@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "936507950796",
+    "project_id": "yongbyung-b2aa8",
+    "storage_bucket": "yongbyung-b2aa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936507950796:android:5c7e820a4fc4654e2ce469",
+        "android_client_info": {
+          "package_name": "com.hardy.yongbyung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936507950796-rlmanc4gud64mottggfue24fqrtgic45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZMMr8C0Vjpe_-65A9E9LK3zSCuMVuRiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936507950796-rlmanc4gud64mottggfue24fqrtgic45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
