@@ -79,6 +79,11 @@ class YongByungPlainButton @JvmOverloads constructor(
         }
     }
 
+    override fun performClick(): Boolean {
+        if(isDisabled) return false
+        return super.performClick()
+    }
+
     private fun setAtomTint(color: Int) {
         val atomTint = context.getColor(color)
         binding.text.setTextColor(atomTint)

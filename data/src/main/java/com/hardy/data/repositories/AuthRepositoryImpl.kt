@@ -1,6 +1,7 @@
 package com.hardy.data.repositories
 
 import android.util.Log
+import androidx.datastore.core.DataStore
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.AuthCredential
@@ -8,10 +9,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hardy.data.Constants.SIGN_IN_REQUEST
 import com.hardy.data.Constants.SIGN_UP_REQUEST
+import com.hardy.data.local.preferences.toDomain
 import com.hardy.domain.model.Response
 import com.hardy.domain.model.User
 import com.hardy.domain.repositories.AuthRepository
-import kotlinx.coroutines.flow.flow
+import com.hardy.yongbyung.datastore.UserPreferences
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Named
@@ -23,9 +27,14 @@ class AuthRepositoryImpl @Inject constructor(
     private var oneTapClient: SignInClient,
     @Named(SIGN_IN_REQUEST) private var signInRequest: BeginSignInRequest,
     @Named(SIGN_UP_REQUEST) private var signUpRequest: BeginSignInRequest,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val userDataStore: DataStore<UserPreferences>
 ) : AuthRepository {
-    override val isUserAuthenticatedInFirebase = auth.currentUser != null
+    override fun isUserAuthenticated(): Flow<Boolean> {
+        return userDataStore.data.map { userPref ->
+            !userPref.nickname.isNullOrEmpty() && auth.currentUser != null
+        }
+    }
 
     override fun oneTapSignInWithGoogle() = flow {
         try {
@@ -50,7 +59,7 @@ class AuthRepositoryImpl @Inject constructor(
             val snapshot = firestore.collection("users").document(uid).get().await()
             if (snapshot.exists()) {
                 val user = snapshot.toObject(User.Registered::class.java)
-                emit(Response.Success(user))
+                user?.let { emit(Response.Success(saveUser(user))) }
             } else {
                 emit(Response.Success(User.UnRegistered))
             }
@@ -59,17 +68,29 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-//    private suspend fun addUserToFirestore() {
-//        auth.currentUser?.apply {
-//            val user = toUser()
-//            firestore.collection(USERS).document(uid).set(user).await()
-//        }
-//    }
+    override suspend fun signUp(): Flow<Response<User>> = flow {
+        try {
+            emit(Response.Loading)
+            val currentUser = auth.currentUser ?: throw IllegalArgumentException("not sign in")
+            val uid = currentUser.uid
+            val nickname = currentUser.displayName ?: "새로운용병"
+            val user = User.Registered(
+                nickname = nickname,
+                profileImage = "https://firebasestorage.googleapis.com/v0/b/yongbyung-b2aa8.appspot.com/o/images%2Fdefault_profile.png?alt=media&token=660e2d25-4834-4a35-8309-bf94e9d9cab9"
+            )
+            firestore.collection("users").document(uid).set(user).await()
+            emit(Response.Success(saveUser(user)))
+        } catch (e: Exception) {
+            emit(Response.Failure(e))
+        }
+    }
 
-//    private fun FirebaseUser.toUser() = mapOf(
-//        DISPLAY_NAME to displayName,
-//        EMAIL to email,
-//        PHOTO_URL to photoUrl?.toString(),
-//        CREATED_AT to FieldValue.serverTimestamp()
-//    )
+    private suspend fun saveUser(user: User.Registered): User.Registered {
+        return userDataStore.updateData { pref ->
+            pref.toBuilder()
+                .setNickname(user.nickname)
+                .setProfileImage(user.profileImage)
+                .build()
+        }.toDomain()
+    }
 }

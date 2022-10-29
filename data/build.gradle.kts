@@ -1,8 +1,11 @@
+import com.google.protobuf.gradle.*
+
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
     id(Plugins.SECRETS_GRADLE_PLUGIN)
+    id(Plugins.PROTOBUF)
 }
 
 android {
@@ -56,6 +59,25 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${Versions.PROTOBUF}"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(":domain"))
 
@@ -69,6 +91,10 @@ dependencies {
     //firebase database
     implementation(Dependencies.FIRESTORE)
     implementation(Dependencies.FIREBASE_DATABASE)
+
+    implementation(Dependencies.PREFERENCES_DATASTORE)
+    implementation(Dependencies.PROTO_DATASTORE)
+    implementation(Dependencies.PROTOBUF)
 
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

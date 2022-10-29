@@ -10,4 +10,7 @@ object Versions {
     const val MATERIAL = "1.7.0"
     const val LEAKCANARY = "2.8.1"
     const val CONSTRAINT_LAYOUT = "2.1.4"
+
+    const val DATASTORE = "1.0.0"
+    const val PROTOBUF = "3.19.4"
 }

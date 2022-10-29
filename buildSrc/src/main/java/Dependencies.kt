@@ -3,7 +3,8 @@ object Dependencies {
     const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
     const val APPCOMPAT = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
     const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
-    const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
+    const val CONSTRAINT_LAYOUT =
+        "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
 
     const val KAPT_HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
@@ -19,4 +20,9 @@ object Dependencies {
     const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx"
     const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx"
     const val FIREBASE_DATABASE = "com.google.firebase:firebase-database"
+
+    const val PREFERENCES_DATASTORE =
+        "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
+    const val PROTO_DATASTORE = "androidx.datastore:datastore:${Versions.DATASTORE}"
+    const val PROTOBUF = "com.google.protobuf:protobuf-javalite:${Versions.PROTOBUF}"
 }

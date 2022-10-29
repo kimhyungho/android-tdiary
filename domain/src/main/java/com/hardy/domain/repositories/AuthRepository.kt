@@ -7,9 +7,11 @@ import com.hardy.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    val isUserAuthenticatedInFirebase: Boolean
+    fun isUserAuthenticated(): Flow<Boolean>
 
     fun oneTapSignInWithGoogle(): Flow<Response<BeginSignInResult>>
 
     fun firebaseSignInWithGoogle(googleCredential: AuthCredential): Flow<Response<User>>
+
+    suspend fun signUp(): Flow<Response<User>>
 }
