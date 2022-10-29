@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/app_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="동네용병"
+            android:textColor="@color/P500"
+            app:layout_constraintStart_toEndOf="@id/guide_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:typo="h3" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textColor="@color/P500"
+            app:layout_constraintStart_toEndOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/app_name_text"
+            app:typo="h3" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/need_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이 필요해요"
+            android:textColor="@color/G600"
+            app:layout_constraintStart_toEndOf="@id/login_text"
+            app:layout_constraintTop_toBottomOf="@id/app_name_text"
+            app:typo="h3" />
+
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:id="@+id/google_login_button"
+            app:buttonSize="wide"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_end"
+            app:layout_constraintStart_toStartOf="@+id/guide_start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

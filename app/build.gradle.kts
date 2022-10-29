@@ -6,6 +6,7 @@ plugins {
     id(Plugins.GOOGLE_SERVICE)
     id(Plugins.SECRETS_GRADLE_PLUGIN)
     id(Plugins.CRASHLYTICS)
+    id(Plugins.NAVIGATION_SAFEARGS)
 }
 
 android {
@@ -62,6 +63,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -84,10 +89,10 @@ dependencies {
     debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.LEAKCANARY_PLUMBER)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
-    implementation("androidx.fragment:fragment-ktx:1.5.3")
+    implementation("androidx.fragment:fragment-ktx:1.5.4")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")

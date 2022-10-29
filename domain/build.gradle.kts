@@ -61,10 +61,15 @@ dependencies {
     androidTestImplementation(Testing.ESPRESSO_CORE)
 
     api(platform("com.google.firebase:firebase-bom:31.0.2"))
+    api("com.google.android.gms:play-services-auth:20.3.0")
 
     kapt(Dependencies.KAPT_HILT_COMPILER)
     implementation(Dependencies.HILT_ANDROID)
 
     api(Dependencies.COROUTINE_CORE)
     api(Dependencies.COROUTINE_ANDROID)
+
+    // firebase-auth
+    api(Dependencies.FIREBASE_AUTH)
+
 }

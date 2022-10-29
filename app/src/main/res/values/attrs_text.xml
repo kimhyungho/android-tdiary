@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="YongByungText">
+        <attr name="typo" format="enum">
+            <enum name="h1" value="0" />
+            <enum name="h2" value="1" />
+            <enum name="h3" value="2" />
+            <enum name="h3_1" value="3" />
+            <enum name="b1" value="10" />
+            <enum name="b2" value="11" />
+            <enum name="b2_1" value="12" />
+            <enum name="button" value="20" />
+            <enum name="subtitle1" value="30" />
+            <enum name="subtitle2" value="31" />
+            <enum name="subtitle3" value="32" />
+            <enum name="subtitle4" value="33" />
+            <enum name="caption1" value="40" />
+            <enum name="caption1_1" value="41" />
+            <enum name="caption2" value="42" />
+            <enum name="caption3" value="43" />
+            <enum name="caption4" value="44" />
+            <enum name="caption5" value="45" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text">Text</style>
+
+    <style name="Text.H1">
+        <item name="android:textSize">48dp</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+    <dimen name="h1_line_height">48dp</dimen>
+
+    <style name="Text.H2">
+        <item name="android:textSize">36dp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+    <dimen name="h2_line_height">46dp</dimen>
+
+    <style name="Text.H3">
+        <item name="android:textSize">24dp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+    <dimen name="h3_line_height">24dp</dimen>
+
+    <style name="Text.H3_1">
+        <item name="android:textSize">24dp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+    <dimen name="h3_1_line_height">34dp</dimen>
+
+    <style name="Text.B1">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+    <dimen name="b1_line_height">26dp</dimen>
+
+    <style name="Text.B2">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+    <dimen name="b2_line_height">24dp</dimen>
+
+    <style name="Text.B2_1">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="b2_1_line_height">24dp</dimen>
+
+    <style name="Text.Button">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="button_line_height">16dp</dimen>
+
+    <style name="Text.Subtitle1">
+        <item name="android:textSize">18dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="subtitle1_line_height">18dp</dimen>
+
+    <style name="Text.Subtitle2">
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="subtitle2_line_height">16dp</dimen>
+
+    <style name="Text.Subtitle3">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="subtitle3_line_height">14dp</dimen>
+
+    <style name="Text.Subtitle4">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+    <dimen name="subtitle4_line_height">14dp</dimen>
+
+    <style name="Text.Caption1">
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+    <dimen name="caption1_line_height">16dp</dimen>
+
+    <style name="Text.Caption1_1">
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="caption1_1_line_height">16dp</dimen>
+
+    <style name="Text.Caption2">
+        <item name="android:textSize">10dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="caption2_line_height">15.6dp</dimen>
+
+    <style name="Text.Caption3">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="caption3_line_height">14dp</dimen>
+
+    <style name="Text.Caption4">
+        <item name="android:textSize">14dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="caption4_line_height">14dp</dimen>
+
+    <style name="Text.Caption5">
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+    <dimen name="caption5_line_height">16dp</dimen>
+
+</resources>

@@ -2,6 +2,7 @@ plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
     id(Plugins.KAPT)
+    id(Plugins.SECRETS_GRADLE_PLUGIN)
 }
 
 android {
@@ -64,9 +65,6 @@ dependencies {
 
     kapt(Dependencies.KAPT_HILT_COMPILER)
     implementation(Dependencies.HILT_ANDROID)
-
-    // firebase-auth
-    implementation(Dependencies.FIREBASE_AUTH)
 
     //firebase database
     implementation(Dependencies.FIRESTORE)

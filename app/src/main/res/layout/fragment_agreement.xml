@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.components.YongByungPlainButton" />
+
+        <import type="com.hardy.yongbyung.components.YongByungBoxButton" />
+
+        <import type="com.hardy.yongbyung.components.YongByungCheckBox" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.agreement.AgreementViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/next_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/app_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="동네용병"
+                    android:textColor="@color/P500"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:typo="h3" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/agreement_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약관동의"
+                    android:textColor="@color/P500"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/app_name_text"
+                    app:typo="h3" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/need_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가 필요해요"
+                    android:textColor="@color/G600"
+                    app:layout_constraintStart_toEndOf="@id/agreement_text"
+                    app:layout_constraintTop_toBottomOf="@id/app_name_text"
+                    app:typo="h3" />
+
+                <com.hardy.yongbyung.components.YongByungBoxButton
+                    android:id="@+id/all_agree_button"
+                    isDisabled="@{viewModel.isEssentialAgreeChecked()}"
+                    rounding="@{24}"
+                    size="@{YongByungBoxButton.LARGE}"
+                    type="@{YongByungBoxButton.LINE}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:onClick="@{()->viewModel.onAllAgreeButtonClick()}"
+                    android:text="@{`전체 동의`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/need_text" />
+
+                <View
+                    android:id="@+id/top_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/G100"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/all_agree_button" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/warning_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{`유의사항`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/top_divider"
+                    app:typo="subtitle1" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/fourteen_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{`동네용병 서비스는 만 14세 이상만 이용 가능합니다.`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/warning_text"
+                    app:typo="subtitle1" />
+
+                <com.hardy.yongbyung.components.YongByungCheckBox
+                    android:id="@+id/essential_checkbox"
+                    isSelected="@{viewModel.isEssentialAgreeChecked()}"
+                    label="@{`필수 약관 전체동의 (필수)`}"
+                    selectedListener="@{(selected)->viewModel.onEssentialAgreeClick(selected)}"
+                    size="@{YongByungCheckBox.MEDIUM}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/fourteen_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.hardy.yongbyung.components.YongByungPlainButton
+            android:id="@+id/next_button"
+            size="@{YongByungPlainButton.LARGE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{`다음`}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
