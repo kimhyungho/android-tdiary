@@ -2,7 +2,10 @@ package com.hardy.yongbyung.components
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.extensions.getDimenFloat
 import com.hardy.yongbyung.foundation.Typo

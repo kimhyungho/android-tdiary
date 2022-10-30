@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <variable
+            name="uiModel"
+            type="com.hardy.yongbyung.model.CategoryUiModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <com.hardy.yongbyung.components.YongByungImageView
+            src="@{uiModel.drawableId}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_football" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/category_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:TextColor="@{uiModel.selected ? @color/P500 : @color/G900}"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{uiModel.name}"
+            app:typo="caption1_1" />
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            icon="@{Icon.ic_select}"
+            visibleOrGone="@{uiModel.selected}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:tint="@color/P500" />
+    </LinearLayout>
+</layout>

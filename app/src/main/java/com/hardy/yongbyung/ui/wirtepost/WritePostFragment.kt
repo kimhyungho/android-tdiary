@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentWritePostBinding
+import com.hardy.yongbyung.dialog.SelectCategoryDialog
+import com.hardy.yongbyung.dialog.SelectDateDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +20,20 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
         super.onViewCreated(view, savedInstanceState)
 
         with(viewDataBinding) {
+            categorySpinner.setOnClickListener {
+                val categoryName = viewModel?.category?.value?.name
+                val dialog = SelectCategoryDialog.newInstance(
+                    categoryName
+                ) { category -> viewModel?.setSelectedCategory(category) }
+                dialog.show(childFragmentManager, SelectCategoryDialog.TAG)
+            }
 
+            dateSpinner.setOnClickListener {
+                val dialog = SelectDateDialog.newInstance(
+
+                )
+                dialog.show(childFragmentManager, SelectDateDialog.TAG)
+            }
         }
 
         with(viewModel) {

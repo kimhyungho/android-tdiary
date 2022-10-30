@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.wirtepost.WritePostViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.Guideline
@@ -46,10 +55,145 @@
                     android:id="@+id/category_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:text="카테고리"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toTopOf="parent"
                     app:typo="button" />
+
+                <LinearLayout
+                    android:id="@+id/category_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_border_g200_1dp_rounded_8dp"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/category_text">
+
+                    <com.hardy.yongbyung.components.YongByungImageView
+                        src="@{viewModel.category.drawableId}"
+                        visibleOrGone="@{viewModel.category != null}"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_football" />
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/selected_category_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.category == null ? `카테고리를 선택해주세요` : viewModel.category.name}"
+                        android:textColor="@color/G900"
+                        app:typo="subtitle2" />
+
+                    <com.hardy.yongbyung.components.YongByungIcon
+                        icon="@{Icon.ic_arrow_bottom}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:tint="@color/G300" />
+                </LinearLayout>
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/title_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="제목"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/category_spinner"
+                    app:typo="button" />
+
+                <com.hardy.yongbyung.components.YongByungTextArea
+                    android:id="@+id/title_text_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="제목을 입력해주세요."
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/title_text"
+                    app:typo="subtitle3" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/content_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="내용"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/title_text_field"
+                    app:typo="button" />
+
+                <com.hardy.yongbyung.components.YongByungTextArea
+                    android:id="@+id/content_text_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="내용을 입력해주세요."
+                    android:lines="5"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/content_text"
+                    app:typo="subtitle3" />
+
+                <LinearLayout
+                    android:id="@+id/date_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_underline_g200_2dp"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/content_text_field">
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/selected_date_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{`날짜`}"
+                        android:textColor="@color/G900"
+                        app:typo="subtitle2" />
+
+                    <com.hardy.yongbyung.components.YongByungIcon
+                        icon="@{Icon.ic_arrow_bottom}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:tint="@color/G300" />
+                </LinearLayout>
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/location_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="장소"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/date_spinner"
+                    app:typo="button" />
+
+                <com.hardy.yongbyung.components.YongByungPlainTextField
+                    android:id="@+id/location_text_field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="장소를 입력해주세요."
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/location_text" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

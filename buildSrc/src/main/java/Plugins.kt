@@ -13,4 +13,5 @@ object Plugins {
     const val PROTOBUF = "com.google.protobuf"
     const val CRASHLYTICS = "com.google.firebase.crashlytics"
     const val NAVIGATION_SAFEARGS = "androidx.navigation.safeargs.kotlin"
+    const val PARCELIZE = "plugin.parcelize"
 }

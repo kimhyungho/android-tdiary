@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hardy.domain.model.Sport
-import com.hardy.yongbyung.databinding.ItemSportBinding
+import com.hardy.yongbyung.databinding.ItemHorizontalCategoryBinding
+import com.hardy.yongbyung.model.CategoryUiModel
 
-class SportListAdapter :
-    ListAdapter<Sport, SportListAdapter.ViewHolder>(
+class HorizontalCategoryListAdapter :
+    ListAdapter<CategoryUiModel, HorizontalCategoryListAdapter.ViewHolder>(
         FeedImageDiffCallback()
     ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemSportBinding.inflate(
+            ItemHorizontalCategoryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -28,9 +28,9 @@ class SportListAdapter :
     }
 
     class ViewHolder(
-        private val binding: ItemSportBinding
+        private val binding: ItemHorizontalCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Sport) {
+        fun bind(item: CategoryUiModel) {
             binding.apply {
                 uiModel = item
                 executePendingBindings()
@@ -39,17 +39,17 @@ class SportListAdapter :
     }
 }
 
-private class FeedImageDiffCallback : DiffUtil.ItemCallback<Sport>() {
+private class FeedImageDiffCallback : DiffUtil.ItemCallback<CategoryUiModel>() {
     override fun areItemsTheSame(
-        oldItem: Sport,
-        newItem: Sport
+        oldItem: CategoryUiModel,
+        newItem: CategoryUiModel
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: Sport,
-        newItem: Sport
+        oldItem: CategoryUiModel,
+        newItem: CategoryUiModel
     ): Boolean {
         return oldItem == newItem
     }

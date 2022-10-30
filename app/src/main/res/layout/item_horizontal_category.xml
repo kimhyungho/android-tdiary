@@ -7,7 +7,7 @@
 
         <variable
             name="uiModel"
-            type="com.hardy.domain.model.Sport" />
+            type="com.hardy.yongbyung.model.CategoryUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
