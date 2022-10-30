@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
     app:startDestination="@id/dest_main">
 
     <fragment
         android:id="@+id/dest_main"
         android:name="com.hardy.yongbyung.ui.main.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_dest_main_to_dest_write_post"
+            app:destination="@id/dest_write_post" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_write_post"
+        android:name="com.hardy.yongbyung.ui.wirtepost.WritePostFragment"
+        android:label="WritePostFragment"
+        tools:layout="@layout/fragment_write_post" />
 </navigation>

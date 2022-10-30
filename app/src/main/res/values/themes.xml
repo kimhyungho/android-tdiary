@@ -15,4 +15,13 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="Theme.YongByung.BottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.YongByung.BottomSheetBackground</item>
+    </style>
+
+    <style name="Theme.YongByung.BottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_white_top_rounded_16dp</item>
+    </style>
+
 </resources>

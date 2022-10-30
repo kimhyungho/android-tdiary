@@ -4,14 +4,14 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import com.hardy.yongbyung.databinding.ActivityMainBinding
+import com.hardy.yongbyung.databinding.ActivityNavigationBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NavigationActivity : BaseViewModelActivity<ActivityMainBinding, NavigationViewModel>(
-    R.layout.activity_main
+class NavigationActivity : BaseViewModelActivity<ActivityNavigationBinding, NavigationViewModel>(
+    R.layout.activity_navigation
 ) {
     override val viewModel: NavigationViewModel by viewModels()
 
@@ -21,7 +21,7 @@ class NavigationActivity : BaseViewModelActivity<ActivityMainBinding, Navigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_navigation)
 
         lifecycleScope.launch {
             viewModel.isAuthenticated.collect {
