@@ -22,7 +22,9 @@ class PostRepositoryImpl @Inject constructor(
         title: String,
         content: String,
         date: Date,
-        location: String
+        mainRegion: String,
+        subRegion: String,
+        location: String?
     ): Flow<Response<String>> = flow {
         try {
             emit(Response.Loading)
@@ -33,6 +35,8 @@ class PostRepositoryImpl @Inject constructor(
                 uid = uid,
                 content = content,
                 date = date,
+                mainRegion = mainRegion,
+                subRegion = subRegion,
                 location = location,
                 createdAt = Date(),
                 isRecruiting = true

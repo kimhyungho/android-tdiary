@@ -191,5 +191,4 @@ abstract class YongByungBaseTextField(
     }
 
     abstract fun setEditTextFocusedListener()
-
 }

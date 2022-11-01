@@ -114,11 +114,13 @@
                     android:id="@+id/title_text_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{(title)->viewModel.onTitleTextChanged(title)}"
                     android:hint="제목을 입력해주세요."
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/title_text"
                     app:typo="subtitle3" />
+
 
                 <com.hardy.yongbyung.components.YongByungText
                     android:id="@+id/content_text"
@@ -135,6 +137,7 @@
                     android:id="@+id/content_text_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{(content)->viewModel.onContentTextChanged(content)}"
                     android:hint="내용을 입력해주세요."
                     android:lines="5"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
@@ -162,7 +165,39 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@{`날짜`}"
+                        android:text="@{viewModel.date == null ? `날짜` : viewModel.date.first}"
+                        android:textColor="@color/G900"
+                        app:typo="subtitle2" />
+
+                    <com.hardy.yongbyung.components.YongByungIcon
+                        icon="@{Icon.ic_arrow_bottom}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:tint="@color/G300" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/region_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_underline_g200_2dp"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/date_spinner">
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/selected_region_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.selectedSubRegion == null ? `지역` : viewModel.selectedMainRegion + ` ` + viewModel.selectedSubRegion}"
                         android:textColor="@color/G900"
                         app:typo="subtitle2" />
 
@@ -182,17 +217,29 @@
                     android:text="장소"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
-                    app:layout_constraintTop_toBottomOf="@id/date_spinner"
+                    app:layout_constraintTop_toBottomOf="@id/region_spinner"
                     app:typo="button" />
 
                 <com.hardy.yongbyung.components.YongByungPlainTextField
                     android:id="@+id/location_text_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{(location)->viewModel.onLocationTextChanged(location)}"
                     android:hint="장소를 입력해주세요."
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/location_text" />
+
+                <com.hardy.yongbyung.components.YongByungBoxButton
+                    android:id="@+id/confirm_button"
+                    isDisabled="@{viewModel.category == null || viewModel.title.empty || viewModel.content.empty || viewModel.date == null || viewModel.selectedMainRegion == null || viewModel.selectedSubRegion == null}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{`확인`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/location_text_field" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

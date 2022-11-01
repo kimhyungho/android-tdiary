@@ -8,6 +8,8 @@ data class Post(
     val uid: String? = null,
     val content: String? = null,
     val date: Date? = null,
+    val mainRegion: String? = null,
+    val subRegion: String? = null,
     val location: String? = null,
     val createdAt: Date? = null,
     val isRecruiting: Boolean? = null

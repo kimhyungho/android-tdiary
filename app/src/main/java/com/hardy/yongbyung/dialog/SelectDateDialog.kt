@@ -1,12 +1,15 @@
 package com.hardy.yongbyung.dialog
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentSelectDateBinding
 import com.hardy.yongbyung.ui.base.BaseBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.Date
 
 @AndroidEntryPoint
@@ -19,16 +22,26 @@ class SelectDateDialog :
 
     var listener: Listener? = null
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(viewDataBinding) {
-            calendarView.minDate = Date().time
-            calendarView.date = selectedDate ?: Date().time
+            with(calendarView) {
+                minDate = Date().time
+                date = selectedDate ?: Date().time
+                setOnDateChangeListener { calendarView, year, month, day ->
+                    val dateFormat = SimpleDateFormat("yyyy.M.d")
+                    val stringDate = "$year.${month + 1}.$day"
+                    val date = dateFormat.parse(stringDate)
+                    date?.let { calendarView.date = date.time }
+                }
+            }
 
             confirmButton.setOnClickListener {
                 val date = calendarView.date
                 listener?.onConfirmButtonClick(date)
+                dismiss()
             }
         }
     }

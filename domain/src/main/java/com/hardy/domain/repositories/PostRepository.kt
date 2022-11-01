@@ -10,6 +10,8 @@ interface PostRepository {
         title: String,
         content: String,
         date: Date,
-        location: String
+        mainRegion: String,
+        subRegion: String,
+        location: String?
     ): Flow<Response<String>>
 }
