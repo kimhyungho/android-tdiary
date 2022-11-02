@@ -105,4 +105,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     implementation("com.opencsv:opencsv:4.4")
+
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

@@ -12,6 +12,7 @@ class HorizontalCategoryListAdapter :
     ListAdapter<CategoryUiModel, HorizontalCategoryListAdapter.ViewHolder>(
         FeedImageDiffCallback()
     ) {
+    var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -24,11 +25,17 @@ class HorizontalCategoryListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val category = getItem(position)
+        holder.bind(category)
+        holder.binding.sportImage.setOnClickListener {
+            if(!category.isSelected) {
+                listener?.onCategoryImageClick(category.name)
+            }
+        }
     }
 
     class ViewHolder(
-        private val binding: ItemHorizontalCategoryBinding
+        val binding: ItemHorizontalCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CategoryUiModel) {
             binding.apply {
@@ -36,6 +43,10 @@ class HorizontalCategoryListAdapter :
                 executePendingBindings()
             }
         }
+    }
+
+    interface Listener {
+        fun onCategoryImageClick(name: String)
     }
 }
 

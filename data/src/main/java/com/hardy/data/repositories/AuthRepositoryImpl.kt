@@ -17,6 +17,7 @@ import com.hardy.yongbyung.datastore.UserPreferences
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -76,7 +77,8 @@ class AuthRepositoryImpl @Inject constructor(
             val nickname = currentUser.displayName ?: "새로운용병"
             val user = User.Registered(
                 nickname = nickname,
-                profileImage = "https://firebasestorage.googleapis.com/v0/b/yongbyung-b2aa8.appspot.com/o/images%2Fdefault_profile.png?alt=media&token=660e2d25-4834-4a35-8309-bf94e9d9cab9"
+                profileImage = "https://firebasestorage.googleapis.com/v0/b/yongbyung-b2aa8.appspot.com/o/images%2Fdefault_profile.png?alt=media&token=660e2d25-4834-4a35-8309-bf94e9d9cab9",
+                createdAt = Date()
             )
             firestore.collection("users").document(uid).set(user).await()
             emit(Response.Success(saveUser(user)))

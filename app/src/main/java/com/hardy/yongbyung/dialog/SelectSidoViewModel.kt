@@ -16,7 +16,9 @@ class SelectSidoViewModel @Inject constructor(
     resourceProvider: ResourceProvider
 ) : BaseViewModel() {
     private val regions = CsvHelper(resourceProvider.getRawInputStream(R.raw.sido_data))
-        .readData().map { Pair(it.first(), it.last()) }.groupBy { it.first }
+        .readData().map { Pair(it.first().toString(), it.last()) }
+        .filterIndexed { index, _ -> index != 0 }
+        .groupBy { it.first }
 
     private val _mainRegions: MutableStateFlow<List<MainRegionUiModel>> = MutableStateFlow(listOf())
     val mainRegions: StateFlow<List<MainRegionUiModel>> = _mainRegions

@@ -9,10 +9,13 @@
         android:id="@+id/dest_main"
         android:name="com.hardy.yongbyung.ui.main.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_dest_main_to_dest_write_post"
             app:destination="@id/dest_write_post" />
+        <action
+            android:id="@+id/action_dest_main_to_dest_post_detail"
+            app:destination="@id/dest_post_detail" />
     </fragment>
 
     <fragment
@@ -20,4 +23,29 @@
         android:name="com.hardy.yongbyung.ui.wirtepost.WritePostFragment"
         android:label="WritePostFragment"
         tools:layout="@layout/fragment_write_post" />
+    <fragment
+        android:id="@+id/dest_post_detail"
+        android:name="com.hardy.yongbyung.ui.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment"
+        tools:layout="@layout/fragment_post_detail">
+
+        <argument
+            android:name="postId"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_dest_post_detail_to_dest_profile"
+            app:destination="@id/dest_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_profile"
+        android:name="com.hardy.yongbyung.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <argument
+            android:name="uid"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

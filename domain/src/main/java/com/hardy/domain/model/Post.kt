@@ -12,5 +12,5 @@ data class Post(
     val subRegion: String? = null,
     val location: String? = null,
     val createdAt: Date? = null,
-    val isRecruiting: Boolean? = null
+    val recruiting: Boolean? = null
 )

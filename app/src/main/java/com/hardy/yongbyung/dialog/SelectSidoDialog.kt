@@ -79,7 +79,6 @@ class SelectSidoDialog :
         with(viewModel) {
             lifecycleScope.launch {
                 mainRegions.collect {
-                    Log.d("kkkk", it.toString())
                     mainRegionListAdapter.submitList(it)
                 }
             }

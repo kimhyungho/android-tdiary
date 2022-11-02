@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <import type="com.hardy.yongbyung.components.YongByungIcon" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.postdetail.PostDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.hardy.yongbyung.components.YongByungTopBar
+            android:id="@+id/toolbar"
+            hasDivider="@{true}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/category_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_g100_rounded_4dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/guide_start"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.hardy.yongbyung.components.YongByungImageView
+                        android:id="@+id/category_image"
+                        src="@{viewModel.post.categoryDrawableResId}"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        tools:src="@drawable/ic_football" />
+
+                    <Space
+                        android:layout_width="4dp"
+                        android:layout_height="wrap_content" />
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/category_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.post.category}"
+                        app:typo="caption1"
+                        tools:text="풋살" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/profile_image_frame"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/oval_border_g100_1dp"
+                    android:padding="1dp"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/category_layout">
+
+                    <com.hardy.yongbyung.components.YongByungImageView
+                        android:id="@+id/profile_image"
+                        isCircular="@{true}"
+                        src="@{viewModel.user.profileImage}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image_frame"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/profile_image_frame"
+                    app:layout_constraintTop_toTopOf="@id/profile_image_frame">
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/nickname_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.user.nickname}"
+                        app:typo="button" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="6dp" />
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/createdAt_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.post.createdAt}"
+                        app:typo="button" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/G100"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/profile_image_frame" />
+
+                <TextView
+                    android:id="@+id/recruit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@{viewModel.post.recruiting ? `모집중` : `모집마감`}"
+                    app:layout_constraintStart_toStartOf="@+id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@+id/divider"
+                    app:layout_goneMarginTop="16dp"
+                    tools:text="모집중" />
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@{viewModel.post.title}"
+                    app:layout_constraintBottom_toBottomOf="@id/recruit_text"
+                    app:layout_constraintEnd_toStartOf="@+id/guide_end"
+                    app:layout_constraintStart_toEndOf="@+id/recruit_text"
+                    app:layout_constraintTop_toTopOf="@+id/recruit_text"
+                    tools:text="풋살 모집합니다." />
+
+                <com.hardy.yongbyung.components.YongByungIcon
+                    android:id="@+id/calendar_image"
+                    icon="@{Icon.ic_calendar}"
+                    size="@{YongByungIcon.ExtraSmall}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="@+id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@+id/recruit_text" />
+
+                <TextView
+                    android:id="@+id/date_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{viewModel.post.date}"
+                    app:layout_constraintBottom_toBottomOf="@+id/calendar_image"
+                    app:layout_constraintEnd_toStartOf="@+id/guide_end"
+                    app:layout_constraintStart_toEndOf="@+id/calendar_image"
+                    app:layout_constraintTop_toTopOf="@+id/calendar_image"
+                    tools:text="11월 24일" />
+
+                <com.hardy.yongbyung.components.YongByungIcon
+                    android:id="@+id/location_image"
+                    icon="@{Icon.ic_location}"
+                    size="@{YongByungIcon.ExtraSmall}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@+id/calendar_image" />
+
+                <TextView
+                    android:id="@+id/region_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{viewModel.post.mainRegion + ` ` + viewModel.post.subRegion}"
+                    app:layout_constraintBottom_toBottomOf="@+id/location_image"
+                    app:layout_constraintEnd_toStartOf="@+id/guide_end"
+                    app:layout_constraintStart_toEndOf="@+id/location_image"
+                    app:layout_constraintTop_toTopOf="@+id/location_image"
+                    tools:text="경기 의정부시" />
+
+                <TextView
+                    android:id="@+id/location_text"
+                    visibleOrGone="@{viewModel.post.location != null}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{viewModel.post.location}"
+                    app:layout_constraintStart_toStartOf="@+id/region_text"
+                    app:layout_constraintTop_toBottomOf="@+id/region_text" />
+
+                <TextView
+                    android:id="@+id/content_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{viewModel.post.content}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/location_text"
+                    tools:text="내용은 이러쿵저러쿵 합니다만..." />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/bottom_bar_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/G100"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.hardy.yongbyung.components.YongByungIconCheckBox
+                android:id="@+id/bookmark_check_box"
+                defaultIcon="@{Icon.ic_heart}"
+                defaultIconColor="@{@color/G300}"
+                selectedIcon="@{Icon.ic_heart_filled}"
+                selectedIconColor="@{@color/P500}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/note_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/note_button" />
+
+            <com.hardy.yongbyung.components.YongByungBoxButton
+                android:id="@+id/note_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@{`쪽지하기`}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/bookmark_check_box"
+                app:layout_constraintTop_toBottomOf="@id/bottom_bar_divider" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -29,7 +29,6 @@ class AgreementViewModel @Inject constructor(
 
     fun onNextButtonClick() = viewModelScope.launch(Dispatchers.IO) {
         authRepository.signUp().collect {
-            Log.d("kkkk", it.toString())
         }
     }
 }

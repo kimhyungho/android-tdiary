@@ -2,15 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/icon_button_background">
+        android:layout_height="wrap_content">
 
         <com.hardy.yongbyung.components.YongByungIcon
             android:id="@+id/icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="true" />
-
+            android:layout_height="wrap_content" />
     </FrameLayout>
 </layout>
