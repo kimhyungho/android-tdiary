@@ -30,7 +30,6 @@ class GetPostPagingSource(
                 nextKey = nextKey
             )
         } catch (e: Exception) {
-            Log.d("kkkk", "", e)
             LoadResult.Error(e)
         }
     }

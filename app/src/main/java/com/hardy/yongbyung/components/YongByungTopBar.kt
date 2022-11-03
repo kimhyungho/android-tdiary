@@ -42,6 +42,7 @@ class YongByungTopBar @JvmOverloads constructor(
     var startIcon: Int? = null
         set(icon) {
             field = icon
+            binding.startButton.visibility = View.VISIBLE
             binding.startButton.icon = icon!!
         }
 
@@ -49,6 +50,7 @@ class YongByungTopBar @JvmOverloads constructor(
     var endFirstIcon: Int? = null
         set(icon) {
             field = icon
+            binding.endFirstButton.visibility = View.VISIBLE
             binding.endFirstButton.icon = icon!!
         }
 
@@ -56,6 +58,7 @@ class YongByungTopBar @JvmOverloads constructor(
     var endSecondIcon: Int? = null
         set(icon) {
             field = icon
+            binding.endSecondButton.visibility = View.VISIBLE
             binding.endSecondButton.icon = icon!!
         }
 

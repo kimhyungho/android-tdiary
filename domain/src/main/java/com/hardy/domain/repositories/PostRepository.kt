@@ -23,5 +23,7 @@ interface PostRepository {
         subRegion: String
     ): Flow<PagingData<Pair<String, Post>>>
 
+    fun getPosts(uid: String): Flow<PagingData<Pair<String, Post>>>
+
     fun getPost(postId: String): Flow<Response<Pair<String, Post>>>
 }

@@ -86,6 +86,14 @@ class PostRepositoryImpl @Inject constructor(
         GetPostPagingSource(query)
     }.flow
 
+    override fun getPosts(uid: String): Flow<PagingData<Pair<String, Post>>> =
+        Pager(PagingConfig(20)) {
+            val query = firestore.collection("posts")
+                .whereEqualTo("uid", uid)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+            GetPostPagingSource(query)
+        }.flow
+
     override fun getPost(postId: String): Flow<Response<Pair<String, Post>>> = flow {
         try {
             emit(Response.Loading)

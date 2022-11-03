@@ -8,10 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.hardy.yongbyung.ui.profile.ProfileViewModel" />
+            type="com.hardy.yongbyung.ui.editprofile.EditProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,7 +20,8 @@
             android:id="@+id/toolbar"
             hasDivider="@{true}"
             startIcon="@{Icon.ic_back}"
-            android:layout_width="wrap_content"
+            title="@{`프로필 수정`}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,17 +29,16 @@
 
         <ScrollView
             android:id="@+id/sv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_start"
@@ -55,74 +56,58 @@
 
                 <FrameLayout
                     android:id="@+id/profile_image_frame"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/oval_border_g100_1dp"
                     android:padding="1dp"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.hardy.yongbyung.components.YongByungImageView
                         android:id="@+id/profile_image"
-                        isCircular="@{true}"
-                        src="@{viewModel.user.profileImage}"
-                        android:layout_width="match_parent"
                         cacheable="@{false}"
+                        isCircular="@{true}"
+                        src="@{viewModel.profileImage}"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop" />
                 </FrameLayout>
 
-                <com.hardy.yongbyung.components.YongByungText
-                    android:id="@+id/nickname_text"
+                <com.hardy.yongbyung.components.YongByungTextArea
+                    android:id="@+id/nickname_text_field"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
+                    android:layout_marginTop="24dp"
+                    android:afterTextChanged="@{(nickname)->viewModel.setNickname(nickname)}"
+                    android:hint="닉네임"
+                    android:maxLength="10"
                     android:maxLines="1"
-                    android:text="@{viewModel.user.nickname}"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_image_frame"
-                    app:layout_constraintEnd_toStartOf="@id/profile_image_frame"
-                    app:layout_constraintStart_toEndOf="@id/guide_start"
-                    app:layout_constraintTop_toTopOf="@id/profile_image_frame"
-                    app:typo="button" />
-
-                <com.hardy.yongbyung.components.YongByungText
-                    android:id="@+id/createdAt_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.user.createdAt + ` 가입`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/profile_image_frame"
                     app:typo="button" />
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/G100"
-                    app:layout_constraintEnd_toStartOf="@id/guide_end"
-                    app:layout_constraintStart_toEndOf="@id/guide_start"
-                    app:layout_constraintTop_toBottomOf="@id/createdAt_text" />
-
                 <com.hardy.yongbyung.components.YongByungText
-                    android:id="@+id/post_text"
+                    android:id="@+id/limit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="작성한 글"
-                    app:layout_constraintStart_toEndOf="@id/guide_start"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    android:text="@{viewModel.nickname.length() + `/10`}"
+                    app:layout_constraintEnd_toEndOf="@id/nickname_text_field"
+                    app:layout_constraintTop_toBottomOf="@id/nickname_text_field"
                     app:typo="button" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/posts_recycler_view"
+                <com.hardy.yongbyung.components.YongByungBoxButton
+                    android:id="@+id/change_button"
+                    isDisabled="@{viewModel.nickname.length() &lt; 2 || (viewModel.profileImage.startsWith(`http`) &amp; viewModel.nickname.equals(viewModel.originNickname))}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/post_text" />
+                    android:layout_marginTop="24dp"
+                    android:text="@{`변경`}"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/limit_text" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

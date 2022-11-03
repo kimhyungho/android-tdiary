@@ -12,6 +12,11 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/dest_message"
+        android:name="com.hardy.yongbyung.ui.message.MessageFragment"
+        android:label="MessageFragment" />
+
+    <fragment
         android:id="@+id/dest_my_page"
         android:name="com.hardy.yongbyung.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"

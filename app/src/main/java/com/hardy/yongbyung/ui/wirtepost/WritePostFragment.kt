@@ -22,6 +22,10 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
         super.onViewCreated(view, savedInstanceState)
 
         with(viewDataBinding) {
+            toolbar.startButtonClickListener = View.OnClickListener {
+                navController.popBackStack()
+            }
+
             categorySpinner.setOnClickListener {
                 val categoryName = viewModel?.category?.value?.name
                 val dialog = SelectCategoryDialog.newInstance(

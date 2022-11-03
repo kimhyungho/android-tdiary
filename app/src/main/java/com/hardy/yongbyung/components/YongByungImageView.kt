@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.hardy.yongbyung.extensions.dpToIntPx
@@ -23,7 +24,7 @@ class YongByungImageView @JvmOverloads constructor(
     companion object {
         @JvmStatic
         @BindingAdapter(
-            value = ["src", "isCircular", "radius", "placeholder"],
+            value = ["src", "isCircular", "radius", "placeholder", "cacheable"],
             requireAll = false
         )
         fun bind(
@@ -31,13 +32,18 @@ class YongByungImageView @JvmOverloads constructor(
             src: String?,
             isCircular: Boolean? = null,
             radius: Float = 0f,
-            placeholder: Drawable? = null
+            placeholder: Drawable? = null,
+            cacheable: Boolean = true
         ) {
             Glide.with(imageView)
                 .load(src)
                 .placeholder(placeholder)
                 .error(placeholder)
                 .apply {
+                    if (!cacheable) {
+                        diskCacheStrategy(DiskCacheStrategy.NONE)
+                        skipMemoryCache(true)
+                    }
                     if (isCircular == true) {
                         apply(RequestOptions.circleCropTransform())
                     } else if (radius > 0) {
@@ -73,7 +79,7 @@ class YongByungImageView @JvmOverloads constructor(
 
         @JvmStatic
         @BindingAdapter(
-            value = ["src", "isCircular", "radius", "placeholder"],
+            value = ["src", "isCircular", "radius", "placeholder", "cacheable"],
             requireAll = false
         )
         fun bind(
@@ -82,12 +88,17 @@ class YongByungImageView @JvmOverloads constructor(
             isCircular: Boolean? = null,
             radius: Float = 0f,
             placeholder: Drawable? = null,
+            cacheable: Boolean = true
         ) {
             Glide.with(imageView)
                 .load(src)
                 .placeholder(placeholder)
                 .error(placeholder)
                 .apply {
+                    if (!cacheable) {
+                        diskCacheStrategy(DiskCacheStrategy.NONE)
+                        skipMemoryCache(true)
+                    }
                     if (isCircular == true) {
                         apply(RequestOptions.circleCropTransform())
                     } else if (radius > 0) {

@@ -18,6 +18,7 @@ import com.hardy.yongbyung.foundation.Typo.H1
 import com.hardy.yongbyung.foundation.Typo.H2
 import com.hardy.yongbyung.foundation.Typo.H3
 import com.hardy.yongbyung.foundation.Typo.H3_1
+import com.hardy.yongbyung.foundation.Typo.H4
 import com.hardy.yongbyung.foundation.Typo.Subtitle1
 import com.hardy.yongbyung.foundation.Typo.Subtitle2
 import com.hardy.yongbyung.foundation.Typo.Subtitle3
@@ -25,7 +26,7 @@ import com.hardy.yongbyung.foundation.Typo.Subtitle4
 
 
 @Retention(AnnotationRetention.SOURCE)
-@IntDef(value = [H1, H2, H3, H3_1, B1, B2, B2_1, Button, Subtitle1, Subtitle2, Subtitle3, Subtitle4, Caption1, Caption1_1, Caption2, Caption3, Caption4, Caption5])
+@IntDef(value = [H1, H2, H3, H4, H3_1, B1, B2, B2_1, Button, Subtitle1, Subtitle2, Subtitle3, Subtitle4, Caption1, Caption1_1, Caption2, Caption3, Caption4, Caption5])
 annotation class Typography
 
 object Typo {
@@ -33,6 +34,7 @@ object Typo {
     const val H2 = 1
     const val H3 = 2
     const val H3_1 = 3
+    const val H4 = 4
     const val B1 = 10
     const val B2 = 11
     const val B2_1 = 12
@@ -54,6 +56,7 @@ object Typo {
         H2 -> R.style.Text_H2
         H3 -> R.style.Text_H3
         H3_1 -> R.style.Text_H3_1
+        H4 -> R.style.Text_H4
         B1 -> R.style.Text_B1
         B2 -> R.style.Text_B2
         B2_1 -> R.style.Text_B2_1
@@ -77,6 +80,7 @@ object Typo {
         H2 -> R.dimen.h2_line_height
         H3 -> R.dimen.h3_line_height
         H3_1 -> R.dimen.h3_1_line_height
+        H4 -> R.dimen.h4_line_height
         B1 -> R.dimen.b1_line_height
         B2 -> R.dimen.b2_line_height
         B2_1 -> R.dimen.b2_1_line_height
@@ -92,76 +96,5 @@ object Typo {
         Caption4 -> R.dimen.caption4_line_height
         Caption5 -> R.dimen.caption5_line_height
         else -> R.dimen.h1_line_height
-    }
-
-    fun getList(): List<Int> {
-        return listOf(
-            H1,
-            H2,
-            H3,
-            H3_1,
-            B1,
-            B2,
-            B2_1,
-            Button,
-            Subtitle1,
-            Subtitle2,
-            Subtitle3,
-            Subtitle4,
-            Caption1,
-            Caption1_1,
-            Caption2,
-            Caption3,
-            Caption4,
-            Caption5
-        )
-    }
-
-    fun getName(@Typography value: Int): String {
-        return when (value) {
-            H1 -> "H1"
-            H2 -> "H2"
-            H3 -> "H3"
-            H3_1 -> "H3_1"
-            B1 -> "B1"
-            B2 -> "B2"
-            B2_1 -> "B2_1"
-            Button -> "Button"
-            Subtitle1 -> "Subtitle1"
-            Subtitle2 -> "Subtitle2"
-            Subtitle3 -> "Subtitle3"
-            Subtitle4 -> "Subtitle4"
-            Caption1 -> "Caption1"
-            Caption1_1 -> "Caption1_1"
-            Caption2 -> "Caption2"
-            Caption3 -> "Caption3"
-            Caption4 -> "Caption4"
-            Caption5 -> "Caption5"
-            else -> "H1"
-        }
-    }
-
-    fun getValueByName(value: String): Int {
-        return when (value) {
-            "H1" -> H1
-            "H2" -> H2
-            "H3" -> H3
-            "H3_1" -> H3_1
-            "B1" -> B1
-            "B2" -> B2
-            "B2_1" -> B2_1
-            "Button" -> Button
-            "Subtitle1" -> Subtitle1
-            "Subtitle2" -> Subtitle2
-            "Subtitle3" -> Subtitle3
-            "Subtitle4" -> Subtitle4
-            "Caption1" -> Caption1
-            "Caption1_1" -> Caption1_1
-            "Caption2" -> Caption2
-            "Caption3" -> Caption3
-            "Caption4" -> Caption4
-            "Caption5" -> Caption5
-            else -> H1
-        }
     }
 }

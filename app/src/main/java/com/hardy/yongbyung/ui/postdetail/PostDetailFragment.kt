@@ -24,6 +24,10 @@ class PostDetailFragment : BaseViewModelFragment<FragmentPostDetailBinding, Post
                     PostDetailFragmentDirections.actionDestPostDetailToDestProfile(uid)
                 )
             }
+
+            toolbar.startButtonClickListener = View.OnClickListener {
+                navController.popBackStack()
+            }
         }
     }
 }

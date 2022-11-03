@@ -16,7 +16,8 @@ object Icon {
             ic_calendar,
             ic_location,
             ic_heart,
-            ic_heart_filled
+            ic_heart_filled,
+            ic_back
         ]
     )
     annotation class Iconography
@@ -30,6 +31,7 @@ object Icon {
     const val ic_location = 6
     const val ic_heart = 7
     const val ic_heart_filled = 8
+    const val ic_back = 9
 
     @DrawableRes
     fun getIconDrawable(@Iconography icon: Int): Int {
@@ -43,6 +45,7 @@ object Icon {
             ic_location -> R.drawable.ic_location
             ic_heart -> R.drawable.ic_heart
             ic_heart_filled -> R.drawable.ic_heart_filled
+            ic_back -> R.drawable.ic_back
             else -> ic_check
         }
     }
