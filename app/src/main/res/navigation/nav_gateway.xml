@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/dest_message"
-        android:name="com.hardy.yongbyung.ui.message.MessageFragment"
+        android:name="com.hardy.yongbyung.ui.messagelist.MessageListFragment"
         android:label="MessageFragment" />
 
     <fragment

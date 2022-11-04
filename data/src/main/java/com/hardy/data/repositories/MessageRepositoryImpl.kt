@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.snapshots
 import com.hardy.domain.model.Message
 import com.hardy.domain.model.MessageRoom
 import com.hardy.domain.model.Response
@@ -12,6 +13,8 @@ import com.hardy.domain.repositories.MessageRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject
@@ -24,36 +27,55 @@ class MessageRepositoryImpl @Inject constructor(
 ) : MessageRepository {
     private val uid get() = firebaseAuth.currentUser?.uid
 
-    override suspend fun sendMessage(receiverUid: String, message: String) {
-        try {
-            uid ?: throw IllegalArgumentException("not sign in")
+    override suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<Unit>> =
+        flow {
+            try {
+                emit(Response.Loading)
+                uid ?: throw IllegalArgumentException("not sign in")
 
-            val chatroom = firebaseDatabase.reference.child("messagerooms")
-                .orderByChild("users/$uid").equalTo(true)
-                .orderByChild("users/$receiverUid").equalTo(true)
-                .get().await()
+                val messageRoomsSnapshot = firebaseDatabase.reference.child("messagerooms")
+                    .orderByChild("users/$uid")
+                    .equalTo(true).snapshots.first()
 
-            val messageModel = Message(
-                uid = uid,
-                message = message,
-                createdAt = Date(),
-                readUsers = mapOf(uid!! to true)
-            )
+                var keyAndMessageRoom: Pair<String, MessageRoom>? = null
 
-            if (chatroom.exists()) {
-                firebaseDatabase.reference.child("messagerooms").child(chatroom.key!!)
-                    .child("messages")
-                    .push()
-                    .setValue(messageModel)
-            } else {
-                val messageRoom = MessageRoom(users = mapOf(uid!! to true, receiverUid to true))
-                firebaseDatabase.reference.child("messagerooms").push().setValue(messageRoom)
-                    .await()
+                messageRoomsSnapshot.children.forEach { snapshot ->
+                    val messageRoom = snapshot.getValue(MessageRoom::class.java)
+                    if (messageRoom?.users?.containsKey(receiverUid) == true) {
+                        keyAndMessageRoom = Pair(snapshot.key!!, messageRoom)
+                    }
+                }
+
+                val messageModel = Message(
+                    uid = uid,
+                    message = message,
+                    createdAt = Date(),
+                    readUsers = mapOf(uid!! to true)
+                )
+
+                if (keyAndMessageRoom != null) {
+                    firebaseDatabase.reference.child("messagerooms")
+                        .child(keyAndMessageRoom!!.first)
+                        .child("messages")
+                        .push()
+                        .setValue(messageModel)
+                        .await()
+                } else {
+                    val randomUid = firebaseDatabase.reference.push().key!!
+                    val messageRoom = MessageRoom(
+                        users = mapOf(uid!! to true, receiverUid to true),
+                        messages = mapOf(randomUid to messageModel)
+                    )
+                    firebaseDatabase.reference.child("messagerooms")
+                        .push()
+                        .setValue(messageRoom)
+                        .await()
+                }
+                emit(Response.Success(Unit))
+            } catch (e: Exception) {
+                emit(Response.Failure(e))
             }
-        } catch (e: Exception) {
-
         }
-    }
 
     override fun getMessageRooms(): Flow<Response<List<Pair<String?, MessageRoom?>>>> =
         callbackFlow {
@@ -66,6 +88,26 @@ class MessageRepositoryImpl @Inject constructor(
                             snapshot.children
                                 .map { Pair(it.key, it.getValue(MessageRoom::class.java)) }
                         trySend(Response.Success(messageRooms))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        trySend(Response.Failure(error.toException()))
+                    }
+                })
+            awaitClose { close() }
+        }
+
+    override fun getMessages(messageRoomId: String): Flow<Response<List<Pair<String?, Message?>>>> =
+        callbackFlow {
+            trySend(Response.Loading)
+            firebaseDatabase.reference.child("messagerooms")
+                .child(messageRoomId)
+                .child("messages")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val messages =
+                            snapshot.children.map { Pair(it.key, it.getValue(Message::class.java)) }
+                        trySend(Response.Success(messages))
                     }
 
                     override fun onCancelled(error: DatabaseError) {

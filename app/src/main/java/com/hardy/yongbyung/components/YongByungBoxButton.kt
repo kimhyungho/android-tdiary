@@ -203,6 +203,11 @@ class YongByungBoxButton @JvmOverloads constructor(
         return true
     }
 
+    override fun performClick(): Boolean {
+        if(isDisabled) return false
+        return super.performClick()
+    }
+
     companion object {
         const val FILLED = 0
         const val LINE = 1

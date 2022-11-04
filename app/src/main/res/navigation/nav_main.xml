@@ -38,6 +38,13 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_dest_main_to_dest_message_detail"
+            app:destination="@id/dest_message_detail"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment
@@ -85,4 +92,14 @@
         android:id="@+id/dest_edit_profile"
         android:name="com.hardy.yongbyung.ui.editprofile.EditProfileFragment"
         android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/dest_message_detail"
+        android:name="com.hardy.yongbyung.ui.messagedetail.MessageDetailFragment"
+        android:label="MessageDetailFragment" >
+
+        <argument
+            android:name="messageRoomId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

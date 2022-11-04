@@ -17,7 +17,8 @@ data class PostUiModel(
     val mainRegion: String,
     val subRegion: String,
     val location: String?,
-    val createdAt: String
+    val createdAt: String,
+    val uid: String
 )
 
 object PostUiMapper : Mapper<Pair<String, Post>, PostUiModel> {
@@ -41,7 +42,8 @@ object PostUiMapper : Mapper<Pair<String, Post>, PostUiModel> {
             mainRegion = from.second.mainRegion ?: "",
             subRegion = from.second.subRegion ?: "",
             location = from.second.location,
-            createdAt = DateUtil.dateToAgoString(from.second.createdAt) ?: ""
+            createdAt = DateUtil.dateToAgoString(from.second.createdAt) ?: "",
+            uid = from.second.uid ?: ""
         )
     }
 }

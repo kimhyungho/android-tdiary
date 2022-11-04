@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentPostDetailBinding
+import com.hardy.yongbyung.dialog.SendMessageDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,15 @@ class PostDetailFragment : BaseViewModelFragment<FragmentPostDetailBinding, Post
 
             toolbar.startButtonClickListener = View.OnClickListener {
                 navController.popBackStack()
+            }
+
+            sendMessageButton.setOnClickListener {
+                val receiverUid = viewModel?.post?.value?.uid ?: run {
+                    // snackBar
+                    return@setOnClickListener
+                }
+                val dialog = SendMessageDialog.newInstance(receiverUid)
+                dialog.show(childFragmentManager, SendMessageDialog.TAG)
             }
         }
     }
