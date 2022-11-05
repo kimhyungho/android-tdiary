@@ -27,7 +27,7 @@ class MessageRepositoryImpl @Inject constructor(
 ) : MessageRepository {
     private val uid get() = firebaseAuth.currentUser?.uid
 
-    override suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<Unit>> =
+    override suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<String>> =
         flow {
             try {
                 emit(Response.Loading)
@@ -60,6 +60,7 @@ class MessageRepositoryImpl @Inject constructor(
                         .push()
                         .setValue(messageModel)
                         .await()
+                    emit(Response.Success(keyAndMessageRoom!!.first))
                 } else {
                     val randomUid = firebaseDatabase.reference.push().key!!
                     val messageRoom = MessageRoom(
@@ -70,8 +71,8 @@ class MessageRepositoryImpl @Inject constructor(
                         .push()
                         .setValue(messageRoom)
                         .await()
+                    emit(Response.Success(randomUid))
                 }
-                emit(Response.Success(Unit))
             } catch (e: Exception) {
                 emit(Response.Failure(e))
             }

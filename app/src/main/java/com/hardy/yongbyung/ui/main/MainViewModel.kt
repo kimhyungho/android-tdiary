@@ -1,18 +1,25 @@
 package com.hardy.yongbyung.ui.main
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.hardy.domain.model.Response
 import com.hardy.domain.repositories.MessageRepository
+import com.hardy.yongbyung.mapper.ExceptionMapper
 import com.hardy.yongbyung.model.MessageRoomUiMapper
 import com.hardy.yongbyung.model.MessageRoomUiModel
 import com.hardy.yongbyung.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ObsoleteCoroutinesApi::class)
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val messageRoomUiMapper: MessageRoomUiMapper,
@@ -25,29 +32,44 @@ class MainViewModel @Inject constructor(
     private val _hasNewMessage: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val hasNewMessage: StateFlow<Boolean> = _hasNewMessage
 
+    private val _messageRoomLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val messageRoomLoading: StateFlow<Boolean> = _messageRoomLoading
+
+    private val _refreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val refreshing: StateFlow<Boolean> = _refreshing
+
+    private val _error = BroadcastChannel<String>(Channel.BUFFERED)
+    val error = _error.asFlow()
+
     init {
         getMessageRooms()
     }
 
-    fun getMessageRooms() = viewModelScope.launch(Dispatchers.IO) {
+    private fun getMessageRooms() = viewModelScope.launch(Dispatchers.IO) {
         messageRepository.getMessageRooms().collect { response ->
             when (response) {
-                is Response.Loading -> {
-
-                }
-
+                is Response.Loading -> _messageRoomLoading.value = true
                 is Response.Success -> {
+                    _messageRoomLoading.value = false
+                    _refreshing.value = false
                     response.data?.let {
                         response.data?.map {
                             messageRoomUiMapper.mapToView(it)
-                        }?.let { _messageRooms.value = it }
+                        }?.sortedByDescending { it.lastMessageDate }
+                            ?.let { _messageRooms.value = it }
                     }
                 }
-
                 is Response.Failure -> {
-
+                    _messageRoomLoading.value = false
+                    _refreshing.value = false
+                    _error.trySend(ExceptionMapper.mapToView(response.e))
                 }
             }
         }
+    }
+
+    fun onRefresh() {
+        _refreshing.value = true
+        getMessageRooms()
     }
 }

@@ -1,18 +1,23 @@
 package com.hardy.yongbyung.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.adapters.HorizontalCategoryListAdapter
+import com.hardy.yongbyung.adapters.PagingStateAdapter
 import com.hardy.yongbyung.adapters.PostListAdapter
 import com.hardy.yongbyung.databinding.FragmentHomeBinding
 import com.hardy.yongbyung.dialog.SelectSidoDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import com.hardy.yongbyung.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -41,6 +46,15 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
         super.onViewCreated(view, savedInstanceState)
 
         with(viewDataBinding) {
+            lifecycleScope.launch {
+                postListAdapter.loadStateFlow.collectLatest { loadStates ->
+                    viewModel?.setPostLoading(loadStates.refresh is LoadState.Loading)
+                    if (loadStates.refresh is LoadState.Error) {
+                        viewModel?.setError((loadStates.refresh as LoadState.Error).error)
+                    }
+                }
+            }
+
             with(sportsRecyclerView) {
                 itemAnimator = null
                 adapter = horizontalCategoryListAdapter
@@ -48,7 +62,9 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
 
             with(postsRecyclerView) {
                 itemAnimator = null
-                adapter = postListAdapter
+                adapter = postListAdapter.withLoadStateFooter(
+                    footer = PagingStateAdapter { postListAdapter.retry() }
+                )
             }
 
             writePostFab.setOnClickListener {
@@ -79,6 +95,22 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
             lifecycleScope.launchWhenStarted {
                 posts.collect { posts ->
                     postListAdapter.submitData(lifecycle, posts)
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                refreshing.collect {
+                    viewDataBinding.postRefreshLayout.isRefreshing = it
+                    if (it) {
+                        postListAdapter.refresh()
+                        viewModel.setRefreshing(false)
+                    }
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                error.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

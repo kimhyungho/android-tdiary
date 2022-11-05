@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -234,6 +235,8 @@
                 <com.hardy.yongbyung.components.YongByungBoxButton
                     android:id="@+id/confirm_button"
                     isDisabled="@{viewModel.category == null || viewModel.title.empty || viewModel.content.empty || viewModel.date == null || viewModel.selectedMainRegion == null || viewModel.selectedSubRegion == null}"
+                    isLoading="@{viewModel.writeLoading}"
+                    loadingColor="@{@color/white}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

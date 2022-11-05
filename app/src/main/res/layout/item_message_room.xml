@@ -44,7 +44,7 @@
             android:id="@+id/last_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{uiModel.lastMessageDate}"
+            android:text="@{uiModel.lastMessageDateString}"
             app:layout_constraintBottom_toBottomOf="@+id/nickname_text"
             app:layout_constraintEnd_toStartOf="@+id/guide_end"
             app:layout_constraintTop_toTopOf="@+id/nickname_text"

@@ -5,14 +5,21 @@
     <data>
 
         <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.messagedetail.MessageDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.hardy.yongbyung.components.YongByungTopBar
             android:id="@+id/toolbar"
+            endFirstIcon="@{Icon.ic_menu}"
+            endSecondIcon="@{Icon.ic_send}"
             startIcon="@{Icon.ic_back}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,7 +35,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:reverseLayout="true"
+            app:stackFromEnd="true" />
+
+        <com.hardy.yongbyung.components.YongByungLoading
+            isLoading="@{viewModel.messageLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/message_recycler_view"
+            app:layout_constraintEnd_toEndOf="@id/message_recycler_view"
+            app:layout_constraintStart_toStartOf="@id/message_recycler_view"
+            app:layout_constraintTop_toTopOf="@id/message_recycler_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

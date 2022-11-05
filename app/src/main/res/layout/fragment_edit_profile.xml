@@ -101,6 +101,7 @@
                 <com.hardy.yongbyung.components.YongByungBoxButton
                     android:id="@+id/change_button"
                     isDisabled="@{viewModel.nickname.length() &lt; 2 || (viewModel.profileImage.startsWith(`http`) &amp; viewModel.nickname.equals(viewModel.originNickname))}"
+                    isLoading="@{viewModel.changeLoading || viewModel.meLoading}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"

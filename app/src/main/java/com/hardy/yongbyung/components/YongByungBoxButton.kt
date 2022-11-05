@@ -2,6 +2,7 @@ package com.hardy.yongbyung.components
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
@@ -58,16 +59,28 @@ class YongByungBoxButton @JvmOverloads constructor(
             setState()
         }
 
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            setState()
+        }
+
+    var loadingColor: Int = Color.parseColor("#FF5C5C")
+        set(value) {
+            field = value
+            binding.loader.indeterminateTintList = ColorStateList.valueOf(loadingColor)
+        }
+
     @ColorRes
     private var itemColor: Int = 0
 
     @ColorRes
     private var bgColor: Int = 0
 
-
     private fun setState() {
         setTheme()
         setText()
+        setLoading()
         requestLayout()
         invalidate()
     }
@@ -79,6 +92,16 @@ class YongByungBoxButton @JvmOverloads constructor(
             LINE -> setLineTheme()
         }
         setColorAndStroke()
+    }
+
+    private fun setLoading() {
+        if (isLoading) {
+            binding.loader.visibility = VISIBLE
+            binding.text.visibility = INVISIBLE
+        } else {
+            binding.loader.visibility = GONE
+            binding.text.visibility = VISIBLE
+        }
     }
 
     private fun setFilledTheme() {
@@ -204,7 +227,7 @@ class YongByungBoxButton @JvmOverloads constructor(
     }
 
     override fun performClick(): Boolean {
-        if(isDisabled) return false
+        if (isDisabled || isLoading) return false
         return super.performClick()
     }
 
@@ -244,6 +267,18 @@ class YongByungBoxButton @JvmOverloads constructor(
         @BindingAdapter("android:text")
         fun setText(boxButton: YongByungBoxButton, text: String) {
             boxButton.text = text
+        }
+
+        @JvmStatic
+        @BindingAdapter("isLoading")
+        fun setIsLoading(boxButton: YongByungBoxButton, isLoading: Boolean) {
+            boxButton.isLoading = isLoading
+        }
+
+        @JvmStatic
+        @BindingAdapter("loadingColor")
+        fun setLoadingColor(boxButton: YongByungBoxButton, color: Int) {
+            boxButton.loadingColor = color
         }
     }
 }

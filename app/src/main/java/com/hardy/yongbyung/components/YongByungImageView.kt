@@ -156,20 +156,5 @@ class YongByungImageView @JvmOverloads constructor(
                     }
                 }.into(imageView)
         }
-
-        @JvmStatic
-        @BindingAdapter("margin")
-        fun bindMargin(
-            imageView: YongByungImageView,
-            margin: Float
-        ) {
-            imageView.layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            ).apply {
-                val margins = imageView.context.dpToIntPx(margin)
-                setMargins(margins, margins, margins, margins)
-            }
-        }
     }
 }

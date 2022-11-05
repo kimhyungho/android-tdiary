@@ -6,13 +6,18 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentSendMessageDialogBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelBottomSheetDialogFragment
+import com.hardy.yongbyung.ui.postdetail.PostDetailFragment
+import com.hardy.yongbyung.ui.postdetail.PostDetailFragmentDirections
 import com.hardy.yongbyung.utils.bind
 import com.hardy.yongbyung.utils.clicks
 import com.hardy.yongbyung.utils.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class SendMessageDialog(
@@ -32,6 +37,29 @@ class SendMessageDialog(
                 .bind(lifecycleScope) {
                     viewModel?.sendMessage(receiverUid)
                 }
+        }
+
+        with(viewModel) {
+            lifecycleScope.launchWhenStarted {
+                sendSuccess.collect {
+                    if (parentFragment is PostDetailFragment) {
+                        parentFragment?.findNavController()
+                            ?.navigate(
+                                PostDetailFragmentDirections.actionDestPostDetailToDestMessageDetail(
+                                    receiverUid,
+                                    it
+                                )
+                            )
+                    }
+                    dismiss()
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                error.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

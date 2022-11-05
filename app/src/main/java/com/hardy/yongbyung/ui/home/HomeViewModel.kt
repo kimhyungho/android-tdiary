@@ -1,23 +1,29 @@
 package com.hardy.yongbyung.ui.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.hardy.domain.repositories.PostRepository
 import com.hardy.yongbyung.R
+import com.hardy.yongbyung.mapper.ExceptionMapper
 import com.hardy.yongbyung.model.CategoryUiModel
 import com.hardy.yongbyung.model.PostUiMapper
 import com.hardy.yongbyung.model.PostUiModel
 import com.hardy.yongbyung.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ObsoleteCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val postRepository: PostRepository
@@ -35,6 +41,15 @@ class HomeViewModel @Inject constructor(
     private val _selectedSubRegion: MutableStateFlow<String> = MutableStateFlow("전체")
     val selectedSubRegion: StateFlow<String> = _selectedSubRegion
 
+    private val _refreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val refreshing: StateFlow<Boolean> = _refreshing
+
+    private val _postLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val postLoading: StateFlow<Boolean> = _postLoading
+
+    private val _error = BroadcastChannel<String>(Channel.BUFFERED)
+    val error = _error.asFlow()
+
     init {
         _categories.value = listOf(
             CategoryUiModel("전체", R.drawable.ic_all, true),
@@ -45,7 +60,7 @@ class HomeViewModel @Inject constructor(
         getPosts()
     }
 
-    fun getPosts() = viewModelScope.launch(Dispatchers.IO) {
+    private fun getPosts() = viewModelScope.launch(Dispatchers.IO) {
         val category = categories.value.first { it.isSelected }.name
         val mainRegion = selectedMainRegion.value
         val subRegion = selectedSubRegion.value
@@ -69,5 +84,17 @@ class HomeViewModel @Inject constructor(
         _selectedMainRegion.value = selectedMainRegion
         _selectedSubRegion.value = selectedSubRegion
         getPosts()
+    }
+
+    fun setRefreshing(isRefreshing: Boolean) {
+        _refreshing.value = isRefreshing
+    }
+
+    fun setPostLoading(isPostLoading: Boolean) {
+        _postLoading.value = isPostLoading
+    }
+
+    fun setError(throwable: Throwable) {
+        _error.trySend(ExceptionMapper.mapToView(Exception(throwable)))
     }
 }

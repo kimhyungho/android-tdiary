@@ -55,7 +55,7 @@
             size="@{YongByungIcon.Small}"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="24dp"
             android:background="?selectableItemBackgroundBorderless"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/end_first_button"

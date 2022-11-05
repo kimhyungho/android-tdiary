@@ -11,14 +11,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.GoogleAuthProvider
 import com.hardy.domain.model.User
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentLoginBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -52,9 +52,7 @@ class LoginFragment : BaseViewModelFragment<FragmentLoginBinding, LoginViewModel
         super.onViewCreated(view, savedInstanceState)
 
         with(viewModel) {
-            lifecycleScope.launch {
-//                repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                }
+            lifecycleScope.launchWhenStarted {
                 oneTapSignInResult.collect { result ->
                     result?.let {
                         val intent =
@@ -64,19 +62,19 @@ class LoginFragment : BaseViewModelFragment<FragmentLoginBinding, LoginViewModel
                 }
             }
 
-            lifecycleScope.launch {
+            lifecycleScope.launchWhenStarted {
                 user.collect { user ->
                     user?.let {
-                        when (user) {
-                            is User.UnRegistered -> {
-                                navController.navigate(LoginFragmentDirections.actionDestLoginToDestAgreement())
-                            }
-
-                            is User.Registered -> {
-
-                            }
+                        if (user is User.UnRegistered) {
+                            navController.navigate(LoginFragmentDirections.actionDestLoginToDestAgreement())
                         }
                     }
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                error.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

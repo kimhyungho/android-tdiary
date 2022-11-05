@@ -76,14 +76,8 @@ class EditProfileFragment : BaseViewModelFragment<FragmentEditProfileBinding, Ed
             }
 
             lifecycleScope.launch {
-                showBack.collect {
-                    if (it != null) {
-                        Snackbar.make(
-                            viewDataBinding.rootLayout,
-                            "프로필이 변경되었습니다.",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
+                message.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

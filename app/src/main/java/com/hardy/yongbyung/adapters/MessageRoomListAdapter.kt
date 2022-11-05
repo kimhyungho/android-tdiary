@@ -29,7 +29,7 @@ class MessageRoomListAdapter :
         val messageRoom = getItem(position)
         holder.bind(getItem(position))
         holder.itemView.setOnClickListener {
-            listener?.onItemClick(messageRoom.id)
+            listener?.onItemClick(messageRoom.opponentUid, messageRoom.id)
         }
     }
 
@@ -45,7 +45,7 @@ class MessageRoomListAdapter :
     }
 
     interface Listener {
-        fun onItemClick(id: String)
+        fun onItemClick(uid: String, messageRoomId: String)
     }
 }
 

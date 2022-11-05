@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="받은 쪽지"
+            android:textColor="@color/Green500"
             app:layout_constraintStart_toStartOf="@+id/guide_start"
             app:layout_constraintTop_toTopOf="parent"
             app:typo="button" />

@@ -1,13 +1,7 @@
 package com.hardy.data.di
 
-import com.hardy.data.repositories.AuthRepositoryImpl
-import com.hardy.data.repositories.MessageRepositoryImpl
-import com.hardy.data.repositories.PostRepositoryImpl
-import com.hardy.data.repositories.UserRepositoryImpl
-import com.hardy.domain.repositories.AuthRepository
-import com.hardy.domain.repositories.MessageRepository
-import com.hardy.domain.repositories.PostRepository
-import com.hardy.domain.repositories.UserRepository
+import com.hardy.data.repositories.*
+import com.hardy.domain.repositories.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -40,4 +34,10 @@ interface DataModule {
     fun bindMessageRepository(
         repo: MessageRepositoryImpl
     ): MessageRepository
+
+    @Singleton
+    @Binds
+    fun bindMessageRoomRepository(
+        repo: MessageRoomRepositoryImpl
+    ): MessageRoomRepository
 }

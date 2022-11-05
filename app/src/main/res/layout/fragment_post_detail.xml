@@ -101,8 +101,8 @@
 
                     <com.hardy.yongbyung.components.YongByungImageView
                         android:id="@+id/profile_image"
-                        isCircular="@{true}"
                         cacheable="@{false}"
+                        isCircular="@{true}"
                         src="@{viewModel.user.profileImage}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -260,18 +260,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.hardy.yongbyung.components.YongByungIconCheckBox
-                android:id="@+id/bookmark_check_box"
-                defaultIcon="@{Icon.ic_heart}"
-                defaultIconColor="@{@color/G300}"
-                selectedIcon="@{Icon.ic_heart_filled}"
-                selectedIconColor="@{@color/P500}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@id/send_message_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/send_message_button" />
+            <!--            <com.hardy.yongbyung.components.YongByungIconCheckBox-->
+            <!--                android:id="@+id/bookmark_check_box"-->
+            <!--                defaultIcon="@{Icon.ic_heart}"-->
+            <!--                defaultIconColor="@{@color/G300}"-->
+            <!--                selectedIcon="@{Icon.ic_heart_filled}"-->
+            <!--                selectedIconColor="@{@color/P500}"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="16dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@id/send_message_button"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="@id/send_message_button" />-->
 
             <com.hardy.yongbyung.components.YongByungBoxButton
                 android:id="@+id/send_message_button"
@@ -281,7 +281,7 @@
                 android:text="@{`쪽지하기`}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/bookmark_check_box"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bottom_bar_divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

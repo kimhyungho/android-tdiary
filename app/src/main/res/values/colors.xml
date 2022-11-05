@@ -29,7 +29,10 @@
     <color name="P800">#A80000</color>
     <color name="S100">#FFF6D6</color>
     <color name="S200">#FFF0BD</color>
+    <color name="S800">#EECA5A</color>
     <color name="S900">#FFC90A</color>
+
+    <color name="Green500">#4b979f</color>
 
     <color name="P500_90">#F2FF5C5C</color>
     <color name="DarkBG">#292929</color>

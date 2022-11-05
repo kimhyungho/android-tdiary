@@ -12,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.hardy.data.Constants.SIGN_IN_REQUEST
 import com.hardy.data.Constants.SIGN_UP_REQUEST
 import com.hardy.data.mapper.UserMapper
+import com.hardy.domain.exceptions.YongByungException
 import com.hardy.domain.model.Response
 import com.hardy.domain.model.User
 import com.hardy.domain.repositories.AuthRepository
@@ -53,7 +54,7 @@ class AuthRepositoryImpl @Inject constructor(
                 val signUpResult = oneTapClient.beginSignIn(signUpRequest).await()
                 emit(Response.Success(signUpResult))
             } catch (e: Exception) {
-                emit(Response.Failure(e))
+                emit(Response.Failure(YongByungException.parseFrom(e)))
             }
         }
     }
@@ -71,7 +72,7 @@ class AuthRepositoryImpl @Inject constructor(
                 emit(Response.Success(User.UnRegistered))
             }
         } catch (e: Exception) {
-            emit(Response.Failure(e))
+            emit(Response.Failure(YongByungException.parseFrom(e)))
         }
     }
 
@@ -89,7 +90,7 @@ class AuthRepositoryImpl @Inject constructor(
             firestore.collection("users").document(uid).set(user).await()
             emit(Response.Success(saveUser(user)))
         } catch (e: Exception) {
-            emit(Response.Failure(e))
+            emit(Response.Failure(YongByungException.parseFrom(e)))
         }
     }
 
@@ -126,14 +127,15 @@ class AuthRepositoryImpl @Inject constructor(
                         userDataStore.updateData { prefs ->
                             prefs.toBuilder()
                                 .apply {
-                                    if (profileImage != null) this.profileImage = updateData["profileImage"]
+                                    if (profileImage != null) this.profileImage =
+                                        updateData["profileImage"]
                                     this.nickname = updateData["nickname"]
                                 }.build()
                         })
                 )
             )
         } catch (e: Exception) {
-            emit(Response.Failure(e))
+            emit(Response.Failure(YongByungException.parseFrom(e)))
         }
     }
 
@@ -147,7 +149,7 @@ class AuthRepositoryImpl @Inject constructor(
                     .build()
             })))
         } catch (e: Exception) {
-            emit(Response.Failure(e))
+            emit(Response.Failure(YongByungException.parseFrom(e)))
         }
     }
 

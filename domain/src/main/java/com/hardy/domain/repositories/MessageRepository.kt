@@ -6,7 +6,7 @@ import com.hardy.domain.model.Response
 import kotlinx.coroutines.flow.Flow
 
 interface MessageRepository {
-    suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<Unit>>
+    suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<String>>
 
     fun getMessageRooms(): Flow<Response<List<Pair<String?, MessageRoom?>>>>
 

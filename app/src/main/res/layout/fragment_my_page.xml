@@ -120,10 +120,10 @@
                     app:icon="@{Icon.ic_back}"
                     app:name="@{`내가 쓴 글`}" />
 
-                <include
-                    layout="@layout/layout_my_page_button"
-                    app:icon="@{Icon.ic_back}"
-                    app:name="@{`관심목록`}" />
+<!--                <include-->
+<!--                    layout="@layout/layout_my_page_button"-->
+<!--                    app:icon="@{Icon.ic_back}"-->
+<!--                    app:name="@{`관심목록`}" />-->
 
             </LinearLayout>
 

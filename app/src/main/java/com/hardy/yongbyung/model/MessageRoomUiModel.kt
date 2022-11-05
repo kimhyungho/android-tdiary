@@ -1,24 +1,24 @@
 package com.hardy.yongbyung.model
 
-import android.util.Log
 import com.hardy.domain.model.Message
 import com.hardy.domain.model.MessageRoom
 import com.hardy.domain.model.Response
 import com.hardy.domain.repositories.AuthRepository
 import com.hardy.domain.repositories.UserRepository
-import com.hardy.yongbyung.mapper.Mapper
 import com.hardy.yongbyung.utils.DateUtil
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
 data class MessageRoomUiModel(
     val id: String,
+    val opponentUid: String,
     val opponentNickname: String,
     val lastMessage: String,
-    val lastMessageDate: String,
-    val hasNewMessage: Boolean
+    val lastMessageDateString: String,
+    val hasNewMessage: Boolean,
+    val lastMessageDate: Date?
 )
 
 @Singleton
@@ -28,9 +28,13 @@ class MessageRoomUiMapper @Inject constructor(
 ) {
     private val myUid = authRepository.uid
 
-    private suspend fun getOpponentNickname(users: Map<String, Boolean>?): String? {
-        val opponentUserUid = users?.keys?.firstOrNull { it != myUid } ?: return null
-        val response = userRepository.getUser(opponentUserUid).first()
+    private fun getOpponentUid(users: Map<String, Boolean>?): String? {
+        return users?.keys?.firstOrNull { it != myUid }
+    }
+
+    private suspend fun getOpponentNickname(opponentUid: String?): String? {
+        opponentUid ?: return null
+        val response = userRepository.getUser(opponentUid).last()
         if (response !is Response.Success) return null
         return response.data?.nickname
     }
@@ -45,13 +49,15 @@ class MessageRoomUiMapper @Inject constructor(
 
     suspend fun mapToView(from: Pair<String?, MessageRoom?>): MessageRoomUiModel {
         val lastMessage = getLastMessage(from.second?.messages)
+        val opponentUid = getOpponentUid(from.second?.users)
         return MessageRoomUiModel(
             id = from.first ?: "",
-            opponentNickname = getOpponentNickname(from.second?.users) ?: "",
+            opponentUid = opponentUid ?: "",
+            opponentNickname = getOpponentNickname(opponentUid) ?: "",
             lastMessage = lastMessage?.message ?: "",
-            lastMessageDate = DateUtil.dateToString(lastMessage?.createdAt, DateUtil.DOTTED_FORMAT)
-                ?: "",
-            hasNewMessage = getHasNewMessage(lastMessage)
+            lastMessageDateString = DateUtil.dateToAgoString(lastMessage?.createdAt) ?: "",
+            hasNewMessage = getHasNewMessage(lastMessage),
+            lastMessageDate = lastMessage?.createdAt
         )
     }
 }

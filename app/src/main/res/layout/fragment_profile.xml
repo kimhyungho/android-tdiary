@@ -25,11 +25,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/sv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -65,10 +67,10 @@
 
                     <com.hardy.yongbyung.components.YongByungImageView
                         android:id="@+id/profile_image"
+                        cacheable="@{false}"
                         isCircular="@{true}"
                         src="@{viewModel.user.profileImage}"
                         android:layout_width="match_parent"
-                        cacheable="@{false}"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop" />
                 </FrameLayout>
@@ -119,13 +121,14 @@
                     android:id="@+id/posts_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/post_text" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

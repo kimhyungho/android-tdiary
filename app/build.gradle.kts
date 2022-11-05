@@ -106,5 +106,7 @@ dependencies {
 
     implementation("com.opencsv:opencsv:4.4")
 
-    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.airbnb.android:lottie:5.2.0")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

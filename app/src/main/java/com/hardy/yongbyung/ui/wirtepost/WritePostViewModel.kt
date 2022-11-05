@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.hardy.domain.model.Response
 import com.hardy.domain.repositories.PostRepository
+import com.hardy.yongbyung.mapper.ExceptionMapper
 import com.hardy.yongbyung.model.CategoryUiModel
 import com.hardy.yongbyung.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
@@ -33,6 +36,15 @@ class WritePostViewModel @Inject constructor(
     val selectedMainRegion: StateFlow<String?> =
         savedStateHandle.getStateFlow(MAIN_REGION_KEY, null)
     val selectedSubRegion: StateFlow<String?> = savedStateHandle.getStateFlow(SUB_REGION_KEY, null)
+
+    private val _writeLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val writeLoading: StateFlow<Boolean> = _writeLoading
+
+    private val _showPostDetail: MutableStateFlow<String?> = MutableStateFlow(null)
+    val showPostDetail: StateFlow<String?> = _showPostDetail
+
+    private val _error = BroadcastChannel<String>(Channel.BUFFERED)
+    val error = _error.asFlow()
 
     fun setSelectedCategory(categoryUiModel: CategoryUiModel) {
         savedStateHandle[CATEGORY_KEY] = categoryUiModel
@@ -65,15 +77,19 @@ class WritePostViewModel @Inject constructor(
 
     fun onWriteButtonClick() {
         val category = this.category.value?.name ?: run {
+            _error.trySend("카테고리는 필수입니다.")
             return
         }
         val date = this.date.value?.second ?: run {
+            _error.trySend("날짜는 필수입니다.")
             return
         }
         val mainRegion = this.selectedMainRegion.value ?: run {
+            _error.trySend("지역은 필수입니다.")
             return
         }
         val subRegion = this.selectedSubRegion.value ?: run {
+            _error.trySend("지역은 필수입니다.")
             return
         }
         val title = this.title.value
@@ -89,8 +105,18 @@ class WritePostViewModel @Inject constructor(
                 mainRegion,
                 subRegion,
                 location
-            ).collect {
-
+            ).collect { response ->
+                when (response) {
+                    is Response.Loading -> _writeLoading.value = true
+                    is Response.Success -> {
+                        _writeLoading.value = false
+                        _showPostDetail.value = response.data
+                    }
+                    is Response.Failure -> {
+                        _writeLoading.value = false
+                        _error.trySend(ExceptionMapper.mapToView(response.e))
+                    }
+                }
             }
         }
     }
