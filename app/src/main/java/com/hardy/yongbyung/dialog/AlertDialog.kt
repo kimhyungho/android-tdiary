@@ -3,9 +3,13 @@ package com.hardy.yongbyung.dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentAlertDialogBinding
 import com.hardy.yongbyung.ui.base.BaseDialogFragment
+import com.hardy.yongbyung.utils.bind
+import com.hardy.yongbyung.utils.clicks
+import com.hardy.yongbyung.utils.throttleFirst
 
 class AlertDialog : BaseDialogFragment<FragmentAlertDialogBinding>(
     R.layout.fragment_alert_dialog
@@ -24,10 +28,12 @@ class AlertDialog : BaseDialogFragment<FragmentAlertDialogBinding>(
 
             with(negativeButton) {
                 if (negativeText != null) text = negativeText!!
-                setOnClickListener {
-                    listener?.onNegativeButtonClick()
-                    dismiss()
-                }
+                clicks()
+                    .throttleFirst(1000L)
+                    .bind(lifecycleScope) {
+                        listener?.onNegativeButtonClick()
+                        dismiss()
+                    }
             }
 
             with(positiveButton) {
@@ -35,10 +41,12 @@ class AlertDialog : BaseDialogFragment<FragmentAlertDialogBinding>(
                     text = positiveText!!
                     visibility = View.VISIBLE
                 }
-                setOnClickListener {
-                    listener?.onPositiveButtonClick()
-                    dismiss()
-                }
+                clicks()
+                    .throttleFirst(1000L)
+                    .bind(lifecycleScope) {
+                        listener?.onPositiveButtonClick()
+                        dismiss()
+                    }
             }
         }
     }

@@ -18,6 +18,7 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -47,8 +48,8 @@
 
                 <com.hardy.yongbyung.components.YongByungImageView
                     android:id="@+id/profile_image"
-                    isCircular="@{true}"
                     cacheable="@{false}"
+                    isCircular="@{true}"
                     src="@{viewModel.user.profileImage}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -80,7 +81,7 @@
                 <com.hardy.yongbyung.components.YongByungText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="수정"
+                    android:text="@string/edit"
                     app:typo="button" />
             </FrameLayout>
 
@@ -99,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="내 활동"
+                android:text="@string/my_activity"
                 app:layout_constraintStart_toStartOf="@+id/guide_start"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
                 app:typo="button" />
@@ -117,13 +118,13 @@
                 <include
                     android:id="@+id/my_post_button"
                     layout="@layout/layout_my_page_button"
-                    app:icon="@{Icon.ic_back}"
-                    app:name="@{`내가 쓴 글`}" />
+                    app:icon="@{Icon.ic_post}"
+                    app:name="@{@string/my_post}" />
 
-<!--                <include-->
-<!--                    layout="@layout/layout_my_page_button"-->
-<!--                    app:icon="@{Icon.ic_back}"-->
-<!--                    app:name="@{`관심목록`}" />-->
+                <!--                <include-->
+                <!--                    layout="@layout/layout_my_page_button"-->
+                <!--                    app:icon="@{Icon.ic_back}"-->
+                <!--                    app:name="@{`관심목록`}" />-->
 
             </LinearLayout>
 
@@ -132,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="기타"
+                android:text="@string/etc"
                 app:layout_constraintStart_toStartOf="@+id/guide_start"
                 app:layout_constraintTop_toBottomOf="@+id/divider2"
                 app:typo="button" />
@@ -158,21 +159,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/etc_text">
 
                 <include
+                    android:id="@+id/terms_of_service_button"
                     layout="@layout/layout_my_page_button"
-                    app:icon="@{Icon.ic_back}"
-                    app:name="@{`이용약관`}" />
+                    app:icon="@{Icon.ic_term}"
+                    app:name="@{@string/terms_of_service}" />
 
                 <include
                     android:id="@+id/logout_button"
                     layout="@layout/layout_my_page_button"
-                    app:icon="@{Icon.ic_back}"
-                    app:name="@{`로그아웃`}" />
+                    app:icon="@{Icon.ic_logout}"
+                    app:isLoading="@{viewModel.logoutLoading}"
+                    app:name="@{@string/logout}" />
 
                 <include
+                    android:id="@+id/sign_out_button"
                     layout="@layout/layout_my_page_button"
-                    app:icon="@{Icon.ic_back}"
-                    app:name="@{`회원탈퇴`}" />
-
+                    app:icon="@{Icon.ic_sign_out}"
+                    app:isLoading="@{viewModel.signOutLoading}"
+                    app:name="@{@string/sign_out}" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

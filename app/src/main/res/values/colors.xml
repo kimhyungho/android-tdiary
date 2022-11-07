@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FF5C5C</color>
-    <color name="purple_500">#FF5C5C</color>
-    <color name="purple_700">#FF5C5C</color>
-    <color name="teal_200">#FF5C5C</color>
-    <color name="teal_700">#FF5C5C</color>
+    <color name="purple_200">#1F4EF5</color>
+    <color name="purple_500">#1F4EF5</color>
+    <color name="purple_700">#1F4EF5</color>
+    <color name="teal_200">#1F4EF5</color>
+    <color name="teal_700">#1F4EF5</color>
     <color name="black">#FF000000</color>
     <color name="black70">#B3000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -20,13 +20,11 @@
     <color name="G700">#363D51</color>
     <color name="G800">#212633</color>
     <color name="G900">#0D0F14</color>
-    <color name="P50">#FFF5F5</color>
-    <color name="P100">#FFDBDB</color>
-    <color name="P300">#FFA8A8</color>
-    <color name="P400">#FF8F8F</color>
-    <color name="P500">#FF5C5C</color>
-    <color name="P700">#DB0000</color>
-    <color name="P800">#A80000</color>
+    <color name="P100">#83B4F9</color>
+    <color name="P300">#4880EE</color>
+    <color name="P500">#1F4EF5</color>
+    <color name="R500">#FF5C5C</color>
+    <color name="R800">#A80000</color>
     <color name="S100">#FFF6D6</color>
     <color name="S200">#FFF0BD</color>
     <color name="S800">#EECA5A</color>
@@ -34,6 +32,7 @@
 
     <color name="Green500">#4b979f</color>
 
-    <color name="P500_90">#F2FF5C5C</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+
     <color name="DarkBG">#292929</color>
 </resources>

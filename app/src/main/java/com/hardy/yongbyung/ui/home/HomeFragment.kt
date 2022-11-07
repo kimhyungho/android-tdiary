@@ -15,7 +15,7 @@ import com.hardy.yongbyung.adapters.PostListAdapter
 import com.hardy.yongbyung.databinding.FragmentHomeBinding
 import com.hardy.yongbyung.dialog.SelectSidoDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
-import com.hardy.yongbyung.ui.main.MainFragmentDirections
+import com.hardy.yongbyung.ui.main.GatewayFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +37,11 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
         listener = object : PostListAdapter.Listener {
             override fun onItemClick(id: String) {
                 val mainNavController = parentFragment?.parentFragment?.findNavController()
-                mainNavController?.navigate(MainFragmentDirections.actionDestMainToDestPostDetail(id))
+                mainNavController?.navigate(
+                    GatewayFragmentDirections.actionDestMainToDestPostDetail(
+                        id
+                    )
+                )
             }
         }
     }
@@ -51,6 +55,10 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                     viewModel?.setPostLoading(loadStates.refresh is LoadState.Loading)
                     if (loadStates.refresh is LoadState.Error) {
                         viewModel?.setError((loadStates.refresh as LoadState.Error).error)
+                    }
+
+                    if (loadStates.append is LoadState.NotLoading && loadStates.append.endOfPaginationReached) {
+                        viewModel?.setShowEmptyImage(postListAdapter.itemCount < 1)
                     }
                 }
             }
@@ -69,7 +77,7 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
 
             writePostFab.setOnClickListener {
                 val mainNavController = parentFragment?.parentFragment?.findNavController()
-                mainNavController?.navigate(MainFragmentDirections.actionDestMainToDestWritePost())
+                mainNavController?.navigate(GatewayFragmentDirections.actionDestMainToDestWritePost())
             }
 
             regionFilterButton.setOnClickListener {
@@ -114,5 +122,13 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        with(viewDataBinding){
+            sportsRecyclerView.adapter = null
+            postsRecyclerView.adapter = null
+        }
+        super.onDestroyView()
     }
 }

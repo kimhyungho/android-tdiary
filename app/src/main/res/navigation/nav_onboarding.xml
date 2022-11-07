@@ -25,5 +25,6 @@
         android:id="@+id/dest_agreement"
         android:name="com.hardy.yongbyung.ui.agreement.AgreementFragment"
         android:label="AgreementFragment"
-        tools:layout="@layout/fragment_agreement" />
+        tools:layout="@layout/fragment_agreement">
+    </fragment>
 </navigation>

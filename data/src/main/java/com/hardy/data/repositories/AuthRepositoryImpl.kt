@@ -153,6 +153,20 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun signOut(): Flow<Response<User>> = flow {
+        try {
+            emit(Response.Loading)
+            emit(Response.Success(UserMapper.mapToDomain(userDataStore.updateData { pref ->
+                auth.currentUser?.delete()
+                pref.toBuilder()
+                    .clear()
+                    .build()
+            })))
+        } catch (e: Exception) {
+            emit(Response.Failure(YongByungException.parseFrom(e)))
+        }
+    }
+
     private suspend fun saveUser(user: User.Registered): User.Registered {
         return UserMapper.mapToDomain(userDataStore.updateData { pref ->
             pref.toBuilder()
@@ -164,4 +178,6 @@ class AuthRepositoryImpl @Inject constructor(
                 ).build()
         })
     }
+
+
 }

@@ -10,6 +10,8 @@
 
         <import type="com.hardy.yongbyung.components.YongByungCheckBox" />
 
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
         <variable
             name="viewModel"
             type="com.hardy.yongbyung.ui.agreement.AgreementViewModel" />
@@ -17,6 +19,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -54,8 +57,8 @@
                     android:id="@+id/app_name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:text="동네용병"
+                    android:layout_marginTop="64dp"
+                    android:text="@string/app_name"
                     android:textColor="@color/P500"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toTopOf="parent"
@@ -65,7 +68,8 @@
                     android:id="@+id/agreement_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="약관동의"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/agreement"
                     android:textColor="@color/P500"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/app_name_text"
@@ -75,10 +79,11 @@
                     android:id="@+id/need_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가 필요해요"
+                    android:text="@string/need"
                     android:textColor="@color/G600"
+                    app:layout_constraintBottom_toBottomOf="@+id/agreement_text"
                     app:layout_constraintStart_toEndOf="@id/agreement_text"
-                    app:layout_constraintTop_toBottomOf="@id/app_name_text"
+                    app:layout_constraintTop_toTopOf="@+id/agreement_text"
                     app:typo="h3" />
 
                 <com.hardy.yongbyung.components.YongByungBoxButton
@@ -89,9 +94,9 @@
                     type="@{YongByungBoxButton.LINE}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="36dp"
                     android:onClick="@{()->viewModel.onAllAgreeButtonClick()}"
-                    android:text="@{`전체 동의`}"
+                    android:text="@{@string/all_agree}"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/need_text" />
@@ -110,42 +115,94 @@
                     android:id="@+id/warning_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{`유의사항`}"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/careful_notice"
+                    android:textColor="@color/G600"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/top_divider"
-                    app:typo="subtitle1" />
+                    app:typo="button" />
 
                 <com.hardy.yongbyung.components.YongByungText
                     android:id="@+id/fourteen_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{`동네용병 서비스는 만 14세 이상만 이용 가능합니다.`}"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/fourteen_agreement"
+                    android:textColor="@color/G600"
                     app:layout_constraintEnd_toStartOf="@id/guide_end"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
                     app:layout_constraintTop_toBottomOf="@id/warning_text"
-                    app:typo="subtitle1" />
+                    app:typo="caption5" />
 
-                <com.hardy.yongbyung.components.YongByungCheckBox
-                    android:id="@+id/essential_checkbox"
-                    isSelected="@{viewModel.isEssentialAgreeChecked()}"
-                    label="@{`필수 약관 전체동의 (필수)`}"
-                    selectedListener="@{(selected)->viewModel.onEssentialAgreeClick(selected)}"
-                    size="@{YongByungCheckBox.MEDIUM}"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/essential_layout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/guide_end"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@id/guide_start"
-                    app:layout_constraintTop_toBottomOf="@id/fourteen_text" />
+                    app:layout_constraintTop_toBottomOf="@id/fourteen_text">
+
+                    <com.hardy.yongbyung.components.YongByungCheckBox
+                        android:id="@+id/essential_checkbox"
+                        isSelected="@{viewModel.isEssentialAgreeChecked()}"
+                        label="@{@string/essential_agreement}"
+                        selectedListener="@{(selected)->viewModel.onEssentialAgreeClick(selected)}"
+                        size="@{YongByungCheckBox.MEDIUM}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.hardy.yongbyung.components.YongByungIcon
+                        icon="@{viewModel.isEssentialExpanded() ? Icon.ic_arrow_top : Icon.ic_arrow_bottom}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:onClick="@{()->viewModel.onEssentialIconClick()}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/G600" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/essential_terms_layout"
+                    visibleOrGone="@{viewModel.isEssentialExpanded()}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_end"
+                    app:layout_constraintStart_toEndOf="@id/guide_start"
+                    app:layout_constraintTop_toBottomOf="@id/essential_layout">
+
+                    <com.hardy.yongbyung.components.YongByungText
+                        android:id="@+id/terms_of_service_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:text="@string/terms_of_service"
+                        android:textColor="@color/G900"
+                        app:typo="caption3" />
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <com.hardy.yongbyung.components.YongByungPlainButton
             android:id="@+id/next_button"
+            isDisabled="@{!viewModel.isEssentialAgreeChecked()}"
+            isLoading="@{viewModel.signUpLoading}"
             size="@{YongByungPlainButton.LARGE}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            isDisabled="@{!viewModel.isEssentialAgreeChecked()}"
             android:text="@{`다음`}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

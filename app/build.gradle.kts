@@ -14,6 +14,22 @@ android {
     namespace = "com.hardy.yongbyung"
     compileSdk = DefaultConfig.COMPILE_SDK_VERSION
 
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = getPropertyValue("yongbyung.debug.keyAlias")
+            keyPassword = getPropertyValue("yongbyung.debug.keyPassword")
+            storeFile = file("../DebugKeyStore")
+            storePassword = getPropertyValue("yongbyung.debug.storePassword")
+        }
+
+        create("yongbyung") {
+            keyAlias = getPropertyValue("yongbyung.prod.keyAlias")
+            keyPassword = getPropertyValue("yongbyung.prod.keyPassword")
+            storeFile = file("../YongByungKeyStore")
+            storePassword = getPropertyValue("yongbyung.prod.storePassword")
+        }
+    }
+
     defaultConfig {
         applicationId = "com.hardy.yongbyung"
         minSdk = DefaultConfig.MIN_SDK_VERSION
@@ -26,7 +42,7 @@ android {
 
     buildTypes {
         debug {
-//            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
 
             proguardFiles(
@@ -36,7 +52,7 @@ android {
         }
 
         release {
-//            signingConfig = signingConfigs.getByName("yongbyung")
+            signingConfig = signingConfigs.getByName("yongbyung")
             isMinifyEnabled = true
 
             proguardFiles(
@@ -68,6 +84,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+}
+
+fun getPropertyValue(propertyKey: String): String {
+    return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {
@@ -109,4 +129,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:5.2.0")
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    implementation ("androidx.core:core-splashscreen:1.0.0")
 }

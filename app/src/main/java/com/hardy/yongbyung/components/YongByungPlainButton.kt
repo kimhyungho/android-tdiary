@@ -2,6 +2,8 @@ package com.hardy.yongbyung.components
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -44,7 +46,28 @@ class YongByungPlainButton @JvmOverloads constructor(
             setState()
         }
 
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            setLoading()
+        }
+
+    var loadingColor: Int = Color.WHITE
+        set(value) {
+            field = value
+            setLoadingColor()
+        }
+
+    init {
+        setLoadingColor()
+    }
+
+    private fun setLoadingColor() {
+        binding.loader.indeterminateTintList = ColorStateList.valueOf(loadingColor)
+    }
+
     private fun setState() {
+
         setButtonColor()
 
         when (size) {
@@ -59,6 +82,16 @@ class YongByungPlainButton @JvmOverloads constructor(
             LARGE -> {
 
             }
+        }
+    }
+
+    private fun setLoading() {
+        if (isLoading) {
+            binding.loader.visibility = VISIBLE
+            binding.text.visibility = INVISIBLE
+        } else {
+            binding.loader.visibility = GONE
+            binding.text.visibility = VISIBLE
         }
     }
 
@@ -80,7 +113,7 @@ class YongByungPlainButton @JvmOverloads constructor(
     }
 
     override fun performClick(): Boolean {
-        if(isDisabled) return false
+        if (isDisabled || isLoading) return false
         return super.performClick()
     }
 
@@ -137,6 +170,18 @@ class YongByungPlainButton @JvmOverloads constructor(
         @BindingAdapter("android:text")
         fun setText(plainButton: YongByungPlainButton, text: String) {
             plainButton.text = text
+        }
+
+        @JvmStatic
+        @BindingAdapter("isLoading")
+        fun setIsLoading(plainButton: YongByungPlainButton, isLoading: Boolean) {
+            plainButton.isLoading = isLoading
+        }
+
+        @JvmStatic
+        @BindingAdapter("loadingColor")
+        fun setLoadingColor(plainButton: YongByungPlainButton, color: Int) {
+            plainButton.loadingColor = color
         }
     }
 }

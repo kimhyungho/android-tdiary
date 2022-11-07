@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.hardy.yongbyung.ui.main.MainViewModel" />
+            type="com.hardy.yongbyung.ui.main.GatewayViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             <com.hardy.yongbyung.components.YongByungText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="쪽지함"
+                android:text="@string/message_box"
                 app:typo="h4" />
 
         </LinearLayout>
@@ -61,6 +61,16 @@
                     tools:listitem="@layout/item_message_room" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <include
+                layout="@layout/layout_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibleOrGone="@{viewModel.showEmptyImage}" />
 
             <com.hardy.yongbyung.components.YongByungLoading
                 isLoading="@{viewModel.messageRoomLoading}"

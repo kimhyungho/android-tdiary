@@ -115,7 +115,19 @@
 
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+                <include
+                    android:id="@+id/empty_image"
+                    layout="@layout/layout_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:visibleOrGone="@{viewModel.showEmptyImage}" />
+
                 <com.hardy.yongbyung.components.YongByungLoading
+                    android:id="@+id/yongByungLoading"
                     isLoading="@{viewModel.postLoading}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,6 +135,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -132,12 +145,12 @@
             android:id="@+id/write_post_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tint="@color/white"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:src="@drawable/ic_plus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

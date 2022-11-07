@@ -1,6 +1,5 @@
 package com.hardy.yongbyung.dialog
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hardy.domain.model.Response

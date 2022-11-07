@@ -11,11 +11,11 @@
     <dimen name="h1_line_height">48dp</dimen>
 
     <style name="Text.H2">
-        <item name="android:textSize">36dp</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">32dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
-    <dimen name="h2_line_height">46dp</dimen>
+    <dimen name="h2_line_height">36dp</dimen>
 
     <style name="Text.H3">
         <item name="android:textSize">24dp</item>
@@ -96,8 +96,8 @@
     <dimen name="subtitle4_line_height">14dp</dimen>
 
     <style name="Text.Caption1">
-        <item name="android:textSize">12dp</item>
-        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
     <dimen name="caption1_line_height">16dp</dimen>
@@ -118,7 +118,7 @@
 
     <style name="Text.Caption3">
         <item name="android:textSize">14dp</item>
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
     <dimen name="caption3_line_height">14dp</dimen>
@@ -132,7 +132,7 @@
 
     <style name="Text.Caption5">
         <item name="android:textSize">12dp</item>
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
 
     <dimen name="caption5_line_height">16dp</dimen>

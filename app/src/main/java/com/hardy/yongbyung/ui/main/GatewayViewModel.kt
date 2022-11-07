@@ -1,6 +1,5 @@
 package com.hardy.yongbyung.ui.main
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.hardy.domain.model.Response
 import com.hardy.domain.repositories.MessageRepository
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 @OptIn(ObsoleteCoroutinesApi::class)
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class GatewayViewModel @Inject constructor(
     private val messageRoomUiMapper: MessageRoomUiMapper,
     private val messageRepository: MessageRepository
 ) : BaseViewModel() {
@@ -38,6 +37,9 @@ class MainViewModel @Inject constructor(
     private val _refreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val refreshing: StateFlow<Boolean> = _refreshing
 
+    private val _showEmptyImage: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showEmptyImage: StateFlow<Boolean> = _showEmptyImage
+
     private val _error = BroadcastChannel<String>(Channel.BUFFERED)
     val error = _error.asFlow()
 
@@ -48,7 +50,10 @@ class MainViewModel @Inject constructor(
     private fun getMessageRooms() = viewModelScope.launch(Dispatchers.IO) {
         messageRepository.getMessageRooms().collect { response ->
             when (response) {
-                is Response.Loading -> _messageRoomLoading.value = true
+                is Response.Loading -> {
+                    _showEmptyImage.value = false
+                    _messageRoomLoading.value = true
+                }
                 is Response.Success -> {
                     _messageRoomLoading.value = false
                     _refreshing.value = false
@@ -56,7 +61,10 @@ class MainViewModel @Inject constructor(
                         response.data?.map {
                             messageRoomUiMapper.mapToView(it)
                         }?.sortedByDescending { it.lastMessageDate }
-                            ?.let { _messageRooms.value = it }
+                            ?.let {
+                                _showEmptyImage.value = it.isEmpty()
+                                _messageRooms.value = it
+                            }
                     }
                 }
                 is Response.Failure -> {

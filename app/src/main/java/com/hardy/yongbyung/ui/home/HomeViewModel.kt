@@ -47,6 +47,9 @@ class HomeViewModel @Inject constructor(
     private val _postLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val postLoading: StateFlow<Boolean> = _postLoading
 
+    private val _showEmptyImage: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val showEmptyImage: StateFlow<Boolean> = _showEmptyImage
+
     private val _error = BroadcastChannel<String>(Channel.BUFFERED)
     val error = _error.asFlow()
 
@@ -96,5 +99,9 @@ class HomeViewModel @Inject constructor(
 
     fun setError(throwable: Throwable) {
         _error.trySend(ExceptionMapper.mapToView(Exception(throwable)))
+    }
+
+    fun setShowEmptyImage(isShow: Boolean) {
+        _showEmptyImage.value = isShow
     }
 }

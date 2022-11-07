@@ -12,6 +12,10 @@
         <variable
             name="name"
             type="String" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <LinearLayout
@@ -40,7 +44,13 @@
             android:layout_weight="1"
             android:text="@{name}"
             app:typo="button"
+            android:layout_marginEnd="8dp"
             tools:text="버튼" />
 
+        <ProgressBar
+            android:id="@+id/loading"
+            visibleOrGone="@{isLoading}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
     </LinearLayout>
 </layout>

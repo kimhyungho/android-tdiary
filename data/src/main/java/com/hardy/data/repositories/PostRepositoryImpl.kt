@@ -104,4 +104,14 @@ class PostRepositoryImpl @Inject constructor(
             emit(Response.Failure(e))
         }
     }
+
+    override fun finishRecruit(postId: String): Flow<Response<Unit>> = flow {
+        try {
+            emit(Response.Loading)
+            firestore.collection("posts").document(postId).update("recruiting", false).await()
+            emit(Response.Success(Unit))
+        } catch (e: Exception) {
+            emit(Response.Failure(e))
+        }
+    }
 }

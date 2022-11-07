@@ -10,22 +10,22 @@ import com.hardy.yongbyung.R
 import com.hardy.yongbyung.adapters.MessageRoomListAdapter
 import com.hardy.yongbyung.databinding.FragmentMessageListBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
-import com.hardy.yongbyung.ui.main.MainFragmentDirections
-import com.hardy.yongbyung.ui.main.MainViewModel
+import com.hardy.yongbyung.ui.main.GatewayFragmentDirections
+import com.hardy.yongbyung.ui.main.GatewayViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MessageListFragment : BaseViewModelFragment<FragmentMessageListBinding, MainViewModel>(
+class MessageListFragment : BaseViewModelFragment<FragmentMessageListBinding, GatewayViewModel>(
     R.layout.fragment_message_list
 ) {
-    override val viewModel: MainViewModel by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
+    override val viewModel: GatewayViewModel by viewModels(ownerProducer = { requireParentFragment().requireParentFragment() })
 
     private val messageRoomListAdapter = MessageRoomListAdapter().apply {
         listener = object : MessageRoomListAdapter.Listener {
             override fun onItemClick(uid: String, messageRoomId: String) {
                 val mainNavController = parentFragment?.parentFragment?.findNavController()
                 mainNavController?.navigate(
-                    MainFragmentDirections.actionDestMainToDestMessageDetail(uid, messageRoomId)
+                    GatewayFragmentDirections.actionDestMainToDestMessageDetail(uid, messageRoomId)
                 )
             }
         }
@@ -49,5 +49,10 @@ class MessageListFragment : BaseViewModelFragment<FragmentMessageListBinding, Ma
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        viewDataBinding.messageRoomRecyclerView.adapter = null
+        super.onDestroyView()
     }
 }

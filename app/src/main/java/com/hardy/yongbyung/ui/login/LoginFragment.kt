@@ -17,6 +17,9 @@ import com.hardy.domain.model.User
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentLoginBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
+import com.hardy.yongbyung.utils.bind
+import com.hardy.yongbyung.utils.clicks
+import com.hardy.yongbyung.utils.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -81,9 +84,11 @@ class LoginFragment : BaseViewModelFragment<FragmentLoginBinding, LoginViewModel
 
 
         with(viewDataBinding) {
-            googleLoginButton.setOnClickListener {
-                viewModel?.oneTapSignIn()
-            }
+            googleLoginButton.clicks()
+                .throttleFirst(1000L)
+                .bind(lifecycleScope) {
+                    viewModel?.oneTapSignIn()
+                }
         }
     }
 }

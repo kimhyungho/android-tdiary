@@ -65,4 +65,9 @@ class MessageDetailFragment :
             }
         }
     }
+
+    override fun onDestroyView() {
+        viewDataBinding.messageRecyclerView.adapter = null
+        super.onDestroyView()
+    }
 }

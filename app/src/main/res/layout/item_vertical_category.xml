@@ -34,7 +34,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{uiModel.name}"
-            app:typo="caption1_1" />
+            app:typo="button" />
 
         <com.hardy.yongbyung.components.YongByungIcon
             icon="@{Icon.ic_select}"

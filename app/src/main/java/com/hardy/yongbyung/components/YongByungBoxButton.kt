@@ -68,7 +68,7 @@ class YongByungBoxButton @JvmOverloads constructor(
     var loadingColor: Int = Color.parseColor("#FF5C5C")
         set(value) {
             field = value
-            binding.loader.indeterminateTintList = ColorStateList.valueOf(loadingColor)
+            setLoadingColor()
         }
 
     @ColorRes
@@ -76,6 +76,14 @@ class YongByungBoxButton @JvmOverloads constructor(
 
     @ColorRes
     private var bgColor: Int = 0
+
+    init {
+        setLoadingColor()
+    }
+
+    private fun setLoadingColor() {
+        binding.loader.indeterminateTintList = ColorStateList.valueOf(loadingColor)
+    }
 
     private fun setState() {
         setTheme()

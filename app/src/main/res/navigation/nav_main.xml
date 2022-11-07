@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/dest_main"
-        android:name="com.hardy.yongbyung.ui.main.MainFragment"
+        android:name="com.hardy.yongbyung.ui.main.GatewayFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_gateway">
         <action
             android:id="@+id/action_dest_main_to_dest_write_post"
             app:destination="@id/dest_write_post"
@@ -45,6 +45,7 @@
             app:exitAnim="@anim/slide_out_to_left"
             app:popEnterAnim="@anim/slide_in_from_left"
             app:popExitAnim="@anim/slide_out_to_right" />
+
     </fragment>
 
     <fragment

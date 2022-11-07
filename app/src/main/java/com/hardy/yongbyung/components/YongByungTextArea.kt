@@ -1,17 +1,15 @@
 package com.hardy.yongbyung.components
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.databinding.BindingAdapter
+import androidx.core.content.ContextCompat
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.extensions.dpToIntPx
 import com.hardy.yongbyung.extensions.getDimenFloat
 import com.hardy.yongbyung.foundation.Typo
-import com.hardy.yongbyung.foundation.Typography
 
 class YongByungTextArea @JvmOverloads constructor(
     context: Context,
@@ -21,46 +19,21 @@ class YongByungTextArea @JvmOverloads constructor(
     context, attrs, defStyleAttr
 ) {
     init {
-        intiView(context, attrs)
-        setState()
+        setTextInfo()
+        setTextColor(ContextCompat.getColor(context, R.color.G900))
+        setHintTextColor(ContextCompat.getColor(context, R.color.G300))
+        setBackground()
         isFocusableInTouchMode = true
     }
 
-    @Typography
-    var typo: Int = Typo.H1
-        set(@Typography typo) {
-            field = typo
-            setTextInfo()
-        }
-
-    var isDisabled = false
-        set(value) {
-            field = value
-            setState()
-        }
-
-    @SuppressLint("CustomViewStyleable")
-    private fun intiView(context: Context, attrs: AttributeSet?) {
-        if (attrs != null) {
-            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.YongByungTextArea)
-
-            typo = typedArray.getInteger(R.styleable.YongByungTextArea_typo, Typo.H1)
-            setTextInfo()
-
-            typedArray.recycle()
-        } else {
-            setTextInfo()
-        }
-    }
-
     private fun setTextInfo() {
-        setTextAppearance(Typo.getStyle(typo))
+        setTextAppearance(Typo.getStyle(Typo.Caption1))
 
         includeFontPadding = false
 
         val fontLineHeight = paint.getFontMetrics(paint.fontMetrics)
 
-        val figmaLineHeight = context.getDimenFloat(Typo.getLineHeight(typo))
+        val figmaLineHeight = context.getDimenFloat(Typo.getLineHeight(Typo.Caption1))
 
         val lineSpacing = figmaLineHeight - fontLineHeight
 
@@ -69,10 +42,6 @@ class YongByungTextArea @JvmOverloads constructor(
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
-        setState()
-    }
-
-    private fun setState() {
         setBackground()
     }
 
@@ -92,11 +61,5 @@ class YongByungTextArea @JvmOverloads constructor(
 
     companion object {
         const val PADDING = 16f
-
-        @JvmStatic
-        @BindingAdapter("isDisabled")
-        fun setDisabled(textArea: YongByungTextArea, isDisabled: Boolean) {
-            textArea.isDisabled = isDisabled
-        }
     }
 }

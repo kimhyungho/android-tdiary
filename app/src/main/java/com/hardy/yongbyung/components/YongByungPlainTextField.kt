@@ -124,7 +124,7 @@ class YongByungPlainTextField @JvmOverloads constructor(
 
     override fun setBackground() {
         when {
-            isError == true -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_p800_2dp)
+            isError == true -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_r800_2dp)
             binding.edittext.isFocused -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g300_2dp)
             else -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g200_2dp)
         }

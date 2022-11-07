@@ -15,7 +15,6 @@ class SelectCategoryViewModel @Inject constructor() : BaseViewModel() {
 
     init {
         _categories.value = listOf(
-            CategoryUiModel("전체", R.drawable.ic_all, false),
             CategoryUiModel("풋살", R.drawable.ic_football, false),
             CategoryUiModel("축구", R.drawable.ic_soccer, false),
             CategoryUiModel("기타", R.drawable.ic_more, false)

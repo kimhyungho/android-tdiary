@@ -26,4 +26,6 @@ interface PostRepository {
     fun getPosts(uid: String): Flow<PagingData<Pair<String, Post>>>
 
     fun getPost(postId: String): Flow<Response<Pair<String, Post>>>
+
+    fun finishRecruit(postId: String) : Flow<Response<Unit>>
 }

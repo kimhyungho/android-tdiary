@@ -28,4 +28,6 @@ interface AuthRepository {
     suspend fun signUp(): Flow<Response<User>>
 
     suspend fun logout(): Flow<Response<User>>
+
+    suspend fun signOut(): Flow<Response<User>>
 }

@@ -11,6 +11,15 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.hardy.yongbyung.components.YongByungText
             android:id="@+id/text"
             android:layout_width="wrap_content"

@@ -19,7 +19,12 @@ object Icon {
             ic_heart_filled,
             ic_back,
             ic_send,
-            ic_menu
+            ic_menu,
+            ic_arrow_top,
+            ic_logout,
+            ic_sign_out,
+            ic_term,
+            ic_post
         ]
     )
     annotation class Iconography
@@ -36,6 +41,11 @@ object Icon {
     const val ic_back = 9
     const val ic_send = 10
     const val ic_menu = 11
+    const val ic_arrow_top = 12
+    const val ic_logout = 13
+    const val ic_sign_out = 14
+    const val ic_term = 15
+    const val ic_post = 16
 
     @DrawableRes
     fun getIconDrawable(@Iconography icon: Int): Int {
@@ -52,6 +62,11 @@ object Icon {
             ic_back -> R.drawable.ic_back
             ic_send -> R.drawable.ic_send
             ic_menu -> R.drawable.ic_menu
+            ic_arrow_top -> R.drawable.ic_arrow_top
+            ic_logout -> R.drawable.ic_logout
+            ic_sign_out -> R.drawable.ic_sign_out
+            ic_term -> R.drawable.ic_term
+            ic_post -> R.drawable.ic_post
             else -> ic_check
         }
     }

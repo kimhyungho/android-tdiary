@@ -2,6 +2,8 @@ package com.hardy.yongbyung
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.hardy.yongbyung.databinding.ActivityNavigationBinding
@@ -21,6 +23,7 @@ class NavigationActivity : BaseViewModelActivity<ActivityNavigationBinding, Navi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContentView(R.layout.activity_navigation)
 
         lifecycleScope.launch {
