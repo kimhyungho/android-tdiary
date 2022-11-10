@@ -23,38 +23,6 @@ class PostRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : PostRepository {
-    override fun writePost(
-        category: String,
-        title: String,
-        content: String,
-        date: Date,
-        mainRegion: String,
-        subRegion: String,
-        location: String?
-    ): Flow<Response<String>> = flow {
-        try {
-            emit(Response.Loading)
-            val uid = firebaseAuth.currentUser?.uid ?: throw IllegalArgumentException("not sign in")
-            val post = Post(
-                category = category,
-                title = title,
-                uid = uid,
-                content = content,
-                date = date,
-                mainRegion = mainRegion,
-                subRegion = subRegion,
-                location = location,
-                createdAt = Date(),
-                recruiting = true
-            )
-            firestore.collection("posts").add(post).await().run {
-                emit(Response.Success(id))
-            }
-        } catch (e: Exception) {
-            emit(Response.Failure(e))
-        }
-    }
-
     override fun getPosts(
         category: String,
         mainRegion: String,
@@ -94,12 +62,54 @@ class PostRepositoryImpl @Inject constructor(
             GetPostPagingSource(query)
         }.flow
 
+    override fun writePost(
+        category: String,
+        title: String,
+        content: String,
+        date: Date,
+        mainRegion: String,
+        subRegion: String,
+        location: String?
+    ): Flow<Response<String>> = flow {
+        try {
+            emit(Response.Loading)
+            val uid = firebaseAuth.currentUser?.uid ?: throw IllegalArgumentException("not sign in")
+            val post = Post(
+                category = category,
+                title = title,
+                uid = uid,
+                content = content,
+                date = date,
+                mainRegion = mainRegion,
+                subRegion = subRegion,
+                location = location,
+                createdAt = Date(),
+                recruiting = true
+            )
+            firestore.collection("posts").add(post).await().run {
+                emit(Response.Success(id))
+            }
+        } catch (e: Exception) {
+            emit(Response.Failure(e))
+        }
+    }
+
     override fun getPost(postId: String): Flow<Response<Pair<String, Post>>> = flow {
         try {
             emit(Response.Loading)
             val snapshot = firestore.collection("posts").document(postId).get().await()
             val post = snapshot.toObject(Post::class.java) ?: throw IOException("post not exist")
             emit(Response.Success(Pair(snapshot.id, post)))
+        } catch (e: Exception) {
+            emit(Response.Failure(e))
+        }
+    }
+
+    override fun deletePost(postId: String): Flow<Response<Unit>> = flow {
+        try {
+            emit(Response.Loading)
+            firestore.collection("posts").document(postId).delete().await()
+            emit(Response.Success(Unit))
         } catch (e: Exception) {
             emit(Response.Failure(e))
         }

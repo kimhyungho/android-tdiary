@@ -40,4 +40,10 @@ interface DataModule {
     fun bindMessageRoomRepository(
         repo: MessageRoomRepositoryImpl
     ): MessageRoomRepository
+
+    @Singleton
+    @Binds
+    fun bindReportRepository(
+        repo: ReportRepositoryImpl
+    ): ReportRepository
 }

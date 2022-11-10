@@ -78,26 +78,6 @@ class MessageRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun getMessageRooms(): Flow<Response<List<Pair<String?, MessageRoom?>>>> =
-        callbackFlow {
-            trySend(Response.Loading)
-            firebaseDatabase.reference.child("messagerooms")
-                .orderByChild("users/$uid").equalTo(true)
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val messageRooms =
-                            snapshot.children
-                                .map { Pair(it.key, it.getValue(MessageRoom::class.java)) }
-                        trySend(Response.Success(messageRooms))
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        trySend(Response.Failure(error.toException()))
-                    }
-                })
-            awaitClose { close() }
-        }
-
     override fun getMessages(messageRoomId: String): Flow<Response<List<Pair<String?, Message?>>>> =
         callbackFlow {
             trySend(Response.Loading)

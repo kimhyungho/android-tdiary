@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentPostDetailBinding
+import com.hardy.yongbyung.dialog.PostMenuDialog
 import com.hardy.yongbyung.dialog.SendMessageDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import com.hardy.yongbyung.utils.bind
@@ -31,9 +32,19 @@ class PostDetailFragment : BaseViewModelFragment<FragmentPostDetailBinding, Post
                 )
             }
 
-            toolbar.startButtonClickListener = View.OnClickListener {
-                navController.popBackStack()
+            with(toolbar) {
+                startButtonClickListener = View.OnClickListener {
+                    navController.popBackStack()
+                }
+
+                endFirstButtonClickListener = View.OnClickListener {
+                    val postId = viewModel?.postId ?: return@OnClickListener
+                    val uid = viewModel?.uid ?: return@OnClickListener
+                    val dialog = PostMenuDialog.newInstance(postId, uid)
+                    dialog.show(childFragmentManager, PostMenuDialog.TAG)
+                }
             }
+
 
             sendMessageButton.clicks()
                 .throttleFirst(1000L)

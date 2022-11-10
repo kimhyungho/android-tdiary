@@ -2,7 +2,7 @@ package com.hardy.yongbyung.ui.main
 
 import androidx.lifecycle.viewModelScope
 import com.hardy.domain.model.Response
-import com.hardy.domain.repositories.MessageRepository
+import com.hardy.domain.repositories.MessageRoomRepository
 import com.hardy.yongbyung.mapper.ExceptionMapper
 import com.hardy.yongbyung.model.MessageRoomUiMapper
 import com.hardy.yongbyung.model.MessageRoomUiModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GatewayViewModel @Inject constructor(
     private val messageRoomUiMapper: MessageRoomUiMapper,
-    private val messageRepository: MessageRepository
+    private val messageRoomRepository: MessageRoomRepository
 ) : BaseViewModel() {
     private val _messageRooms: MutableStateFlow<List<MessageRoomUiModel>> =
         MutableStateFlow(listOf())
@@ -48,7 +48,7 @@ class GatewayViewModel @Inject constructor(
     }
 
     private fun getMessageRooms() = viewModelScope.launch(Dispatchers.IO) {
-        messageRepository.getMessageRooms().collect { response ->
+        messageRoomRepository.getMessageRooms().collect { response ->
             when (response) {
                 is Response.Loading -> {
                     _showEmptyImage.value = false

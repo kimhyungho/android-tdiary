@@ -30,7 +30,7 @@ class PostDetailViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    private val postId = savedStateHandle.get<String>("postId")
+    val postId = savedStateHandle.get<String>("postId")
 
     private var _uid: String? = null
     val uid: String? get() = _uid

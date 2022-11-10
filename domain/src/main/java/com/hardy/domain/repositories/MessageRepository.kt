@@ -8,7 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface MessageRepository {
     suspend fun sendMessage(receiverUid: String, message: String): Flow<Response<String>>
 
-    fun getMessageRooms(): Flow<Response<List<Pair<String?, MessageRoom?>>>>
-
     fun getMessages(messageRoomId: String) : Flow<Response<List<Pair<String?, Message?>>>>
 }

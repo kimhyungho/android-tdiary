@@ -5,6 +5,10 @@
     <data>
 
         <import type="com.hardy.yongbyung.components.YongByungBoxButton" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.dialog.PostMenuViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,19 +16,39 @@
         android:layout_height="match_parent"
         android:paddingBottom="24dp">
 
-        <com.hardy.yongbyung.components.YongByungBoxButton
-            android:id="@+id/delete_button"
-            size="@{YongByungBoxButton.LARGE}"
-            type="@{YongByungBoxButton.LINE}"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@{`전체 삭제`}"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.hardy.yongbyung.components.YongByungBoxButton
+                android:id="@+id/report_button"
+                size="@{YongByungBoxButton.LARGE}"
+                type="@{YongByungBoxButton.LINE}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/report_post}" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="12dp" />
+
+            <com.hardy.yongbyung.components.YongByungBoxButton
+                android:id="@+id/delete_button"
+                isLoading="@{viewModel.deleteLoading}"
+                size="@{YongByungBoxButton.LARGE}"
+                type="@{YongByungBoxButton.FILLED}"
+                visibleOrGone="@{viewModel.isMyPost()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/delete_post}" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

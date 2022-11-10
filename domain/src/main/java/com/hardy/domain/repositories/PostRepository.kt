@@ -7,6 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface PostRepository {
+    fun getPosts(
+        category: String,
+        mainRegion: String,
+        subRegion: String
+    ): Flow<PagingData<Pair<String, Post>>>
+
+    fun getPosts(uid: String): Flow<PagingData<Pair<String, Post>>>
+
     fun writePost(
         category: String,
         title: String,
@@ -17,15 +25,9 @@ interface PostRepository {
         location: String?
     ): Flow<Response<String>>
 
-    fun getPosts(
-        category: String,
-        mainRegion: String,
-        subRegion: String
-    ): Flow<PagingData<Pair<String, Post>>>
-
-    fun getPosts(uid: String): Flow<PagingData<Pair<String, Post>>>
-
     fun getPost(postId: String): Flow<Response<Pair<String, Post>>>
+
+    fun deletePost(postId: String): Flow<Response<Unit>>
 
     fun finishRecruit(postId: String) : Flow<Response<Unit>>
 }
