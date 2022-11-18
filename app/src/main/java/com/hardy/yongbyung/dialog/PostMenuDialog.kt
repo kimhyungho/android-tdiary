@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentPostMenuDialogBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelBottomSheetDialogFragment
@@ -50,6 +51,14 @@ class PostMenuDialog :
                     )
                     dialog.show(childFragmentManager, AlertDialog.TAG)
                 }
+        }
+
+        with(viewModel) {
+            lifecycleScope.launchWhenStarted {
+                successDelete.collect {
+                    if (it != null) parentFragment?.findNavController()?.popBackStack()
+                }
+            }
         }
     }
 

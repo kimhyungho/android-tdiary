@@ -24,7 +24,8 @@ object Icon {
             ic_logout,
             ic_sign_out,
             ic_term,
-            ic_post
+            ic_post,
+            ic_siren
         ]
     )
     annotation class Iconography
@@ -46,6 +47,7 @@ object Icon {
     const val ic_sign_out = 14
     const val ic_term = 15
     const val ic_post = 16
+    const val ic_siren = 17
 
     @DrawableRes
     fun getIconDrawable(@Iconography icon: Int): Int {
@@ -67,6 +69,7 @@ object Icon {
             ic_sign_out -> R.drawable.ic_sign_out
             ic_term -> R.drawable.ic_term
             ic_post -> R.drawable.ic_post
+            ic_siren -> R.drawable.ic_siren
             else -> ic_check
         }
     }

@@ -110,25 +110,25 @@ dependencies {
     debugImplementation(Dependencies.LEAKCANARY)
     implementation(Dependencies.LEAKCANARY_PLUMBER)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation(Dependencies.NAVIGATION_FRAGMENT)
+    implementation(Dependencies.NAVIGATION_UI)
 
-    implementation("androidx.fragment:fragment-ktx:1.5.4")
+    implementation(Dependencies.FRAGMENT_KTX)
 
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation(Dependencies.LIFECYCLE_EXTENSIONS)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
 
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(Dependencies.FIREBASE_ANALYTICS)
 
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt(Dependencies.GLIDE_COMPILER)
+    implementation(Dependencies.GLIDE)
 
-    implementation("com.opencsv:opencsv:4.4")
+    implementation(Dependencies.OPENCSV)
 
-    implementation("com.airbnb.android:lottie:5.2.0")
+    implementation(Dependencies.LOTTIE)
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(Dependencies.SWIPE_REFRESH_LAYOUT)
 
-    implementation ("androidx.core:core-splashscreen:1.0.0")
+    implementation (Dependencies.SPLASH_SCREEN)
 }

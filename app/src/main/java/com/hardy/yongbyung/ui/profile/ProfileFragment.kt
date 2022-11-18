@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.adapters.PostListAdapter
 import com.hardy.yongbyung.databinding.FragmentProfileBinding
+import com.hardy.yongbyung.dialog.ReportDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -25,6 +26,11 @@ class ProfileFragment : BaseViewModelFragment<FragmentProfileBinding, ProfileVie
             override fun onItemClick(id: String) {
                 navController
                     .navigate(ProfileFragmentDirections.actionDestProfileToDestPostDetail(id))
+            }
+
+            override fun onSirenClick(id: String) {
+                val dialog = ReportDialog.newInstance(id)
+                dialog.show(childFragmentManager, ReportDialog.TAG)
             }
         }
     }

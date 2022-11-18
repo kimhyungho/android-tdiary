@@ -37,9 +37,6 @@ class ReportDialog : BaseViewModelDialogFragment<FragmentReportDialogBinding, Re
             lifecycleScope.launchWhenStarted {
                 reportSuccess.collect {
                     if (it != null) {
-                        Snackbar
-                            .make(viewDataBinding.rootLayout, "신고가 접수되었습니다.", Snackbar.LENGTH_SHORT)
-                            .show()
                         dismiss()
                     }
                 }

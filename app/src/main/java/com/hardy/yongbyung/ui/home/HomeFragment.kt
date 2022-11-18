@@ -13,6 +13,7 @@ import com.hardy.yongbyung.adapters.HorizontalCategoryListAdapter
 import com.hardy.yongbyung.adapters.PagingStateAdapter
 import com.hardy.yongbyung.adapters.PostListAdapter
 import com.hardy.yongbyung.databinding.FragmentHomeBinding
+import com.hardy.yongbyung.dialog.ReportDialog
 import com.hardy.yongbyung.dialog.SelectSidoDialog
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
 import com.hardy.yongbyung.ui.main.GatewayFragmentDirections
@@ -42,6 +43,11 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                         id
                     )
                 )
+            }
+
+            override fun onSirenClick(id: String) {
+                val dialog = ReportDialog.newInstance(id)
+                dialog.show(childFragmentManager, ReportDialog.TAG)
             }
         }
     }
@@ -125,7 +131,7 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun onDestroyView() {
-        with(viewDataBinding){
+        with(viewDataBinding) {
             sportsRecyclerView.adapter = null
             postsRecyclerView.adapter = null
         }

@@ -27,14 +27,17 @@ class PostListAdapter : PagingDataAdapter<PostUiModel, PostListAdapter.ViewHolde
         val post = getItem(position)
         post?.let {
             holder.bind(post)
-            holder.itemView.setOnClickListener {
+            holder.binding.itemLayout.setOnClickListener {
                 listener?.onItemClick(post.id)
+            }
+            holder.binding.reportButton.setOnClickListener {
+                listener?.onSirenClick(post.id)
             }
         }
     }
 
     class ViewHolder(
-        private val binding: ItemPostBinding
+        val binding: ItemPostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PostUiModel) {
             binding.apply {
@@ -46,6 +49,8 @@ class PostListAdapter : PagingDataAdapter<PostUiModel, PostListAdapter.ViewHolde
 
     interface Listener {
         fun onItemClick(id: String)
+
+        fun onSirenClick(id: String)
     }
 }
 

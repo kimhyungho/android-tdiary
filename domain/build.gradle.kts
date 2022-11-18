@@ -61,7 +61,7 @@ dependencies {
     androidTestImplementation(Testing.ESPRESSO_CORE)
 
     api(platform("com.google.firebase:firebase-bom:31.0.2"))
-    api("com.google.android.gms:play-services-auth:20.3.0")
+    api("com.google.android.gms:play-services-auth:20.4.0")
 
     api("androidx.paging:paging-runtime:3.1.1")
 

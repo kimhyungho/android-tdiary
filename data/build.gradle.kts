@@ -96,17 +96,17 @@ dependencies {
     implementation(Dependencies.PROTO_DATASTORE)
     implementation(Dependencies.PROTOBUF)
 
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation(Dependencies.RETROFIT_CONVERTER_GSON)
+    implementation(Dependencies.RETROFIT)
+    implementation(Dependencies.GSON)
+    implementation(Dependencies.OKHTTP_INTERCEPTOR)
 
-    kapt("androidx.room:room-compiler:2.4.3")
-    implementation("androidx.room:room-runtime:2.4.3")
-    implementation("androidx.room:room-ktx:2.4.3")
+    kapt(Dependencies.ROOM_COMPILER)
+    implementation(Dependencies.ROOM_RUNTIME)
+    implementation(Dependencies.ROOM_KTX)
 
-    implementation ("com.google.firebase:firebase-database-ktx")
+    implementation (Dependencies.FIREBASE_DATABASE)
 
-    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation(Dependencies.FIREBASE_STORAGE)
 
 }
