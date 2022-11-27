@@ -16,7 +16,10 @@ interface AuthRepository {
 
     fun oneTapSignInWithGoogle(): Flow<Response<BeginSignInResult>>
 
-    fun firebaseSignInWithGoogle(googleCredential: AuthCredential): Flow<Response<User>>
+    fun firebaseSignInWithGoogle(
+        googleCredential: AuthCredential,
+        fcmToken: String
+    ): Flow<Response<User>>
 
     fun getMe(): Flow<Response<User.Registered>>
 

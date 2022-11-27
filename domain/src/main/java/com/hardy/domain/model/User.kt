@@ -7,6 +7,7 @@ sealed class User {
     data class Registered(
         val nickname: String? = null,
         val profileImage: String? = null,
-        val createdAt: Date? = null
+        val createdAt: Date? = null,
+        val fcmToken: String? = null
     ) : User()
 }

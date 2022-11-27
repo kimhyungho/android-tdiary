@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.messaging.FirebaseMessaging
 import com.hardy.domain.model.Response
 import com.hardy.domain.model.User
 import com.hardy.domain.repositories.AuthRepository
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @OptIn(ObsoleteCoroutinesApi::class)
@@ -57,7 +59,8 @@ class LoginViewModel @Inject constructor(
     }
 
     fun signInWithGoogle(googleCredential: AuthCredential) = viewModelScope.launch {
-        authRepository.firebaseSignInWithGoogle(googleCredential).collect { response ->
+        val fcmToken = FirebaseMessaging.getInstance().token.await()
+        authRepository.firebaseSignInWithGoogle(googleCredential, fcmToken).collect { response ->
             when (response) {
                 is Response.Loading -> _loginLoading.value = true
                 is Response.Success -> {

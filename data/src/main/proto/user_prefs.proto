@@ -7,6 +7,7 @@ option java_multiple_files = true;
 
 message UserPreferences {
     string nickname = 1;
-    string profile_image = 2;
+    string profileImage = 2;
     int64 createdAt = 3;
+    string fcmToken = 4;
 }

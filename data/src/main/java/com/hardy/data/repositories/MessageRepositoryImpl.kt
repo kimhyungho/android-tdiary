@@ -1,14 +1,20 @@
 package com.hardy.data.repositories
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.snapshots
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.JsonObject
+import com.hardy.data.remote.api.FcmService
+import com.hardy.data.remote.model.request.PostFcmSendRequest
 import com.hardy.domain.model.Message
 import com.hardy.domain.model.MessageRoom
 import com.hardy.domain.model.Response
+import com.hardy.domain.model.User
 import com.hardy.domain.repositories.MessageRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -23,7 +29,9 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firebaseDatabase: FirebaseDatabase
+    private val firebaseDatabase: FirebaseDatabase,
+    private val firestore: FirebaseFirestore,
+    private val fcmService: FcmService
 ) : MessageRepository {
     private val uid get() = firebaseAuth.currentUser?.uid
 
@@ -60,6 +68,7 @@ class MessageRepositoryImpl @Inject constructor(
                         .push()
                         .setValue(messageModel)
                         .await()
+                    sendMessageFcm(receiverUid, message)
                     emit(Response.Success(keyAndMessageRoom!!.first))
                 } else {
                     val randomUid = firebaseDatabase.reference.push().key!!
@@ -71,6 +80,7 @@ class MessageRepositoryImpl @Inject constructor(
                         .push()
                         .setValue(messageRoom)
                         .await()
+                    sendMessageFcm(receiverUid, message)
                     emit(Response.Success(randomUid))
                 }
             } catch (e: Exception) {
@@ -97,4 +107,21 @@ class MessageRepositoryImpl @Inject constructor(
                 })
             awaitClose { close() }
         }
+
+    private suspend fun sendMessageFcm(receiverUid: String, message: String) {
+        val receiverUserSnapshot =
+            firestore.collection("users").document(receiverUid).get().await()
+        val receiverUser = receiverUserSnapshot.toObject(User.Registered::class.java) ?: return
+        fcmService.postFcmSend(
+            PostFcmSendRequest(
+                message = PostFcmSendRequest.FcmMessage(
+                    token = receiverUser.fcmToken ?: return,
+                    notification = PostFcmSendRequest.FcmMessage.Notification(
+                        receiverUser.nickname ?: "",
+                        message
+                    )
+                )
+            )
+        )
+    }
 }

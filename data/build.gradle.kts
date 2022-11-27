@@ -54,8 +54,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/NOTICE")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/LICENSE.txt")
+        exclude ("META-INF/NOTICE.txt")
     }
 }
 
@@ -105,8 +114,16 @@ dependencies {
     implementation(Dependencies.ROOM_RUNTIME)
     implementation(Dependencies.ROOM_KTX)
 
-    implementation (Dependencies.FIREBASE_DATABASE)
+    implementation(Dependencies.FIREBASE_DATABASE)
 
     implementation(Dependencies.FIREBASE_STORAGE)
 
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+//    implementation ("com.google.api-client:google-api-client:1.32.2")
+    implementation("com.google.apis:google-api-services-androidpublisher:v3-rev22-1.25.0")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.2.2")
 }

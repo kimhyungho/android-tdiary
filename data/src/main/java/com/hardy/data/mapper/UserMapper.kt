@@ -9,7 +9,8 @@ object UserMapper : Mapper<UserPreferences, User.Registered> {
         return User.Registered(
             nickname = from.nickname,
             profileImage = from.profileImage,
-            createdAt = Date(from.createdAt)
+            createdAt = Date(from.createdAt),
+            fcmToken = from.fcmToken
         )
     }
 }

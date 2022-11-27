@@ -18,7 +18,7 @@ android {
         getByName("debug") {
             keyAlias = getPropertyValue("yongbyung.debug.keyAlias")
             keyPassword = getPropertyValue("yongbyung.debug.keyPassword")
-            storeFile = file("../DebugKeyStore")
+            storeFile = file("../DebugKeyStore.jks")
             storePassword = getPropertyValue("yongbyung.debug.storePassword")
         }
 
@@ -84,6 +84,14 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/NOTICE")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/LICENSE.txt")
+        exclude ("META-INF/NOTICE.txt")
+    }
 }
 
 fun getPropertyValue(propertyKey: String): String {
@@ -131,4 +139,6 @@ dependencies {
     implementation(Dependencies.SWIPE_REFRESH_LAYOUT)
 
     implementation (Dependencies.SPLASH_SCREEN)
+
+    implementation("com.google.firebase:firebase-messaging-ktx:23.1.0")
 }

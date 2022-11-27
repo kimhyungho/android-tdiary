@@ -3,6 +3,7 @@ package com.hardy.data.repositories
 import android.net.Uri
 import android.util.Log
 import androidx.datastore.core.DataStore
+
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.AuthCredential
@@ -19,8 +20,6 @@ import com.hardy.domain.repositories.AuthRepository
 import com.hardy.yongbyung.datastore.UserPreferences
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
-import java.io.File
-import java.io.InputStream
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -38,10 +37,8 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
     override val uid: String? get() = auth.currentUser?.uid
 
-    override fun isUserAuthenticated(): Flow<Boolean> {
-        return userDataStore.data.map { userPref ->
-            !userPref.nickname.isNullOrEmpty() && auth.currentUser != null
-        }
+    override fun isUserAuthenticated(): Flow<Boolean> = userDataStore.data.map { userPref ->
+        !userPref.nickname.isNullOrEmpty() && auth.currentUser != null
     }
 
     override fun oneTapSignInWithGoogle() = flow {
@@ -59,22 +56,24 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun firebaseSignInWithGoogle(googleCredential: AuthCredential) = flow {
-        try {
-            emit(Response.Loading)
-            val firebaseAuth = auth.signInWithCredential(googleCredential).await()
-            val uid = firebaseAuth.user?.uid ?: throw IllegalArgumentException("not sign in")
-            val snapshot = firestore.collection("users").document(uid).get().await()
-            if (snapshot.exists()) {
-                val user = snapshot.toObject(User.Registered::class.java)
-                user?.let { emit(Response.Success(saveUser(user))) }
-            } else {
-                emit(Response.Success(User.UnRegistered))
+    override fun firebaseSignInWithGoogle(googleCredential: AuthCredential, fcmToken: String) =
+        flow {
+            try {
+                emit(Response.Loading)
+                val firebaseAuth = auth.signInWithCredential(googleCredential).await()
+                val uid = firebaseAuth.user?.uid ?: throw IllegalArgumentException("not sign in")
+                setFcmToken(fcmToken)
+                val snapshot = firestore.collection("users").document(uid).get().await()
+                if (snapshot.exists()) {
+                    val user = snapshot.toObject(User.Registered::class.java)
+                    user?.let { emit(Response.Success(saveUser(user))) }
+                } else {
+                    emit(Response.Success(User.UnRegistered))
+                }
+            } catch (e: Exception) {
+                emit(Response.Failure(YongByungException.parseFrom(e)))
             }
-        } catch (e: Exception) {
-            emit(Response.Failure(YongByungException.parseFrom(e)))
         }
-    }
 
     override suspend fun signUp(): Flow<Response<User>> = flow {
         try {
@@ -130,7 +129,8 @@ class AuthRepositoryImpl @Inject constructor(
                                     if (profileImage != null) this.profileImage =
                                         updateData["profileImage"]
                                     this.nickname = updateData["nickname"]
-                                }.build()
+                                }
+                                .build()
                         })
                 )
             )
@@ -172,6 +172,7 @@ class AuthRepositoryImpl @Inject constructor(
             pref.toBuilder()
                 .setNickname(user.nickname)
                 .setProfileImage(user.profileImage)
+                .setFcmToken(user.fcmToken)
                 .setCreatedAt(
                     user.createdAt?.time
                         ?: throw IllegalArgumentException("createdAt can not be null")
@@ -179,5 +180,9 @@ class AuthRepositoryImpl @Inject constructor(
         })
     }
 
-
+    private suspend fun setFcmToken(fcmToken: String) {
+        firestore.collection("users").document(uid ?: return)
+            .update("fcmToken", fcmToken)
+            .await()
+    }
 }
