@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="icon"
+            type="Integer" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="explain"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp">
+
+        <FrameLayout
+            android:id="@+id/icon_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_oval_black"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.hardy.yongbyung.components.YongByungIcon
+                android:id="@+id/icon"
+                icon="@{icon}"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:tint="@color/white" />
+        </FrameLayout>
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{title}"
+            android:textColor="@color/G900"
+            app:layout_constraintBottom_toTopOf="@+id/explain_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon_container"
+            app:layout_constraintTop_toTopOf="@+id/icon_container"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:typo="subtitle4"
+            tools:text="카메라/갤러리" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/explain_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="@{explain}"
+            android:textColor="@color/G700"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon_container"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            app:typo="subtitle4"
+            tools:text="프로필, 클럽, 채팅 피드 내 사진 등록 시 갤러리 접근" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

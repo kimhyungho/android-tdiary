@@ -46,4 +46,16 @@ interface DataModule {
     fun bindReportRepository(
         repo: ReportRepositoryImpl
     ): ReportRepository
+
+    @Singleton
+    @Binds
+    fun bindSettingRepository(
+        repo: SettingRepositoryImpl
+    ): SettingRepository
+
+    @Singleton
+    @Binds
+    fun bindKakaoMapRepository(
+        repo: KakaoMapRepositoryImpl
+    ): KakaoMapRepository
 }

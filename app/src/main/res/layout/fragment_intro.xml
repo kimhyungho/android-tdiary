@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.components.YongByungBoxButton" />
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.intro.IntroViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/app_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@{@string/app_name}"
+            android:textColor="@color/G900"
+            app:layout_constraintStart_toStartOf="@+id/guide_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:typo="subtitle1"
+            tools:text="동네용병" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{@string/start}"
+            app:layout_constraintBottom_toBottomOf="@+id/app_name_text"
+            app:layout_constraintStart_toEndOf="@+id/app_name_text"
+            app:layout_constraintTop_toTopOf="@+id/app_name_text"
+            app:typo="subtitle1"
+            tools:text="시작하기" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/optional_permission_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@{`선택 접근 권한`}"
+            android:textColor="@color/P500"
+            app:layout_constraintStart_toStartOf="@+id/guide_start"
+            app:layout_constraintTop_toBottomOf="@+id/app_name_text"
+            app:typo="button"
+            tools:text="선택 접근 권한" />
+
+        <include
+            android:id="@+id/item_camera"
+            layout="@layout/item_permission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:explain="@{`설명`}"
+            app:icon="@{Icon.ic_calendar}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/optional_permission_text"
+            app:title="@{`위치 권한`}" />
+
+        <include
+            android:id="@+id/item_push"
+            layout="@layout/item_permission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:explain="@{`설명`}"
+            app:icon="@{Icon.ic_calendar}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_camera"
+            app:title="@{`위치 권한`}" />
+
+        <include
+            android:id="@+id/item_location"
+            layout="@layout/item_permission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:explain="@{`설명`}"
+            app:icon="@{Icon.ic_calendar}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_push"
+            app:title="@{`위치 권한`}" />
+
+        <com.hardy.yongbyung.components.YongByungBoxButton
+            rounding="@{24}"
+            size="@{YongByungBoxButton.LARGE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:onClick="@{()->viewModel.onStartButtonClick()}"
+            android:text="@{@string/start}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_end"
+            app:layout_constraintStart_toStartOf="@+id/guide_start" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

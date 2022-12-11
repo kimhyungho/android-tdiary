@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_onboarding"
-    app:startDestination="@id/dest_login">
+    app:startDestination="@id/dest_intro">
 
     <fragment
         android:id="@+id/dest_login"
@@ -26,5 +26,14 @@
         android:name="com.hardy.yongbyung.ui.agreement.AgreementFragment"
         android:label="AgreementFragment"
         tools:layout="@layout/fragment_agreement">
+    </fragment>
+    <fragment
+        android:id="@+id/dest_intro"
+        tools:layout="@layout/fragment_intro"
+        android:name="com.hardy.yongbyung.ui.intro.IntroFragment"
+        android:label="IntroFragment" >
+        <action
+            android:id="@+id/action_dest_intro_to_dest_login"
+            app:destination="@id/dest_login" />
     </fragment>
 </navigation>

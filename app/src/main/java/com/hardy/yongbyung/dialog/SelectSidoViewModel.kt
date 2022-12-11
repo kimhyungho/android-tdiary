@@ -3,7 +3,7 @@ package com.hardy.yongbyung.dialog
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.model.MainRegionUiModel
 import com.hardy.yongbyung.model.SubRegionUiModel
-import com.hardy.yongbyung.provider.ResourceProvider
+import com.hardy.yongbyung.provider.resource.ResourceProvider
 import com.hardy.yongbyung.ui.base.BaseViewModel
 import com.hardy.yongbyung.utils.CsvHelper
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -2,7 +2,6 @@ package com.hardy.yongbyung
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment

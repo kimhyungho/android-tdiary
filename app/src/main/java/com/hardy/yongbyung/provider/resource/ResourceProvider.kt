@@ -1,4 +1,4 @@
-package com.hardy.yongbyung.provider
+package com.hardy.yongbyung.provider.resource
 
 import androidx.annotation.RawRes
 import java.io.InputStream

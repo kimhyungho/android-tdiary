@@ -86,16 +86,17 @@ android {
     }
 
     packagingOptions {
-        exclude ("META-INF/DEPENDENCIES")
-        exclude ("META-INF/NOTICE")
-        exclude ("META-INF/LICENSE")
-        exclude ("META-INF/LICENSE.txt")
-        exclude ("META-INF/NOTICE.txt")
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/LICENSE.txt")
+        exclude("META-INF/NOTICE.txt")
     }
 }
 
 fun getPropertyValue(propertyKey: String): String {
-    return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty(propertyKey)
+    return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
+        .getProperty(propertyKey)
 }
 
 dependencies {
@@ -138,7 +139,9 @@ dependencies {
 
     implementation(Dependencies.SWIPE_REFRESH_LAYOUT)
 
-    implementation (Dependencies.SPLASH_SCREEN)
+    implementation(Dependencies.SPLASH_SCREEN)
 
     implementation("com.google.firebase:firebase-messaging-ktx:23.1.0")
+
+    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
 }

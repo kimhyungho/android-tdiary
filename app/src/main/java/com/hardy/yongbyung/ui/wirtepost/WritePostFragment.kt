@@ -26,43 +26,7 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
         super.onViewCreated(view, savedInstanceState)
 
         with(viewDataBinding) {
-            toolbar.startButtonClickListener = View.OnClickListener {
-                navController.popBackStack()
-            }
 
-            categorySpinner.setOnClickListener {
-                val categoryName = viewModel?.category?.value?.name
-                val dialog = SelectCategoryDialog.newInstance(
-                    categoryName
-                ) { category -> viewModel?.setSelectedCategory(category) }
-                dialog.show(childFragmentManager, SelectCategoryDialog.TAG)
-            }
-
-            dateSpinner.setOnClickListener {
-                val selectedDate = viewModel?.date?.value?.second
-                val dialog = SelectDateDialog.newInstance(
-                    selectedDate?.time,
-                ) { date -> viewModel?.onDateSelected(date) }
-                dialog.show(childFragmentManager, SelectDateDialog.TAG)
-            }
-
-            regionSpinner.setOnClickListener {
-                val selectedMainRegion = viewModel?.selectedMainRegion?.value
-                val selectedSubRegion = viewModel?.selectedSubRegion?.value
-                val dialog = SelectSidoDialog.newInstance(
-                    selectedMainRegion = selectedMainRegion,
-                    selectedSubRegion = selectedSubRegion,
-                ) { mainRegion, subRegion ->
-                    viewModel?.onRegionSelected(mainRegion, subRegion)
-                }
-                dialog.show(childFragmentManager, SelectSidoDialog.TAG)
-            }
-
-            confirmButton.clicks()
-                .throttleFirst(1000L)
-                .bind(lifecycleScope) {
-                    viewModel?.onWriteButtonClick()
-                }
         }
 
         with(viewModel) {

@@ -1,7 +1,9 @@
 package com.hardy.yongbyung.di
 
-import com.hardy.yongbyung.provider.ResourceProvider
-import com.hardy.yongbyung.provider.ResourceProviderImpl
+import com.hardy.yongbyung.provider.permission.PermissionProvider
+import com.hardy.yongbyung.provider.permission.PermissionProviderImpl
+import com.hardy.yongbyung.provider.resource.ResourceProvider
+import com.hardy.yongbyung.provider.resource.ResourceProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,10 @@ interface ProviderModule {
     fun bindResourceProvider(
         provider: ResourceProviderImpl
     ): ResourceProvider
+
+    @Singleton
+    @Binds
+    fun bindPermissionProvider(
+        provider: PermissionProviderImpl
+    ): PermissionProvider
 }

@@ -15,6 +15,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_glass"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black70"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+        </FrameLayout>
+
+        <ImageView
+            app:tint="@color/white"
+            android:id="@+id/imageView2"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            app:layout_constraintBottom_toTopOf="@+id/login_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_login_logo" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_start"
             android:layout_width="wrap_content"
@@ -30,77 +63,72 @@
             app:layout_constraintGuide_end="16dp" />
 
         <com.hardy.yongbyung.components.YongByungText
-            android:id="@+id/app_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="@string/app_name"
-            android:textColor="@color/P500"
-            app:layout_constraintStart_toEndOf="@id/guide_start"
-            app:layout_constraintTop_toTopOf="parent"
-            app:typo="h2" />
-
-        <com.hardy.yongbyung.components.YongByungText
             android:id="@+id/login_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="@string/login"
-            android:textColor="@color/P500"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/login_explain_text"
             app:layout_constraintStart_toEndOf="@id/guide_start"
-            app:layout_constraintTop_toBottomOf="@id/app_name_text"
-            app:typo="h2" />
+            app:typo="h4" />
 
         <com.hardy.yongbyung.components.YongByungText
-            android:id="@+id/need_text"
+            android:id="@+id/login_explain_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/need"
-            android:textColor="@color/G600"
-            app:layout_constraintBottom_toBottomOf="@+id/login_text"
-            app:layout_constraintStart_toEndOf="@id/login_text"
-            app:layout_constraintTop_toTopOf="@+id/login_text"
-            app:typo="h2" />
+            android:layout_marginBottom="24dp"
+            android:text="아이디와 비밀번호 입력하기 귀찮으시죠?\n구글계정으로 1초 만에 로그인 하세요."
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/google_login_button"
+            app:layout_constraintStart_toEndOf="@id/guide_start"
+            app:typo="caption1_1" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/google_login_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/image_login"
-            app:layout_constraintBottom_toTopOf="@+id/google_login_button"
-            app:layout_constraintEnd_toStartOf="@+id/guide_end"
-            app:layout_constraintStart_toStartOf="@+id/guide_start"
-            app:layout_constraintTop_toBottomOf="@+id/login_text" />
-
-        <FrameLayout
-            android:id="@+id/google_login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:background="@drawable/oval_white"
+            android:layout_marginBottom="56dp"
+            android:background="@drawable/bg_white_rounded_8dp"
             android:elevation="8dp"
-            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guide_end"
             app:layout_constraintStart_toStartOf="@+id/guide_start">
 
             <ImageView
                 android:id="@+id/imageView3"
-                visibleOrGone="@{!viewModel.loginLoading}"
+                visibleOrInvisible="@{!viewModel.loginLoading}"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/googleg_standard_color_18"
-                tools:layout_editor_absoluteX="175dp"
-                tools:layout_editor_absoluteY="547dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/googleg_standard_color_18" />
+
+            <com.hardy.yongbyung.components.YongByungText
+                android:id="@+id/login_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구글 로그인"
+                android:textColor="@color/G900"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:typo="button" />
 
             <ProgressBar
                 visibleOrGone="@{viewModel.loginLoading}"
                 android:layout_width="24dp"
-                android:layout_height="24dp" />
-        </FrameLayout>
+                android:layout_height="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

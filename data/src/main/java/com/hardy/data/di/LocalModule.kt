@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.hardy.data.local.serializers.UserPreferencesSerializer
 import com.hardy.yongbyung.datastore.UserPreferences
 import dagger.Module
@@ -25,5 +28,15 @@ object LocalModule {
     ): DataStore<UserPreferences> = DataStoreFactory.create(
         serializer = UserPreferencesSerializer,
         produceFile = { context.dataStoreFile(USER_DATA_STORE_FILE_NAME) }
+    )
+
+    @Singleton
+    @Provides
+    fun providePreferenceDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
+        produceFile = {
+            context.preferencesDataStoreFile("settings")
+        }
     )
 }

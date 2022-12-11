@@ -2,7 +2,10 @@ package com.hardy.data.di
 
 import com.google.gson.Gson
 import com.hardy.data.BuildConfig
+import com.hardy.data.di.qualifiers.FcmApiQualifier
+import com.hardy.data.di.qualifiers.KakaoApiQualifier
 import com.hardy.data.remote.api.FcmService
+import com.hardy.data.remote.api.KakaoService
 import com.hardy.data.remote.interceptors.FcmAuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -46,6 +49,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    @FcmApiQualifier
     fun provideFcmRetrofit(
         gson: Gson,
         okHttpClient: OkHttpClient
@@ -60,6 +64,29 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideFcmService(
+        @FcmApiQualifier
         retrofit: Retrofit
     ): FcmService = retrofit.create(FcmService::class.java)
+
+    @Singleton
+    @Provides
+    @KakaoApiQualifier
+    fun provideKakaoRetrofit(
+        gson: Gson,
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://dapi.kakao.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideKakaoService(
+        @KakaoApiQualifier
+        retrofit: Retrofit
+    ): KakaoService = retrofit.create(KakaoService::class.java)
+
 }
