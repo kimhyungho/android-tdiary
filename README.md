@@ -1,23 +1,18 @@
 # 동네용병 - 축구, 농구, 테니스 등 같이 할 사람
 
-<img src="/lotty-images/app_logo.png" align="left"
+<img src="/yb-images/app_logo.png" align="left"
 width="200" hspace="10" vspace="10">
  
 동네용병은 축구, 풋살, 테니스, 농구 등 같이 운동할 사람을 찾는 서비스입니다.   
-
-
+</br>
+</br>
+</br>
 <p align="left">
 <a href="https://play.google.com/store/apps/details?id=com.hardy.yongbyung">
     <img alt="Get it on Google Play"
         height="80"
         src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
 </a>
-
-<img src="/lotty-images/1.png" width="160px" title="1" alt="1"></img>
-<img src="/lotty-images/2.png" width="160px" title="2" alt="2"></img>
-<img src="/lotty-images/3.png" width="160px" title="3" alt="3"></img>
-<img src="/lotty-images/4.png" width="160px" title="4" alt="4"></img>
-<img src="/lotty-images/5.png" width="160px" title="5" alt="5"></img>
 
 ## 개발환경 / Application Version
 - Android Studio @Dolphin 2021.3.1
@@ -49,8 +44,7 @@ width="200" hspace="10" vspace="10">
 
 ## Screenshots
 
-<img src="/lotty-images/Screenshot_1.png" width="160px" title="1" alt="1"></img>
-<img src="/lotty-images/Screenshot_2.png" width="160px" title="2" alt="2"></img>
-<img src="/lotty-images/Screenshot_3.png" width="160px" title="3" alt="3"></img>
-<img src="/lotty-images/Screenshot_4.png" width="160px" title="4" alt="4"></img>
-<img src="/lotty-images/Screenshot_5.png" width="160px" title="5" alt="5"></img>
+<img src="/yb-images/1.png" width="160px" title="1" alt="1"></img>
+<img src="/yb-images/2.png" width="160px" title="2" alt="2"></img>
+<img src="/yb-images/3.png" width="160px" title="3" alt="3"></img>
+<img src="/yb-images/4.png" width="160px" title="4" alt="4"></img>
