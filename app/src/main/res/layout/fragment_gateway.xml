@@ -12,19 +12,52 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@id/main_bottom_navigation"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/nav_gateway" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/main_bottom_navigation"
-            android:layout_width="0dp"
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_bar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/gateway_menu" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/main_bottom_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:elevation="0dp"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/gateway_menu" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/write_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_plus"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toBottomOf="@id/main_bottom_navigation"
+                    app:layout_constraintEnd_toEndOf="@id/main_bottom_navigation"
+                    app:layout_constraintStart_toStartOf="@id/main_bottom_navigation"
+                    app:layout_constraintTop_toTopOf="@id/main_bottom_navigation"
+                    app:tint="@color/white" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

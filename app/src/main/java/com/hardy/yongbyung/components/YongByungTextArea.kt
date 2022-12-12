@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.extensions.dpToIntPx
 import com.hardy.yongbyung.extensions.getDimenFloat
@@ -18,22 +19,29 @@ class YongByungTextArea @JvmOverloads constructor(
 ) : AppCompatEditText(
     context, attrs, defStyleAttr
 ) {
+
+    var type: Int = LINE
+        set(value) {
+            field = value
+            setBackground()
+        }
+
     init {
         setTextInfo()
         setTextColor(ContextCompat.getColor(context, R.color.G900))
-        setHintTextColor(ContextCompat.getColor(context, R.color.G300))
+        setHintTextColor(ContextCompat.getColor(context, R.color.G200))
         setBackground()
         isFocusableInTouchMode = true
     }
 
     private fun setTextInfo() {
-        setTextAppearance(Typo.getStyle(Typo.Caption1))
+        setTextAppearance(Typo.getStyle(Typo.Subtitle4))
 
         includeFontPadding = false
 
         val fontLineHeight = paint.getFontMetrics(paint.fontMetrics)
 
-        val figmaLineHeight = context.getDimenFloat(Typo.getLineHeight(Typo.Caption1))
+        val figmaLineHeight = context.getDimenFloat(Typo.getLineHeight(Typo.Subtitle4))
 
         val lineSpacing = figmaLineHeight - fontLineHeight
 
@@ -49,9 +57,16 @@ class YongByungTextArea @JvmOverloads constructor(
         val padding = context.dpToIntPx(PADDING)
         setPadding(padding, padding, padding, padding)
 
-        when {
-            isFocused -> setBackground(R.drawable.bg_border_g400_1dp_rounded_8dp)
-            else -> setBackground(R.drawable.bg_border_g200_1dp_rounded_8dp)
+        when (type) {
+            LINE -> {
+                when {
+                    isFocused -> setBackground(R.drawable.bg_border_g400_1dp_rounded_8dp)
+                    else -> setBackground(R.drawable.bg_border_g200_1dp_rounded_8dp)
+                }
+            }
+            TRANSPARENT -> {
+                background = null
+            }
         }
     }
 
@@ -61,5 +76,14 @@ class YongByungTextArea @JvmOverloads constructor(
 
     companion object {
         const val PADDING = 16f
+
+        const val LINE = 0
+        const val TRANSPARENT = 1
+
+        @JvmStatic
+        @BindingAdapter("type")
+        fun setDisabled(textField: YongByungTextArea, type: Int) {
+            textField.type = type
+        }
     }
 }

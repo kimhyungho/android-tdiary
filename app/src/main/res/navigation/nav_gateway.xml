@@ -14,11 +14,17 @@
     <fragment
         android:id="@+id/dest_message"
         android:name="com.hardy.yongbyung.ui.messagelist.MessageListFragment"
-        android:label="MessageFragment" />
+        android:label="MessageFragment"
+        tools:layout="@layout/fragment_message_list" />
 
     <fragment
         android:id="@+id/dest_my_page"
         android:name="com.hardy.yongbyung.ui.mypage.MyPageFragment"
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_my_page" />
+    <fragment
+        android:id="@+id/dest_community"
+        android:name="com.hardy.yongbyung.ui.community.CommunityFragment"
+        android:label="CommunityFragment"
+        tools:layout="@layout/fragment_community" />
 </navigation>

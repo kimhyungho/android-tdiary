@@ -21,8 +21,13 @@ class GatewayFragment : BaseViewModelFragment<FragmentGatewayBinding, GatewayVie
         super.onViewCreated(view, savedInstanceState)
 
         setupBottomNavigation()
-    }
 
+        with(viewDataBinding) {
+            writeFab.setOnClickListener {
+                navController.navigate(GatewayFragmentDirections.actionDestMainToDestWritePost())
+            }
+        }
+    }
 
     private fun setupBottomNavigation() {
         val navHostFragment =

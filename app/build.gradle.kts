@@ -144,4 +144,6 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx:23.1.0")
 
     implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+
+    implementation("com.naver.maps:map-sdk:3.15.0")
 }

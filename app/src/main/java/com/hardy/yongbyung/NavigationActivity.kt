@@ -1,6 +1,7 @@
 package com.hardy.yongbyung
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -27,8 +28,8 @@ class NavigationActivity : BaseViewModelActivity<ActivityNavigationBinding, Navi
 
         lifecycleScope.launch {
             viewModel.isAuthenticated.collect {
-                if (it) navController?.setGraph(R.navigation.nav_main)
-                else navController?.setGraph(R.navigation.nav_onboarding)
+                if (it == true) navController?.setGraph(R.navigation.nav_main)
+                else if (it == false) navController?.setGraph(R.navigation.nav_onboarding)
             }
         }
     }

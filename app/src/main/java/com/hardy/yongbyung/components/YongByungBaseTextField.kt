@@ -6,9 +6,11 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.databinding.adapters.ListenerUtil
+import com.hardy.yongbyung.databinding.OnAfterTextChanged
 
 abstract class YongByungBaseTextField(
     context: Context,
@@ -50,6 +52,12 @@ abstract class YongByungBaseTextField(
         @BindingAdapter("android:maxLength")
         fun setMaxLength(textFiled: YongByungBaseTextField, maxLength: Int) {
             textFiled.maxLength = maxLength
+        }
+
+        @JvmStatic
+        @BindingAdapter("android:imeOptions")
+        fun setImeOptions(textFiled: YongByungBaseTextField, imeOptions: Int) {
+            textFiled.imeOptions = imeOptions
         }
 
         @JvmStatic
@@ -125,6 +133,8 @@ abstract class YongByungBaseTextField(
             field = value
             setCurrentState()
         }
+
+    abstract var imeOptions: Int
 
     abstract var isError: Boolean?
 

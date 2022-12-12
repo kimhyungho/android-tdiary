@@ -11,6 +11,15 @@
         android:title="쪽지" />
 
     <item
+        android:id="@+id/none"
+        android:title="" />
+
+    <item
+        android:id="@+id/dest_community"
+        android:icon="@drawable/ic_message"
+        android:title="커뮤니티" />
+
+    <item
         android:id="@+id/dest_my_page"
         android:icon="@drawable/ic_my_page"
         android:title="내 정보" />

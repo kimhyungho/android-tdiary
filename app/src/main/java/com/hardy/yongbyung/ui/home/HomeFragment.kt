@@ -1,7 +1,6 @@
 package com.hardy.yongbyung.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
-import com.hardy.yongbyung.adapters.HorizontalCategoryListAdapter
 import com.hardy.yongbyung.adapters.PagingStateAdapter
 import com.hardy.yongbyung.adapters.PostListAdapter
 import com.hardy.yongbyung.databinding.FragmentHomeBinding
@@ -27,13 +25,6 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
 ) {
     override val viewModel: HomeViewModel by viewModels()
 
-    private val horizontalCategoryListAdapter = HorizontalCategoryListAdapter().apply {
-        listener = object : HorizontalCategoryListAdapter.Listener {
-            override fun onCategoryImageClick(name: String) {
-                viewModel.onCategorySelect(name)
-            }
-        }
-    }
     private val postListAdapter = PostListAdapter().apply {
         listener = object : PostListAdapter.Listener {
             override fun onItemClick(id: String) {
@@ -69,11 +60,6 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                 }
             }
 
-            with(sportsRecyclerView) {
-                itemAnimator = null
-                adapter = horizontalCategoryListAdapter
-            }
-
             with(postsRecyclerView) {
                 itemAnimator = null
                 adapter = postListAdapter.withLoadStateFooter(
@@ -81,10 +67,7 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                 )
             }
 
-            writePostFab.setOnClickListener {
-                val mainNavController = parentFragment?.parentFragment?.findNavController()
-                mainNavController?.navigate(GatewayFragmentDirections.actionDestMainToDestWritePost())
-            }
+
 
             regionFilterButton.setOnClickListener {
                 val mainRegion = viewModel?.selectedMainRegion?.value
@@ -93,18 +76,13 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
                     mainRegion,
                     subRegion
                 ) { selectedMainRegion, selectedSubRegion ->
-                    viewModel?.onFilterSelected(selectedMainRegion, selectedSubRegion)
+//                    viewModel?.onFilterSelected(selectedMainRegion, selectedSubRegion)
                 }
                 dialog.show(childFragmentManager, SelectSidoDialog.TAG)
             }
         }
 
         with(viewModel) {
-            lifecycleScope.launchWhenStarted {
-                categories.collect { category ->
-                    horizontalCategoryListAdapter.submitList(category)
-                }
-            }
 
             lifecycleScope.launchWhenStarted {
                 posts.collect { posts ->
@@ -132,7 +110,6 @@ class HomeFragment : BaseViewModelFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun onDestroyView() {
         with(viewDataBinding) {
-            sportsRecyclerView.adapter = null
             postsRecyclerView.adapter = null
         }
         super.onDestroyView()

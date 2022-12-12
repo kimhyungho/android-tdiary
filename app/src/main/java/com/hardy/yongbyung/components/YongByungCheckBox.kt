@@ -24,7 +24,7 @@ class YongByungCheckBox @JvmOverloads constructor(
     private val binding: LayoutCheckBoxBinding =
         LayoutCheckBoxBinding.inflate(LayoutInflater.from(context), this, true)
 
-    var size: Int = SMALL
+    var size: Int = MEDIUM
         set(size) {
             field = size
             setSizeState()
@@ -108,8 +108,6 @@ class YongByungCheckBox @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        super.onTouchEvent(event)
-
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 if (!isDisabled) {
@@ -124,7 +122,6 @@ class YongByungCheckBox @JvmOverloads constructor(
                 }
             }
         }
-
         return true
     }
 

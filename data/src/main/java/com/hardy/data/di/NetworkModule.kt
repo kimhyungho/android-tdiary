@@ -7,6 +7,7 @@ import com.hardy.data.di.qualifiers.KakaoApiQualifier
 import com.hardy.data.remote.api.FcmService
 import com.hardy.data.remote.api.KakaoService
 import com.hardy.data.remote.interceptors.FcmAuthInterceptor
+import com.hardy.data.remote.interceptors.KakaoAuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttp(
+    @FcmApiQualifier
+    fun provideFcmOkHttp(
         authInterceptor: FcmAuthInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
@@ -52,6 +54,7 @@ class NetworkModule {
     @FcmApiQualifier
     fun provideFcmRetrofit(
         gson: Gson,
+        @FcmApiQualifier
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
@@ -71,8 +74,31 @@ class NetworkModule {
     @Singleton
     @Provides
     @KakaoApiQualifier
+    fun provideKakaoOkHttp(
+        authInterceptor: KakaoAuthInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BODY
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
+            })
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+
+    @Singleton
+    @Provides
+    @KakaoApiQualifier
     fun provideKakaoRetrofit(
         gson: Gson,
+        @KakaoApiQualifier
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()

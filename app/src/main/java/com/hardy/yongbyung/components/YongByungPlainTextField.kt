@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.LayoutPlainTextFieldBinding
 
@@ -21,7 +22,6 @@ class YongByungPlainTextField @JvmOverloads constructor(
 ) : YongByungBaseTextField(
     context, attrs, defStyleAttr
 ) {
-
     private lateinit var binding: LayoutPlainTextFieldBinding
 
     override fun inflateLayout(context: Context) {
@@ -48,6 +48,18 @@ class YongByungPlainTextField @JvmOverloads constructor(
             typedArray.recycle()
         }
     }
+
+    override var imeOptions: Int = 0
+        set(value) {
+            field = value
+            binding.edittext.imeOptions = value
+        }
+
+    var type: Int = UNDERLINE
+        set(value) {
+            field = value
+            setCurrentState()
+        }
 
     override var isError: Boolean? = false
         set(value) {
@@ -123,10 +135,18 @@ class YongByungPlainTextField @JvmOverloads constructor(
     }
 
     override fun setBackground() {
-        when {
-            isError == true -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_r800_2dp)
-            binding.edittext.isFocused -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g300_2dp)
-            else -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g200_2dp)
+        when (type) {
+            UNDERLINE -> {
+                when {
+                    isError == true -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_r800_2dp)
+                    binding.edittext.isFocused -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g300_2dp)
+                    else -> binding.inputFiled.setBackgroundResource(R.drawable.bg_underline_g200_2dp)
+                }
+            }
+
+            TRANSPARENT -> {
+                binding.inputFiled.background = null
+            }
         }
     }
 
@@ -138,5 +158,16 @@ class YongByungPlainTextField @JvmOverloads constructor(
 
     override fun setIconTint() {
         // plain text field don't have icon
+    }
+
+    companion object {
+        const val UNDERLINE = 0
+        const val TRANSPARENT = 1
+
+        @JvmStatic
+        @BindingAdapter("type")
+        fun setDisabled(textField: YongByungPlainTextField, type: Int) {
+            textField.type = type
+        }
     }
 }

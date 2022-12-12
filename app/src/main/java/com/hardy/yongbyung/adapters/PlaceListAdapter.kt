@@ -5,18 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hardy.yongbyung.databinding.ItemHorizontalCategoryBinding
-import com.hardy.yongbyung.model.CategoryUiModel
+import com.hardy.yongbyung.databinding.ItemPlaceBinding
+import com.hardy.yongbyung.model.PlaceUiModel
 
-class HorizontalCategoryListAdapter :
-    ListAdapter<CategoryUiModel, HorizontalCategoryListAdapter.ViewHolder>(
-        FeedImageDiffCallback()
+class PlaceListAdapter :
+    ListAdapter<PlaceUiModel, PlaceListAdapter.ViewHolder>(
+        PlaceDiffCallback()
     ) {
+
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemHorizontalCategoryBinding.inflate(
+            ItemPlaceBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -25,19 +26,17 @@ class HorizontalCategoryListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category = getItem(position)
-        holder.bind(category)
-        holder.binding.sportImage.setOnClickListener {
-            if(!category.isSelected) {
-                listener?.onCategoryImageClick(category.name)
-            }
+        val place = getItem(position)
+        holder.bind(place)
+        holder.binding.locationCheckBox.setOnClickListener {
+            listener?.onPlaceCheck(place)
         }
     }
 
     class ViewHolder(
-        val binding: ItemHorizontalCategoryBinding
+        val binding: ItemPlaceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CategoryUiModel) {
+        fun bind(item: PlaceUiModel) {
             binding.apply {
                 uiModel = item
                 executePendingBindings()
@@ -46,21 +45,21 @@ class HorizontalCategoryListAdapter :
     }
 
     interface Listener {
-        fun onCategoryImageClick(name: String)
+        fun onPlaceCheck(item: PlaceUiModel)
     }
 }
 
-private class FeedImageDiffCallback : DiffUtil.ItemCallback<CategoryUiModel>() {
+private class PlaceDiffCallback : DiffUtil.ItemCallback<PlaceUiModel>() {
     override fun areItemsTheSame(
-        oldItem: CategoryUiModel,
-        newItem: CategoryUiModel
+        oldItem: PlaceUiModel,
+        newItem: PlaceUiModel
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: CategoryUiModel,
-        newItem: CategoryUiModel
+        oldItem: PlaceUiModel,
+        newItem: PlaceUiModel
     ): Boolean {
         return oldItem == newItem
     }
