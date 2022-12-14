@@ -21,7 +21,7 @@ interface DataModule {
     @Binds
     fun bindPostRepository(
         repo: PostRepositoryImpl
-    ): PostRepository
+    ): PostsRepository
 
     @Singleton
     @Binds

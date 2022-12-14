@@ -8,4 +8,9 @@ interface MessageRoomRepository {
     fun deleteMessageRoom(messageRoomId: String): Flow<Response<Unit>>
 
     fun getMessageRooms(): Flow<Response<List<Pair<String?, MessageRoom?>>>>
+
+
+//    fun getMessageRoomsFromFirestore(): Flow<Response<List<MessageRoom>>>
+//
+//    fun deleteMessageRoomFromFirestore(): Flow<Response<Void?>>
 }

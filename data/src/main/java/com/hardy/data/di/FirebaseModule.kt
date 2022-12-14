@@ -9,6 +9,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import com.hardy.data.di.qualifiers.MessagesQualifier
+import com.hardy.data.di.qualifiers.PostsQualifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +31,22 @@ class FirebaseModule {
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return Firebase.firestore
     }
+
+    @Singleton
+    @Provides
+    @PostsQualifier
+    fun providePostRef(
+        db: FirebaseFirestore
+    ) = db.collection("posts")
+
+    @Singleton
+    @Provides
+    @MessagesQualifier
+    fun provideMessageRoomRef(
+        db: FirebaseFirestore
+    ) = db.collection("messageroom")
+
+
 
     @Singleton
     @Provides

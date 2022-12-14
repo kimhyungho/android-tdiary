@@ -2,9 +2,9 @@ package com.hardy.yongbyung.mapper
 
 import com.hardy.domain.exceptions.YongByungException
 
-internal object ExceptionMapper : Mapper<Exception, String> {
-    override fun mapToView(from: Exception): String {
-        from.printStackTrace()
+internal object ExceptionMapper : Mapper<Throwable?, String> {
+    override fun mapToView(from: Throwable?): String {
+        from?.printStackTrace()
         return when (from) {
             is YongByungException -> {
                 when (from.code) {
