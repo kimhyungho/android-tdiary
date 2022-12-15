@@ -8,7 +8,6 @@ data class Post(
     val content: String? = null,
     val createdAt: Date? = null,
     val place: Place? = null,
-    val mediaUrl1: String?,
-    val mediaUrl2: String?,
-    val mediaUrl3: String?
+    val date: Date? = null,
+    val mediaUrl: String? = null,
 )

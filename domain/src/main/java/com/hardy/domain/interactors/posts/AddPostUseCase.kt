@@ -6,23 +6,27 @@ import com.hardy.domain.model.Place
 import com.hardy.domain.model.Response
 import com.hardy.domain.repositories.PostsRepository
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AddPostUseCase(
+@Singleton
+class AddPostUseCase @Inject constructor(
     private val repo: PostsRepository
 ) : SuspendFlowUseCase<AddPostUseCase.Params, Void?> {
     override suspend fun invoke(params: Params?): Flow<Response<Void?>> {
-        val (title, content, place) = params
+        val (date, title, place, story, mediaUri, mimeType) = params
             ?: throw IllegalArgumentException("params can not be null")
 
-        return repo.addPostToFirestore(title, content, place, null, null, null)
+        return repo.addPostToFirestore(date, title, place, story, mediaUri, mimeType)
     }
 
     data class Params(
+        val date: Date,
         val title: String,
-        val content: String,
-        val place: Place,
-        val mediaUri1: Uri?,
-        val mediaUri2: Uri?,
-        val mediaUri3: Uri?
+        val place: Place?,
+        val story: String,
+        val mediaUri: Uri?,
+        val mimeType: String?
     )
 }

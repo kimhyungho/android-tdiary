@@ -1,8 +1,11 @@
 package com.hardy.data.repositories
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageMetadata
+import com.hardy.data.di.qualifiers.PostsQualifier
 import com.hardy.domain.model.Place
 import com.hardy.domain.model.Post
 import com.hardy.domain.model.Response
@@ -19,6 +22,7 @@ import javax.inject.Singleton
 @Singleton
 class PostRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
+    @PostsQualifier
     private val postsRef: CollectionReference,
     private val firebaseStorage: FirebaseStorage
 ) : PostsRepository {
@@ -62,31 +66,31 @@ class PostRepositoryImpl @Inject constructor(
         }
 
     override suspend fun addPostToFirestore(
+        date: Date,
         title: String,
+        place: Place?,
         content: String,
-        place: Place,
-        mediaUri1: String?,
-        mediaUri2: String?,
-        mediaUri3: String?
+        mediaUri: Uri?,
+        mimeType: String?
     ): Flow<Response<Void?>> = flow {
         try {
             emit(Response.Loading)
             val id = postsRef.document().id
-            val ref = firebaseStorage.reference.child("images/${id}")
-            if (mediaUri1 != null) ref.child("1")
-            if (mediaUri2 != null) ref.child("2")
-            if (mediaUri3 != null) ref.child("3")
+            val ref = firebaseStorage.reference.child("images/posts/${id}/1.$mimeType")
+            if (mediaUri != null) {
+                ref.putFile(mediaUri)
+            }
             val post = Post(
                 id = id,
                 uid = uid,
                 content = content,
                 createdAt = Date(),
                 place = place,
-                mediaUri1,
-                mediaUri2,
-                mediaUri3
+                date = date,
+                mediaUrl = if (mediaUri == null) null else ref.downloadUrl.await().toString()
             )
             postsRef.document(id).set(post).await()
+            emit(Response.Success(null))
         } catch (e: Exception) {
             emit(Response.Failure(e))
         }

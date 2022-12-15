@@ -1,11 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.components.YongByungTextArea" />
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.writepost.WritePostViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Write"
+            android:textColor="@color/G400"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:typo="subtitle2" />
 
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="36dp"
+            android:text="Title"
+            android:textColor="@color/G900"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_text"
+            app:typo="subtitle1" />
+
+        <com.hardy.yongbyung.components.YongByungTextArea
+            android:id="@+id/title_text_area"
+            type="@{YongByungTextArea.TRANSPARENT}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:afterTextChanged="@{(title)->viewModel.setTitle(title)}"
+            android:hint="Write Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Location"
+            android:textColor="@color/G900"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_area"
+            app:typo="subtitle1" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/location_bttuon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.place != null ? viewModel.place.placeName : `Select Location`}"
+            android:textColor="@{viewModel.place != null ? @color/G900 : @color/G200}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_text"
+            app:typo="subtitle4" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/story_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="36dp"
+            android:text="Story"
+            android:textColor="@color/G900"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_bttuon"
+            app:typo="subtitle1" />
+
+        <com.hardy.yongbyung.components.YongByungTextArea
+            android:id="@+id/stroy_text_area"
+            type="@{YongByungTextArea.TRANSPARENT}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:afterTextChanged="@{(story)->viewModel.setStory(story)}"
+            android:hint="Write Story"
+            app:layout_constraintBottom_toTopOf="@+id/write_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/story_text" />
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            android:id="@+id/gallery_button"
+            icon="@{Icon.ic_calendar}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/G600" />
+
+        <com.hardy.yongbyung.components.YongByungImageView
+            android:id="@+id/thumbnail_image_view"
+            src="@{viewModel.media}"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/gallery_button"
+            app:layout_constraintStart_toEndOf="@+id/gallery_button"
+            app:layout_constraintTop_toTopOf="@+id/gallery_button" />
+
+        <com.hardy.yongbyung.components.YongByungBoxButton
+            android:id="@+id/write_button"
+            isDisabled="@{viewModel.title.empty || viewModel.story.empty}"
+            isLoading="@{viewModel.writeLoading}"
+            rounding="@{24}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@{`Write`}"
+            app:layout_constraintBottom_toBottomOf="@+id/gallery_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gallery_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,5 +7,22 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.hardy.yongbyung.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_dest_write_post"
+            app:destination="@id/dest_write_post" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_write_post"
+        android:name="com.hardy.yongbyung.ui.writepost.WritePostFragment"
+        android:label="WritePostFragment"
+        tools:layout="@layout/fragment_write_post">
+
+        <argument
+            android:name="date"
+            app:argType="string"
+            app:nullable="false" />
+
+    </fragment>
 </navigation>

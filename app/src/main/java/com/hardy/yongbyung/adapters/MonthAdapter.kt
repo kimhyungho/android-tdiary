@@ -10,9 +10,12 @@ import com.hardy.domain.model.Post
 import com.hardy.yongbyung.databinding.ItemMonthBinding
 import java.util.*
 
-class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
+class MonthAdapter : ListAdapter<Post, MonthAdapter.ViewHolder>(
     MonthDiffCallback()
 ) {
+
+    var listener: Listener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemMonthBinding.inflate(
@@ -20,6 +23,7 @@ class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
                 parent,
                 false
             ),
+            listener
         )
     }
 
@@ -28,7 +32,8 @@ class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
     }
 
     class ViewHolder(
-        val binding: ItemMonthBinding
+        val binding: ItemMonthBinding,
+        var listener: Listener?,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Post?) {
             binding.apply {
@@ -37,10 +42,10 @@ class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
 
                 calendar.time = Date()
                 calendar.set(Calendar.DAY_OF_MONTH, 1)
-                calendar.add(Calendar.MONTH, position - center)
+                calendar.add(Calendar.MONTH, bindingAdapterPosition - center)
 
                 itemMonthText.text =
-                    "${calendar.get(Calendar.YEAR)}년 ${calendar.get(Calendar.MONTH) + 1}월"
+                    "${calendar.get(Calendar.YEAR)}.${calendar.get(Calendar.MONTH) + 1}"
                 val tempMonth = calendar.get(Calendar.MONTH)
                 var dayList: MutableList<Date> = MutableList(6 * 7) { Date() }
 
@@ -56,7 +61,13 @@ class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
                 }
 
                 val dayListManager = GridLayoutManager(binding.root.context, 7)
-                val dayListAdapter = DayAdapter(tempMonth, dayList)
+                val dayListAdapter = DayAdapter(tempMonth, dayList).apply {
+                    listener = object : DayAdapter.Listener {
+                        override fun onDayClick(item: Post?, date: Date) {
+                            this@ViewHolder.listener?.onDayClick(item, date)
+                        }
+                    }
+                }
 
                 itemMonthDayList.apply {
                     layoutManager = dayListManager
@@ -70,6 +81,10 @@ class MonthAdapter() : ListAdapter<Post, MonthAdapter.ViewHolder>(
 
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
+    }
+
+    interface Listener {
+        fun onDayClick(post: Post?, date: Date)
     }
 }
 

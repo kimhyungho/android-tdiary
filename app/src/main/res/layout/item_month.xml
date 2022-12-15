@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.hardy.yongbyung.components.YongByungText
             android:id="@+id/item_month_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
+            app:typo="subtitle1"
             android:text="2022년 6월"
             android:textColor="@color/black"
             android:textSize="22sp"
@@ -19,82 +21,84 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="일"
-                android:textColor="#ff0000"
-                android:textSize="18sp" />
+                android:text="S"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="월"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="M"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="화"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="T"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="수"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="W"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="목"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="T"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="금"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="F"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.hardy.yongbyung.components.YongByungText
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="토"
-                android:textColor="#0000ff"
-                android:textSize="18sp" />
+                android:text="S"
+                android:textColor="@color/P300"
+                android:textSize="18sp"
+                app:typo="subtitle4" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="3dp"
-            android:background="#bbb" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/item_month_day_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp" />
     </LinearLayout>
 </layout>

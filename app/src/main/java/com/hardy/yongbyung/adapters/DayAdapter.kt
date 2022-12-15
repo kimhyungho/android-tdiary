@@ -33,11 +33,11 @@ class DayAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val date = dayList[position]
 //        val place = getItem(position)
         holder.bind(null)
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.binding.root.context, "${dayList[position]}", Toast.LENGTH_SHORT)
-                .show()
+            listener?.onDayClick(null, date)
         }
     }
 
@@ -48,17 +48,9 @@ class DayAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Post?) {
             binding.apply {
-                itemDayText.text = dayList[position].date.toString()
-                itemDayText.setTextColor(
-                    when (position % 7) {
-                        0 -> Color.RED
-                        6 -> Color.BLUE
-                        else -> Color.BLACK
-                    }
-                )
-
-                if (tempMonth != dayList[position].month) {
-                    itemDayText.alpha = 0.4f
+                itemDayText.text = dayList[bindingAdapterPosition].date.toString()
+                if (tempMonth != dayList[bindingAdapterPosition].month) {
+                    itemDayText.alpha = 0.15f
                 }
                 executePendingBindings()
             }
@@ -70,7 +62,7 @@ class DayAdapter(
     }
 
     interface Listener {
-        fun onPlaceCheck(item: Post)
+        fun onDayClick(item: Post?, date: Date)
     }
 }
 

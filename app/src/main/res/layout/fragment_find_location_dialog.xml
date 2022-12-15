@@ -46,54 +46,33 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:afterTextChanged="@{(location)->viewModel.onLocationNameTextChange(location)}"
             android:layout_marginEnd="16dp"
-            android:hint="@{`장소를 입력해주세요.`}"
+            android:hint="@{`Input Location Name`}"
             android:imeOptions="actionSearch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_text" />
-
-        <com.hardy.yongbyung.components.YongByungCheckBox
-            android:id="@+id/none_check_box"
-            isSelected="@{viewModel.noneSelected}"
-            label="@{`정해진 장소가 없어요`}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location_name_text_field" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/G100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/none_check_box" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/place_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="360dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider" />
+            app:layout_constraintTop_toBottomOf="@id/location_name_text_field" />
 
         <com.hardy.yongbyung.components.YongByungBoxButton
             android:id="@+id/confirm_button"
-            rounding="@{8}"
-            size="@{YongByungPlainButton.MEDIUM}"
+            rounding="@{24}"
+            size="@{YongByungPlainButton.LARGE}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            isDisabled="@{!viewModel.isConfirmButtonEnabled()}"
             android:layout_marginHorizontal="16dp"
-            android:text="@{`확인`}"
+            isDisabled="@{!viewModel.isConfirmButtonEnabled()}"
+            android:text="@{`Submit`}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/place_recycler_view" />

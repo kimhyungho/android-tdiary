@@ -116,15 +116,15 @@ class YongByungBoxButton @JvmOverloads constructor(
         when {
             isDisabled -> {
                 itemColor = R.color.white
-                bgColor = R.color.G500
+                bgColor = R.color.G300
             }
             isPressed -> {
                 itemColor = R.color.white
-                bgColor = R.color.G500
+                bgColor = R.color.P300
             }
             else -> {
                 itemColor = R.color.white
-                bgColor = R.color.black
+                bgColor = R.color.P500
             }
         }
     }
@@ -136,12 +136,12 @@ class YongByungBoxButton @JvmOverloads constructor(
                 bgColor = R.color.G300
             }
             isPressed -> {
-                itemColor = R.color.G500
-                bgColor = R.color.G500
+                itemColor = R.color.P300
+                bgColor = R.color.P300
             }
             else -> {
-                itemColor = R.color.black
-                bgColor = R.color.black
+                itemColor = R.color.P500
+                bgColor = R.color.P500
             }
         }
     }
