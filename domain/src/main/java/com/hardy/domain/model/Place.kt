@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Place(
-    val id: Long?,
-    val placeName: String?,
-    val addressName: String?,
-    val roadAddressName: String?,
-    val placeUrl: String?,
-    val x: Double?,
-    val y: Double?
-): Parcelable
+    val id: Long? = null,
+    val placeName: String? = null,
+    val addressName: String? = null,
+    val roadAddressName: String? = null,
+    val placeUrl: String? = null,
+    val x: Double? = null,
+    val y: Double? = null
+) : Parcelable

@@ -1,8 +1,10 @@
 package com.hardy.data.repositories
 
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.hardy.data.di.qualifiers.PostsQualifier
@@ -29,47 +31,29 @@ class PostRepositoryImpl @Inject constructor(
     private val uid get() = firebaseAuth.currentUser?.uid
 
     override fun getPostsFromFirestore(): Flow<Response<List<Post>>> = callbackFlow {
-        val snapshotListener = postsRef.orderBy("createdAt").addSnapshotListener { snapshot, e ->
-            val response = if (snapshot != null) {
-                val posts = snapshot.toObjects(Post::class.java)
-                Response.Success(posts)
-            } else {
-                Response.Failure(e?.cause)
-            }
+        val snapshotListener = postsRef.orderBy("createdAt", Query.Direction.DESCENDING)
+            .whereEqualTo("uid", uid)
+            .addSnapshotListener { snapshot, e ->
+                val response = if (snapshot != null) {
+                    val posts = snapshot.toObjects(Post::class.java)
+                    Response.Success(posts)
+                } else {
+                    Response.Failure(e?.cause)
+                }
 
-            trySend(response).isSuccess
-        }
+                trySend(response).isSuccess
+            }
 
         awaitClose {
             snapshotListener.remove()
         }
     }
 
-    override fun getPostsByUidFromFirestore(uid: String?): Flow<Response<List<Post>>> =
-        callbackFlow {
-            val snapshotListener = postsRef.orderBy("createdAt")
-                .whereEqualTo("uid", uid ?: this@PostRepositoryImpl.uid)
-                .addSnapshotListener { snapshot, e ->
-                    val response = if (snapshot != null) {
-                        val posts = snapshot.toObjects(Post::class.java)
-                        Response.Success(posts)
-                    } else {
-                        Response.Failure(e?.cause)
-                    }
-
-                    trySend(response).isSuccess
-                }
-
-            awaitClose {
-                snapshotListener.remove()
-            }
-        }
-
     override suspend fun addPostToFirestore(
         date: Date,
         title: String,
         place: Place?,
-        content: String,
+        story: String,
         mediaUri: Uri?,
         mimeType: String?
     ): Flow<Response<Void?>> = flow {
@@ -78,12 +62,13 @@ class PostRepositoryImpl @Inject constructor(
             val id = postsRef.document().id
             val ref = firebaseStorage.reference.child("images/posts/${id}/1.$mimeType")
             if (mediaUri != null) {
-                ref.putFile(mediaUri)
+                ref.putFile(mediaUri).await()
             }
             val post = Post(
+                title = title,
                 id = id,
                 uid = uid,
-                content = content,
+                story = story,
                 createdAt = Date(),
                 place = place,
                 date = date,

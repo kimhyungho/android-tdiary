@@ -10,13 +10,11 @@ import java.util.Date
 interface PostsRepository {
     fun getPostsFromFirestore(): Flow<Response<List<Post>>>
 
-    fun getPostsByUidFromFirestore(uid: String?): Flow<Response<List<Post>>>
-
     suspend fun addPostToFirestore(
         date: Date,
         title: String,
         place: Place?,
-        content: String,
+        story: String,
         mediaUri: Uri?,
         mimeType: String?
     ): Flow<Response<Void?>>

@@ -62,7 +62,7 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
 
     private fun doTakeGallery() {
         val intent = Intent(Intent.ACTION_PICK).apply {
-            type = "image/* video/*"
+            type = "image/*"
             action = Intent.ACTION_GET_CONTENT
         }
         galleryResult.launch(intent)

@@ -146,4 +146,6 @@ dependencies {
     implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
 
     implementation("com.naver.maps:map-sdk:3.15.0")
+
+//    implementation ("com.google.android.exoplayer:exoplayer:2.18.2")
 }
