@@ -2,9 +2,10 @@
 
 <img src="/yb-images/app_logo.png" align="left"
 width="200" hspace="10" vspace="10">
- 
-tdiary는 하루를 기록하는 안드로이드 어플리케이션입니다.
-사진과 위치를 저장할 수 있습니다.
+</br>   
+심플한 디자인으로 일기를 기록하는 서비스입니다.  
+제목과 내용 위치와 사진을 저장할 수 있습니다.  
+캘린더를 통해 한눈에 기록을 확인 할 수 있습니다.  
 
 </br>
 </br>
@@ -50,3 +51,6 @@ tdiary는 하루를 기록하는 안드로이드 어플리케이션입니다.
 <img src="/yb-images/2.png" width="160px" title="2" alt="2"></img>
 <img src="/yb-images/3.png" width="160px" title="3" alt="3"></img>
 <img src="/yb-images/4.png" width="160px" title="4" alt="4"></img>
+<img src="/yb-images/4.png" width="160px" title="4" alt="5"></img>
+<img src="/yb-images/4.png" width="160px" title="4" alt="6"></img>
+
