@@ -3,17 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_onboarding"
-    app:startDestination="@id/dest_intro">
-
-    <fragment
-        android:id="@+id/dest_intro"
-        android:name="com.hardy.yongbyung.ui.intro.IntroFragment"
-        android:label="IntroFragment"
-        tools:layout="@layout/fragment_intro">
-        <action
-            android:id="@+id/action_dest_intro_to_dest_login"
-            app:destination="@id/dest_login" />
-    </fragment>
+    app:startDestination="@id/dest_login">
 
     <fragment
         android:id="@+id/dest_login"
@@ -21,8 +11,14 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
+            app:popUpTo="@id/nav_onboarding"
+            app:popUpToInclusive="false"
             android:id="@+id/action_dest_login_to_dest_agreement"
-            app:destination="@id/dest_agreement" />
+            app:destination="@id/dest_agreement"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
 
     <fragment

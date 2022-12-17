@@ -25,7 +25,11 @@ object Icon {
             ic_sign_out,
             ic_term,
             ic_post,
-            ic_siren
+            ic_siren,
+            ic_plus,
+            ic_setting,
+            ic_delete,
+            ic_gallery
         ]
     )
     annotation class Iconography
@@ -48,6 +52,10 @@ object Icon {
     const val ic_term = 15
     const val ic_post = 16
     const val ic_siren = 17
+    const val ic_plus = 18
+    const val ic_setting = 19
+    const val ic_delete = 20
+    const val ic_gallery = 21
 
     @DrawableRes
     fun getIconDrawable(@Iconography icon: Int): Int {
@@ -56,7 +64,6 @@ object Icon {
             ic_check_filled -> R.drawable.ic_check_filled
             ic_select -> R.drawable.ic_select
             ic_arrow_bottom -> R.drawable.ic_arrow_bottom
-            ic_close -> R.drawable.ic_close
             ic_calendar -> R.drawable.ic_calendar
             ic_location -> R.drawable.ic_location
             ic_heart -> R.drawable.ic_heart
@@ -70,6 +77,10 @@ object Icon {
             ic_term -> R.drawable.ic_term
             ic_post -> R.drawable.ic_post
             ic_siren -> R.drawable.ic_siren
+            ic_plus -> R.drawable.ic_plus
+            ic_setting -> R.drawable.ic_setting
+            ic_delete -> R.drawable.ic_delete
+            ic_gallery -> R.drawable.ic_gallery
             else -> ic_check
         }
     }

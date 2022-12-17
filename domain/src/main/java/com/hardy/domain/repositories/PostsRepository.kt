@@ -17,7 +17,7 @@ interface PostsRepository {
         story: String,
         mediaUri: Uri?,
         mimeType: String?
-    ): Flow<Response<Void?>>
+    ): Flow<Response<Post>>
 
     suspend fun deletePostFromFirestore(postId: String): Flow<Response<Void?>>
 }

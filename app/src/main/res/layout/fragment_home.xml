@@ -26,23 +26,27 @@
 
             <com.hardy.yongbyung.components.YongByungIcon
                 android:id="@+id/setting_button"
-                icon="@{Icon.ic_post}"
+                icon="@{Icon.ic_setting}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackgroundBorderless"
                 app:layout_constraintBottom_toBottomOf="@+id/write_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/write_button" />
+                app:layout_constraintTop_toTopOf="@+id/write_button"
+                app:tint="@color/G600" />
 
             <com.hardy.yongbyung.components.YongByungIcon
                 android:id="@+id/write_button"
-                icon="@{Icon.ic_post}"
+                icon="@{Icon.ic_plus}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
+                android:background="?selectableItemBackgroundBorderless"
                 app:layout_constraintBottom_toBottomOf="@+id/calendar_text"
                 app:layout_constraintEnd_toStartOf="@+id/setting_button"
-                app:layout_constraintTop_toTopOf="@+id/calendar_text" />
+                app:layout_constraintTop_toTopOf="@+id/calendar_text"
+                app:tint="@color/G600" />
 
             <com.hardy.yongbyung.components.YongByungText
                 android:id="@+id/calendar_text"
@@ -89,6 +93,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendar_custom"
                 app:typo="subtitle2" />
+
+            <com.hardy.yongbyung.components.YongByungLoader
+                android:id="@+id/loader"
+                loading="@{viewModel.getPostsLoading}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

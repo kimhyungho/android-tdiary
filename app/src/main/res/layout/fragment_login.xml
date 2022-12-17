@@ -38,7 +38,6 @@
         </FrameLayout>
 
         <ImageView
-            app:tint="@color/white"
             android:id="@+id/imageView2"
             android:layout_width="128dp"
             android:layout_height="128dp"
@@ -46,7 +45,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_login_logo" />
+            app:srcCompat="@drawable/ic_splash"
+            app:tint="@color/white" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_start"

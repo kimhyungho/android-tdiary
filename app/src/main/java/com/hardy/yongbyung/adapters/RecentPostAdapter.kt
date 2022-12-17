@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hardy.domain.model.Post
 import com.hardy.yongbyung.databinding.ItemRecentPostBinding
+import com.hardy.yongbyung.model.PostUiModel
 
 class RecentPostAdapter :
-    ListAdapter<Post, RecentPostAdapter.ViewHolder>(
-        RecentPostDiffCallback()
+    ListAdapter<PostUiModel, RecentPostAdapter.ViewHolder>(
+        RecentPostUiModelDiffCallback()
     ) {
 
     var listener: Listener? = null
@@ -26,17 +26,17 @@ class RecentPostAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post = getItem(position)
-        holder.bind(post)
+        val PostUiModel = getItem(position)
+        holder.bind(PostUiModel)
         holder.itemView.setOnClickListener {
-            listener?.onItemClick(post)
+            listener?.onItemClick(PostUiModel)
         }
     }
 
     class ViewHolder(
         val binding: ItemRecentPostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Post) {
+        fun bind(item: PostUiModel) {
             binding.apply {
                 uiModel = item
                 executePendingBindings()
@@ -45,21 +45,21 @@ class RecentPostAdapter :
     }
 
     interface Listener {
-        fun onItemClick(item: Post)
+        fun onItemClick(item: PostUiModel)
     }
 }
 
-private class RecentPostDiffCallback : DiffUtil.ItemCallback<Post>() {
+private class RecentPostUiModelDiffCallback : DiffUtil.ItemCallback<PostUiModel>() {
     override fun areItemsTheSame(
-        oldItem: Post,
-        newItem: Post
+        oldItem: PostUiModel,
+        newItem: PostUiModel
     ): Boolean {
         return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: Post,
-        newItem: Post
+        oldItem: PostUiModel,
+        newItem: PostUiModel
     ): Boolean {
         return oldItem == newItem
     }

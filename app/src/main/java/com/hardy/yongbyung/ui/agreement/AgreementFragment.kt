@@ -1,5 +1,6 @@
 package com.hardy.yongbyung.ui.agreement
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -8,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentAgreementBinding
 import com.hardy.yongbyung.ui.base.BaseViewModelFragment
+import com.hardy.yongbyung.ui.webview.WebViewActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,8 +27,7 @@ class AgreementFragment : BaseViewModelFragment<FragmentAgreementBinding, Agreem
             }
 
             termsOfServiceText.setOnClickListener {
-//                val dialog = TermDialogFragment.newInstance(TermDialogFragment.TERMS_OF_SERVICE)
-//                dialog.show(childFragmentManager, TermDialogFragment.TAG)
+                requireContext().startActivity(Intent(requireContext(), WebViewActivity::class.java))
             }
         }
 

@@ -25,30 +25,6 @@ interface DataModule {
 
     @Singleton
     @Binds
-    fun bindUserRepository(
-        repo: UserRepositoryImpl
-    ): UserRepository
-
-    @Singleton
-    @Binds
-    fun bindMessageRepository(
-        repo: MessageRepositoryImpl
-    ): MessageRepository
-
-    @Singleton
-    @Binds
-    fun bindMessageRoomRepository(
-        repo: MessageRoomRepositoryImpl
-    ): MessageRoomRepository
-
-    @Singleton
-    @Binds
-    fun bindReportRepository(
-        repo: ReportRepositoryImpl
-    ): ReportRepository
-
-    @Singleton
-    @Binds
     fun bindSettingRepository(
         repo: SettingRepositoryImpl
     ): SettingRepository

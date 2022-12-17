@@ -1,18 +1,16 @@
 package com.hardy.data.repositories
 
-import android.net.Uri
-import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.hardy.data.Constants.SIGN_IN_REQUEST
 import com.hardy.data.Constants.SIGN_UP_REQUEST
+import com.hardy.data.di.qualifiers.UsersQualifier
 import com.hardy.data.mapper.UserMapper
 import com.hardy.domain.exceptions.YongByungException
 import com.hardy.domain.model.Response
@@ -32,11 +30,11 @@ class AuthRepositoryImpl @Inject constructor(
     private var oneTapClient: SignInClient,
     @Named(SIGN_IN_REQUEST) private var signInRequest: BeginSignInRequest,
     @Named(SIGN_UP_REQUEST) private var signUpRequest: BeginSignInRequest,
-    private val firestore: FirebaseFirestore,
+    @UsersQualifier
+    private val userRef: CollectionReference,
     private val userDataStore: DataStore<UserPreferences>,
-    private val firebaseStorage: FirebaseStorage
 ) : AuthRepository {
-    override val uid: String? get() = auth.currentUser?.uid
+    val uid get() = auth.currentUser?.uid
 
     override fun isUserAuthenticated(): Flow<Boolean> = userDataStore.data.map { userPref ->
         !userPref.nickname.isNullOrEmpty() && auth.currentUser != null
@@ -63,8 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
                 emit(Response.Loading)
                 val firebaseAuth = auth.signInWithCredential(googleCredential).await()
                 val uid = firebaseAuth.user?.uid ?: throw IllegalArgumentException("not sign in")
-                setFcmToken(fcmToken)
-                val snapshot = firestore.collection("users").document(uid).get().await()
+                val snapshot = userRef.document(uid).get().await()
                 if (snapshot.exists()) {
                     val user = snapshot.toObject(User.Registered::class.java)
                     user?.let { emit(Response.Success(saveUser(user))) }
@@ -81,60 +78,14 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Response.Loading)
             val currentUser = auth.currentUser ?: throw IllegalArgumentException("not sign in")
             val uid = currentUser.uid
-            val nickname = currentUser.displayName ?: "새로운용병"
+            val nickname = currentUser.displayName ?: "MR.T"
             val user = User.Registered(
                 nickname = nickname,
-                profileImage = "https://firebasestorage.googleapis.com/v0/b/yongbyung-b2aa8.appspot.com/o/images%2Fdefault_profile.png?alt=media&token=660e2d25-4834-4a35-8309-bf94e9d9cab9",
+                profileImage = INIT_PROFILE_IMAGE,
                 createdAt = Date()
             )
-            firestore.collection("users").document(uid).set(user).await()
+            userRef.document(uid).set(user).await()
             emit(Response.Success(saveUser(user)))
-        } catch (e: Exception) {
-            emit(Response.Failure(YongByungException.parseFrom(e)))
-        }
-    }
-
-    override fun getMe(): Flow<Response<User.Registered>> =
-        userDataStore.data.map { Response.Success(UserMapper.mapToDomain(it)) }
-
-    override suspend fun editProfile(
-        nickname: String,
-        profileImage: Uri?
-    ): Flow<Response<User.Registered>> = flow {
-        try {
-            emit(Response.Loading)
-            uid ?: throw IllegalArgumentException("not sign in")
-            val updateData = if (profileImage != null) {
-                val ref = firebaseStorage.reference.child("images/${uid}.jpg")
-                ref.putFile(profileImage)
-                mapOf(
-                    "nickname" to nickname,
-                    "profileImage" to ref.downloadUrl.await().toString()
-                )
-            } else {
-                mapOf(
-                    "nickname" to nickname
-                )
-            }
-            firestore.collection("users")
-                .document(uid!!)
-                .update(updateData)
-                .await()
-
-            emit(
-                Response.Success(
-                    UserMapper.mapToDomain(
-                        userDataStore.updateData { prefs ->
-                            prefs.toBuilder()
-                                .apply {
-                                    if (profileImage != null) this.profileImage =
-                                        updateData["profileImage"]
-                                    this.nickname = updateData["nickname"]
-                                }
-                                .build()
-                        })
-                )
-            )
         } catch (e: Exception) {
             emit(Response.Failure(YongByungException.parseFrom(e)))
         }
@@ -173,7 +124,6 @@ class AuthRepositoryImpl @Inject constructor(
             pref.toBuilder()
                 .setNickname(user.nickname)
                 .setProfileImage(user.profileImage)
-                .setFcmToken(user.fcmToken)
                 .setCreatedAt(
                     user.createdAt?.time
                         ?: throw IllegalArgumentException("createdAt can not be null")
@@ -181,9 +131,8 @@ class AuthRepositoryImpl @Inject constructor(
         })
     }
 
-    private suspend fun setFcmToken(fcmToken: String) {
-        firestore.collection("users").document(uid ?: return)
-            .update("fcmToken", fcmToken)
-            .await()
+    companion object {
+        const val INIT_PROFILE_IMAGE =
+            "https://firebasestorage.googleapis.com/v0/b/yongbyung-b2aa8.appspot.com/o/images%2Fdefault_profile.png?alt=media&token=660e2d25-4834-4a35-8309-bf94e9d9cab9"
     }
 }

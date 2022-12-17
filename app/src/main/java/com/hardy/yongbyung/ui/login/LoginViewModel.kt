@@ -51,6 +51,7 @@ class LoginViewModel @Inject constructor(
                     _oneTapSignInResult.value = response.data
                 }
                 is Response.Failure -> {
+                    Log.d("kkkk", "", response.e)
                     _loginLoading.value = false
                     _error.trySend(ExceptionMapper.mapToView(response.e))
                 }
@@ -68,6 +69,7 @@ class LoginViewModel @Inject constructor(
                     _user.value = response.data
                 }
                 is Response.Failure -> {
+                    Log.d("kkkk", "", response.e)
                     _loginLoading.value = false
                     _error.trySend(ExceptionMapper.mapToView(response.e))
                 }

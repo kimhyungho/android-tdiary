@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.hardy.yongbyung.foundation.Icon" />
+
+        <import type="com.hardy.yongbyung.components.YongByungBoxButton" />
+
+        <variable
+            name="viewModel"
+            type="com.hardy.yongbyung.ui.setting.SettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            android:id="@+id/back_button"
+            icon="@{Icon.ic_back}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:tint="@color/G600" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Setting"
+            android:textColor="@color/G600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:typo="subtitle1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_privacy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/guide_end"
+            app:layout_constraintStart_toStartOf="@+id/guide_start"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <com.hardy.yongbyung.components.YongByungText
+                android:id="@+id/text_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="17dp"
+                android:text="개인정보 수집 및 이용"
+                android:textColor="@color/G600"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:typo="subtitle3" />
+
+            <com.hardy.yongbyung.components.YongByungText
+                android:id="@+id/icon_privacy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:drawablePadding="8dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:textColor="@color/G400"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:typo="subtitle4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.hardy.yongbyung.components.YongByungBoxButton
+            android:id="@+id/button_logout"
+            size="@{YongByungBoxButton.LARGE}"
+            type="@{YongByungBoxButton.LINE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@{`로그아웃`}"
+            app:layout_constraintEnd_toStartOf="@+id/guide_end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guide_start"
+            app:layout_constraintTop_toBottomOf="@+id/button_privacy" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/text_withdrawl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="탈퇴하려면"
+            android:textColor="@color/G400"
+            app:layout_constraintStart_toStartOf="@+id/guide_start"
+            app:layout_constraintTop_toBottomOf="@+id/button_logout"
+            app:typo="caption1_1" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/button_withdrawl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="여기"
+            android:textColor="@color/G400"
+            app:layout_constraintStart_toEndOf="@+id/text_withdrawl1"
+            app:layout_constraintTop_toTopOf="@+id/text_withdrawl1"
+            app:typo="caption1_1" />
+
+        <com.hardy.yongbyung.components.YongByungText
+            android:id="@+id/text_withdrawl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="를 눌러주세요"
+            android:textColor="@color/G400"
+            app:layout_constraintStart_toEndOf="@+id/button_withdrawl"
+            app:layout_constraintTop_toTopOf="@+id/button_withdrawl"
+            app:typo="caption1_1" />
+
+        <com.hardy.yongbyung.components.YongByungLoader
+            android:id="@+id/loader"
+            loading="@{viewModel.isLoading()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

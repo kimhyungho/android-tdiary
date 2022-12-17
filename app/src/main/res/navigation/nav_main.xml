@@ -11,7 +11,25 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_dest_write_post"
-            app:destination="@id/dest_write_post" />
+            app:destination="@id/dest_write_post"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_dest_post_detail"
+            app:destination="@id/dest_post_detail"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_dest_setting"
+            app:destination="@id/dest_setting"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/dest_write_post"
@@ -23,6 +41,32 @@
             android:name="date"
             app:argType="string"
             app:nullable="false" />
+        <action
+            android:id="@+id/action_dest_write_post_to_dest_post_detail"
+            app:destination="@id/dest_post_detail"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
 
     </fragment>
+    <fragment
+        android:id="@+id/dest_post_detail"
+        android:name="com.hardy.yongbyung.ui.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment"
+        tools:layout="@layout/fragment_post_detail">
+
+        <argument
+            android:name="post"
+            app:argType="com.hardy.domain.model.Post"
+            app:nullable="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_setting"
+        android:name="com.hardy.yongbyung.ui.setting.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+
 </navigation>

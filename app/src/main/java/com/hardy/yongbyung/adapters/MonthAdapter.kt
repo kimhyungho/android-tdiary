@@ -1,22 +1,18 @@
 package com.hardy.yongbyung.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hardy.domain.model.Post
-import com.hardy.yongbyung.R
-import com.hardy.yongbyung.databinding.ItemDayBinding
 import com.hardy.yongbyung.databinding.ItemMonthBinding
+import com.hardy.yongbyung.model.PostUiModel
 import okhttp3.internal.notify
 import java.util.*
 
 class MonthAdapter : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
-    private var posts: List<Post> = listOf()
+    private var posts: List<PostUiModel> = listOf()
 
     var listener: Listener? = null
 
@@ -35,8 +31,10 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
         calendar.time = Date()
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         calendar.add(Calendar.MONTH, position - center)
-        holder.binding.itemMonthText.text =
-            "${calendar.get(Calendar.YEAR)}년 ${calendar.get(Calendar.MONTH) + 1}월"
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+
+        holder.binding.itemMonthText.text = "$year. ${month + 1}월"
         val tempMonth = calendar.get(Calendar.MONTH)
 
         var dayList: MutableList<Date> = MutableList(6 * 7) { Date() }
@@ -50,11 +48,13 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
 
         val dayListManager = GridLayoutManager(holder.binding.root.context, 7)
         val dayListAdapter = DayAdapter(tempMonth, dayList)
-        val monthPosts = this.posts
+        val monthPosts = this.posts.filter {
+            it.date!!.year + 1900 == year && it.date.month == month
+        }
         holder.binding.itemMonthDayList.layoutManager = dayListManager
         holder.binding.itemMonthDayList.adapter = dayListAdapter.apply {
             listener = object : DayAdapter.Listener {
-                override fun onDayClick(post: Post?, date: Date) {
+                override fun onDayClick(post: PostUiModel?, date: Date) {
                     this@MonthAdapter.listener?.onDayClick(post, date)
                 }
             }
@@ -67,12 +67,12 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.ViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setPosts(posts: List<Post>) {
+    fun setPosts(posts: List<PostUiModel>) {
         this.posts = posts
         notifyDataSetChanged()
     }
 
     interface Listener {
-        fun onDayClick(post: Post?, date: Date)
+        fun onDayClick(post: PostUiModel?, date: Date)
     }
 }

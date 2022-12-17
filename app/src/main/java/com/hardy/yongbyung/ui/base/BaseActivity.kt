@@ -8,15 +8,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<VD : ViewDataBinding>(
-    @LayoutRes private val layoutResId: Int
+    @LayoutRes
+    private val layoutResId: Int
 ) : AppCompatActivity() {
+
     lateinit var viewDataBinding: VD
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        DataBindingUtil.setContentView<VD>(this, layoutResId).also { viewDataBinding ->
-            viewDataBinding.lifecycleOwner = this
-            this.viewDataBinding = viewDataBinding
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+
+        viewDataBinding =
+            DataBindingUtil.setContentView<VD>(this, layoutResId).also { viewDataBinding ->
+                viewDataBinding.lifecycleOwner = this
+                this.viewDataBinding = viewDataBinding
+            }
     }
 }

@@ -15,6 +15,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -29,6 +30,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:typo="subtitle2" />
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            android:id="@+id/back_button"
+            icon="@{Icon.ic_back}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_text"
+            app:tint="@color/G600" />
 
         <com.hardy.yongbyung.components.YongByungText
             android:id="@+id/title_text"
@@ -106,7 +118,7 @@
 
         <com.hardy.yongbyung.components.YongByungIcon
             android:id="@+id/gallery_button"
-            icon="@{Icon.ic_calendar}"
+            icon="@{Icon.ic_gallery}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

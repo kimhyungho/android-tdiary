@@ -1,16 +1,18 @@
 package com.hardy.yongbyung.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hardy.yongbyung.R
 import java.util.*
-import com.hardy.domain.model.Post
 import com.hardy.yongbyung.databinding.ItemDayBinding
+import com.hardy.yongbyung.model.PostUiModel
 
 class DayAdapter(val tempMonth: Int, val dayList: MutableList<Date>) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
-    private var posts: List<Post> = listOf()
+    private var posts: List<PostUiModel> = listOf()
 
     val ROW = 6
 
@@ -31,7 +33,8 @@ class DayAdapter(val tempMonth: Int, val dayList: MutableList<Date>) :
         holder.binding.itemDayLayout.setOnClickListener { listener?.onDayClick(post, date) }
         holder.binding.itemDayText.text = day.toString()
         if (post != null) {
-            holder.binding.itemDayText.text = "z"
+            holder.binding.dayLayout.setBackgroundResource(R.drawable.oval_p500)
+            holder.binding.itemDayText.setTextColor(Color.WHITE)
         }
 
         if (tempMonth != dayList[position].month) {
@@ -40,7 +43,7 @@ class DayAdapter(val tempMonth: Int, val dayList: MutableList<Date>) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setPosts(posts: List<Post>) {
+    fun setPosts(posts: List<PostUiModel>) {
         this.posts = posts
         notifyDataSetChanged()
     }
@@ -50,6 +53,6 @@ class DayAdapter(val tempMonth: Int, val dayList: MutableList<Date>) :
     }
 
     interface Listener {
-        fun onDayClick(post: Post?, date: Date)
+        fun onDayClick(post: PostUiModel?, date: Date)
     }
 }

@@ -10,8 +10,6 @@ import java.io.File
 import java.io.InputStream
 
 interface AuthRepository {
-    val uid: String?
-
     fun isUserAuthenticated(): Flow<Boolean>
 
     fun oneTapSignInWithGoogle(): Flow<Response<BeginSignInResult>>
@@ -20,13 +18,6 @@ interface AuthRepository {
         googleCredential: AuthCredential,
         fcmToken: String
     ): Flow<Response<User>>
-
-    fun getMe(): Flow<Response<User.Registered>>
-
-    suspend fun editProfile(
-        nickname: String,
-        profileImage: Uri?
-    ): Flow<Response<User.Registered>>
 
     suspend fun signUp(): Flow<Response<User>>
 

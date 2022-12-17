@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="@+id/guide_start"
             app:layout_constraintTop_toTopOf="parent"
             app:typo="subtitle1"
-            tools:text="동네용병" />
+            tools:text="tdiary" />
 
         <com.hardy.yongbyung.components.YongByungText
             android:id="@+id/start_text"

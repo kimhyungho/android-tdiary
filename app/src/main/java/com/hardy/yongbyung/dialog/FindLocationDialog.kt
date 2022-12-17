@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.hardy.domain.model.Place
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.adapters.PlaceListAdapter
@@ -50,6 +51,12 @@ class FindLocationDialog :
             lifecycleScope.launchWhenCreated {
                 places.collect {
                     placeListAdapter.submitList(it)
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                error.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

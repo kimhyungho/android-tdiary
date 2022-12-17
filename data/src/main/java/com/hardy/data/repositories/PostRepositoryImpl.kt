@@ -56,7 +56,7 @@ class PostRepositoryImpl @Inject constructor(
         story: String,
         mediaUri: Uri?,
         mimeType: String?
-    ): Flow<Response<Void?>> = flow {
+    ): Flow<Response<Post>> = flow {
         try {
             emit(Response.Loading)
             val id = postsRef.document().id
@@ -75,7 +75,7 @@ class PostRepositoryImpl @Inject constructor(
                 mediaUrl = if (mediaUri == null) null else ref.downloadUrl.await().toString()
             )
             postsRef.document(id).set(post).await()
-            emit(Response.Success(null))
+            emit(Response.Success(post))
         } catch (e: Exception) {
             emit(Response.Failure(e))
         }
@@ -84,7 +84,7 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun deletePostFromFirestore(postId: String): Flow<Response<Void?>> = flow {
         try {
             postsRef.document(postId).delete().await()
-            Response.Success(true)
+            emit(Response.Success(null))
         } catch (e: Exception) {
             emit(Response.Failure(e))
         }

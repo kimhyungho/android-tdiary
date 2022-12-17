@@ -6,15 +6,22 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.hardy.domain.interactors.posts.AddPostUseCase
 import com.hardy.domain.model.Place
+import com.hardy.domain.model.Post
 import com.hardy.domain.model.Response
+import com.hardy.yongbyung.mapper.ExceptionMapper
 import com.hardy.yongbyung.ui.base.BaseViewModel
 import com.hardy.yongbyung.utils.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ObsoleteCoroutinesApi::class)
 @HiltViewModel
 class WritePostViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
@@ -27,8 +34,14 @@ class WritePostViewModel @Inject constructor(
     val media: StateFlow<Uri?> = savedStateHandle.getStateFlow(MEDIA_KEY, null)
     val mimeType: StateFlow<String?> = savedStateHandle.getStateFlow(MIME_TYPE_KEY, null)
 
+    private val _showPost: MutableStateFlow<Post?> = MutableStateFlow(null)
+    val showPost: StateFlow<Post?> = _showPost
+
     private val _writeLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val writeLoading: StateFlow<Boolean> = _writeLoading
+
+    private val _error = BroadcastChannel<String>(Channel.BUFFERED)
+    val error = _error.asFlow()
 
     fun setTitle(title: CharSequence) {
         savedStateHandle[TITLE_KEY] = title.toString()
@@ -61,12 +74,12 @@ class WritePostViewModel @Inject constructor(
             when (response) {
                 is Response.Loading -> _writeLoading.value = true
                 is Response.Success -> {
-                    Log.d("kkkk", "success")
                     _writeLoading.value = false
+                    _showPost.value = response.data
                 }
                 is Response.Failure -> {
-                    Log.d("kkkk", "dfd", response.e)
                     _writeLoading.value = false
+                    _error.trySend(ExceptionMapper.mapToView(response.e))
                 }
             }
         }

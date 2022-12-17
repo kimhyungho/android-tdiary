@@ -11,7 +11,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.gun0912.tedpermission.provider.TedPermissionProvider
+import com.hardy.domain.model.Post
 import com.hardy.yongbyung.R
 import com.hardy.yongbyung.databinding.FragmentWritePostBinding
 import com.hardy.yongbyung.dialog.FindLocationDialog
@@ -20,7 +22,6 @@ import com.hardy.yongbyung.utils.bind
 import com.hardy.yongbyung.utils.clicks
 import com.hardy.yongbyung.utils.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WritePostViewModel>(
@@ -57,6 +58,24 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
                 .bind(lifecycleScope) {
                     viewModel?.writePost()
                 }
+
+            backButton.setOnClickListener {
+                navController.popBackStack()
+            }
+        }
+
+        with(viewModel) {
+            lifecycleScope.launchWhenCreated {
+                showPost.collect {
+                    if (it != null) startPostDetail(it)
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                error.collect {
+                    Snackbar.make(viewDataBinding.rootLayout, it, Snackbar.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -83,5 +102,9 @@ class WritePostFragment : BaseViewModelFragment<FragmentWritePostBinding, WriteP
         val cR = TedPermissionProvider.context.contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cR.getType(uri ?: return null))
+    }
+
+    private fun startPostDetail(post: Post) {
+        navController.navigate(WritePostFragmentDirections.actionDestWritePostToDestPostDetail(post))
     }
 }

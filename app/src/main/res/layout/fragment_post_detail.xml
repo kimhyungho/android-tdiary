@@ -13,17 +13,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-<!--        <com.hardy.yongbyung.components.YongByungTopBar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            startIcon="@{Icon.ic_back}"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ScrollView
             android:id="@+id/sv"
@@ -37,10 +29,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
 
-                <ImageView
+                <com.hardy.yongbyung.components.YongByungImageView
                     android:id="@+id/media_image_view"
+                    src="@{viewModel.post.mediaUrl}"
+                    visibleOrGone="@{viewModel.post.mediaUrl != null}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
@@ -51,6 +46,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
 
+                <androidx.legacy.widget.Space
+                    android:id="@+id/space"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/media_image_view" />
 
                 <com.hardy.yongbyung.components.YongByungText
                     android:id="@+id/date_text"
@@ -58,13 +60,120 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.post.stringDate}"
+                    android:textColor="@color/P500"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/media_image_view"
-                    app:typo="button" />
+                    app:layout_constraintTop_toBottomOf="@+id/space"
+                    app:typo="subtitle2"
+                    tools:text="ㅎㅎㅎㅎ" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/title_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.post.title}"
+                    android:textColor="@color/G900"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/date_text"
+                    app:typo="subtitle1"
+                    tools:text="ㅎㅎㅎㅎ" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/story_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.post.story}"
+                    android:textColor="@color/G900"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_text"
+                    app:typo="subtitle4"
+                    tools:text="ㅎㅎㅎㅎ" />
+
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/location_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="Location"
+                    android:textColor="@color/G600"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/story_text"
+                    app:typo="subtitle2" />
+
+                <com.hardy.yongbyung.components.YongByungText
+                    android:id="@+id/place_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="@{viewModel.post.place.placeName}"
+                    android:textColor="@color/G600"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/location_text"
+                    app:typo="subtitle4" />
+
+                <fragment
+                    android:id="@+id/map_fragment"
+                    android:name="com.naver.maps.map.MapFragment"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/place_text" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            android:id="@+id/back_button"
+            icon="@{Icon.ic_back}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/P500" />
+
+        <com.hardy.yongbyung.components.YongByungIcon
+            android:id="@+id/menu_button"
+            icon="@{Icon.ic_delete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/P500" />
+
+        <com.hardy.yongbyung.components.YongByungLoader
+            android:id="@+id/loader"
+            loading="@{viewModel.deleteLoading}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
