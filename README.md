@@ -1,9 +1,11 @@
-# 동네용병 - 축구, 농구, 테니스 등 같이 할 사람
+# tdiary
 
 <img src="/yb-images/app_logo.png" align="left"
 width="200" hspace="10" vspace="10">
  
-동네용병은 축구, 풋살, 테니스, 농구 등 같이 운동할 사람을 찾는 서비스입니다.   
+tdiary는 하루를 기록하는 안드로이드 어플리케이션입니다.
+사진과 위치를 저장할 수 있습니다.
+
 </br>
 </br>
 </br>
