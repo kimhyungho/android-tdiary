@@ -51,6 +51,6 @@ width="200" hspace="10" vspace="10">
 <img src="/yb-images/2.png" width="160px" title="2" alt="2"></img>
 <img src="/yb-images/3.png" width="160px" title="3" alt="3"></img>
 <img src="/yb-images/4.png" width="160px" title="4" alt="4"></img>
-<img src="/yb-images/4.png" width="160px" title="4" alt="5"></img>
-<img src="/yb-images/4.png" width="160px" title="4" alt="6"></img>
+<img src="/yb-images/5.png" width="160px" title="5" alt="5"></img>
+<img src="/yb-images/6.png" width="160px" title="6" alt="6"></img>
 
