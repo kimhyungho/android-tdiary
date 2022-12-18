@@ -25,7 +25,7 @@ width="200" hspace="10" vspace="10">
 ## android tech
 - language : Kotlin
 - architecture : ACC MVVM
-- async library : Coroutine
+- async : Coroutine
 - image library : Glide
 - network library : Retrofit2, Gson, OkHttp
 - jetpack : Navigation, DataBinding
@@ -34,7 +34,7 @@ width="200" hspace="10" vspace="10">
 - 개인
 
 ## 특징
-- Coroutine를 사용하여 비동기 네트워크 통신을 합니다.
+- Coroutine를 사용한 비동기 프로그래밍
 - ACC ViewModel을 사용해 ACC MVVM 디자인 패턴을 구현하려고 노력했습니다.
 - Module을 Presentation, Domain, Data로 나눴습니다.
 - Firebase Realtime Database, Storage, Auth, Firestore를 사용했습니다.
