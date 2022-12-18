@@ -40,10 +40,9 @@ width="200" hspace="10" vspace="10">
 - Firebase Realtime Database, Storage, Auth, Firestore를 사용했습니다.
 
 ## Firebase
-- Firebase Realtime Database를 통한 쪽지 구현
-- Storage를 사용한 profile image
+- Storage를 이용한 일기 사진
 - Firebase Auth를 이용한 구글 로그인
-- Firestore를 이용한 모집 글
+- Firestore를 일기 글
 
 ## Screenshots
 
